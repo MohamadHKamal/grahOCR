@@ -1,0 +1,77 @@
+constraints:
+  date_ranges:
+    min_date_of_service: "2015-01-01"
+    max_date_of_service: "today"
+    max_patient_age: 130
+    min_patient_age: 0
+
+  amount_limits:
+    max_single_line_item_usd: 500000
+    max_claim_total_usd: 2000000
+    min_line_item_usd: 0.01
+
+  dosage_limits:
+    # Drug name -> max daily dosage in mg
+    metformin: 2550
+    atorvastatin: 80
+    lisinopril: 80
+    amlodipine: 10
+    omeprazole: 40
+    amoxicillin: 3000
+    ibuprofen: 3200
+    paracetamol: 4000
+    insulin_glargine: 300  # units
+    warfarin: 15
+
+relationships:
+  procedure_diagnosis_compatibility:
+    # procedure_code -> list of valid diagnosis code prefixes
+    "99213": ["E11", "I10", "J06", "M54", "Z00"]  # Office visit
+    "99214": ["E11", "I10", "J06", "M54", "Z00"]  # Extended visit
+    "36415": ["D50", "D64", "E11", "R79"]           # Venipuncture
+    "85025": ["D50", "D64", "R79", "Z01"]           # CBC
+    "80053": ["E11", "E78", "N18", "R79"]           # Metabolic panel
+
+  contraindicated_drugs:
+    - ["warfarin", "aspirin"]
+    - ["metformin", "iodinated_contrast"]
+    - ["lisinopril", "potassium_supplements"]
+    - ["sildenafil", "nitrates"]
+    - ["fluoxetine", "tramadol"]
+
+  specialty_requirements:
+    # procedure_code -> required specialty
+    "27447": "orthopedics"       # Knee replacement
+    "33533": "cardiothoracic"    # CABG
+    "47562": "general_surgery"   # Laparoscopic cholecystectomy
+    "66984": "ophthalmology"     # Cataract surgery
+    "69436": "otolaryngology"    # Tympanostomy
+
+temporal_rules:
+  policy_effective_ranges:
+    # rider_code -> [effective_from, effective_to]
+    "RIDER_2018_A": ["2018-01-01", "2020-12-31"]
+    "RIDER_2018_B": ["2018-06-01", "2021-06-30"]
+    "RIDER_2020_STD": ["2020-01-01", "2023-12-31"]
+    "RIDER_2022_ENH": ["2022-01-01", "2025-12-31"]
+    "RIDER_2024_STD": ["2024-01-01", "2027-12-31"]
+    "POLICY_LEGACY_V1": ["2015-01-01", "2019-12-31"]
+    "POLICY_LEGACY_V2": ["2018-01-01", "2022-12-31"]
+    "POLICY_STANDARD_2025": ["2025-01-01", "2028-12-31"]
+
+indexes:
+  - label: "DiagnosisCode"
+    property: "code"
+    type: "unique"
+  - label: "ProcedureCode"
+    property: "code"
+    type: "unique"
+  - label: "Medication"
+    property: "name"
+    type: "unique"
+  - label: "Provider"
+    property: "id"
+    type: "unique"
+  - label: "Patient"
+    property: "id"
+    type: "unique"

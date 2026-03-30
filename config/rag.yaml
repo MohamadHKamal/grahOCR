@@ -1,0 +1,26 @@
+rag:
+  vector_store:
+    backend: "chromadb"
+    persist_dir: "./data/vectorstore"
+    collection_name: "policy_chunks"
+
+  embeddings:
+    model: "intfloat/multilingual-e5-large"
+    dimension: 1024
+    batch_size: 32
+
+  retriever:
+    n_results: 5
+    # Temporal filtering is always on; these control fallback behavior
+    allow_semantic_fallback: true
+    min_confidence_threshold: 0.3
+
+  chunking:
+    max_chunk_size: 1000
+    overlap: 100
+    # Section types to prioritize in retrieval
+    priority_sections:
+      - "coverage"
+      - "exclusion"
+      - "benefit_limit"
+      - "preauth"

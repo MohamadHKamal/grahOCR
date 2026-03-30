@@ -1,0 +1,166 @@
+{
+  "report_type": "pipeline_test",
+  "generated_at": "2026-03-29T23:04:00.806630",
+  "test_start": "2026-03-29T23:02:32.008442",
+  "test_end": "2026-03-29T23:04:00.806630",
+  "test_duration_seconds": 88.8,
+  "source_file": "/Users/msd/grahpOCR/sample data/pdfs/test_column_issue.pdf",
+  "file_name": "test_column_issue.pdf",
+  "file_size_bytes": 1959,
+  "engine_configurations": 1,
+  "runs": [
+    {
+      "engine": "PaddleOCR",
+      "use_paddle": true,
+      "use_surya": false,
+      "error": null,
+      "document_id": "069c9936-a170-7121-8000-ec3b8d69dfc4",
+      "pages": 1,
+      "total_tokens": 10,
+      "arabic_tokens": 0,
+      "english_tokens": 10,
+      "avg_confidence": 0.991,
+      "min_confidence": 0.9686,
+      "max_confidence": 0.9993,
+      "failures": 1,
+      "failure_details": [
+        {
+          "type": "spatial_blind",
+          "severity": 1.0,
+          "remedy": "vlm_rescan",
+          "evidence": "Reading order jump: tokens 8->9 are 1974px apart spatially"
+        }
+      ],
+      "route": "cheap_rail",
+      "uncertainty": 0.109,
+      "latency_ms": 86715.8,
+      "tokens": [
+        {
+          "id": "069c993c",
+          "text": "Patient Details:",
+          "language": "en",
+          "confidence": 0.9944,
+          "page": 1,
+          "bbox": "(143,239)-(406,276)",
+          "is_handwritten": false,
+          "zone": null,
+          "engine": "paddleocr"
+        },
+        {
+          "id": "069c993c",
+          "text": "Name: Ahmed Ali",
+          "language": "en",
+          "confidence": 0.9686,
+          "page": 1,
+          "bbox": "(144,288)-(382,320)",
+          "is_handwritten": false,
+          "zone": null,
+          "engine": "paddleocr"
+        },
+        {
+          "id": "069c993c",
+          "text": "DOB: 15-05-1985",
+          "language": "en",
+          "confidence": 0.9976,
+          "page": 1,
+          "bbox": "(145,335)-(383,366)",
+          "is_handwritten": false,
+          "zone": null,
+          "engine": "paddleocr"
+        },
+        {
+          "id": "069c993c",
+          "text": "ID: PAT-99201",
+          "language": "en",
+          "confidence": 0.9902,
+          "page": 1,
+          "bbox": "(143,375)-(346,412)",
+          "is_handwritten": false,
+          "zone": null,
+          "engine": "paddleocr"
+        },
+        {
+          "id": "069c993c",
+          "text": "Hospital Discharge Summary",
+          "language": "en",
+          "confidence": 0.9989,
+          "page": 1,
+          "bbox": "(590,79)-(1254,135)",
+          "is_handwritten": false,
+          "zone": null,
+          "engine": "paddleocr"
+        },
+        {
+          "id": "069c993c",
+          "text": "Clinical Diagnosis:",
+          "language": "en",
+          "confidence": 0.9993,
+          "page": 1,
+          "bbox": "(1035,238)-(1358,279)",
+          "is_handwritten": false,
+          "zone": null,
+          "engine": "paddleocr"
+        },
+        {
+          "id": "069c993c",
+          "text": "Code: ICD-10-J45 (Asthma)",
+          "language": "en",
+          "confidence": 0.9954,
+          "page": 1,
+          "bbox": "(1034,287)-(1407,324)",
+          "is_handwritten": false,
+          "zone": null,
+          "engine": "paddleocr"
+        },
+        {
+          "id": "069c993c",
+          "text": "Admission: 10-02-2026",
+          "language": "en",
+          "confidence": 0.9989,
+          "page": 1,
+          "bbox": "(1036,335)-(1346,366)",
+          "is_handwritten": false,
+          "zone": null,
+          "engine": "paddleocr"
+        },
+        {
+          "id": "069c993c",
+          "text": "Ward: Respiratory Unit",
+          "language": "en",
+          "confidence": 0.977,
+          "page": 1,
+          "bbox": "(1034,377)-(1342,413)",
+          "is_handwritten": false,
+          "zone": null,
+          "engine": "paddleocr"
+        },
+        {
+          "id": "069c993c",
+          "text": "Metadata: Generated for Spatial-Aware OCR Testing",
+          "language": "en",
+          "confidence": 0.9893,
+          "page": 1,
+          "bbox": "(590,2327)-(1151,2359)",
+          "is_handwritten": false,
+          "zone": null,
+          "engine": "paddleocr"
+        }
+      ],
+      "provenance": [
+        "[069c993c] 'Patient Details:' page=1 (143,239)-(406,276) conf=0.99 lang=en engine=paddleocr",
+        "[069c993c] 'Name: Ahmed Ali' page=1 (144,288)-(382,320) conf=0.97 lang=en engine=paddleocr",
+        "[069c993c] 'DOB: 15-05-1985' page=1 (145,335)-(383,366) conf=1.00 lang=en engine=paddleocr",
+        "[069c993c] 'ID: PAT-99201' page=1 (143,375)-(346,412) conf=0.99 lang=en engine=paddleocr",
+        "[069c993c] 'Hospital Discharge Summary' page=1 (590,79)-(1254,135) conf=1.00 lang=en engine=paddleocr",
+        "[069c993c] 'Clinical Diagnosis:' page=1 (1035,238)-(1358,279) conf=1.00 lang=en engine=paddleocr",
+        "[069c993c] 'Code: ICD-10-J45 (Asthma)' page=1 (1034,287)-(1407,324) conf=1.00 lang=en engine=paddleocr",
+        "[069c993c] 'Admission: 10-02-2026' page=1 (1036,335)-(1346,366) conf=1.00 lang=en engine=paddleocr",
+        "[069c993c] 'Ward: Respiratory Unit' page=1 (1034,377)-(1342,413) conf=0.98 lang=en engine=paddleocr",
+        "[069c993c] 'Metadata: Generated for Spatial-Aware OCR Testing' page=1 (590,2327)-(1151,2359) conf=0.99 lang=en engine=paddleocr"
+      ]
+    }
+  ],
+  "suggestions": [
+    "[PaddleOCR] High latency (87s) — consider GPU acceleration or reducing max image size for faster processing."
+  ]
+}

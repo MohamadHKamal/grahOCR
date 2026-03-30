@@ -1,0 +1,42 @@
+langsmith:
+  project: "graphocr"
+  tracing_enabled: true
+  trace_sample_rate: 1.0  # Trace every request in dev; reduce in prod
+
+langfuse:
+  enabled: false
+  public_key: ""
+  secret_key: ""
+  host: "https://cloud.langfuse.com"
+
+circuit_breaker:
+  window_seconds: 300
+  failure_rate_threshold: 0.15
+  min_calls_in_window: 50
+  recovery_timeout_seconds: 60
+  half_open_max_calls: 10
+
+traffic_controller:
+  cheap_rail_confidence_threshold: 0.65   # Was 0.85 — gives threshold T = 0.35
+  handwriting_penalty: 0.15
+  mixed_language_penalty: 0.02            # Was 0.05 — mixed ar/en is normal for medical docs
+  failure_classification_penalty: 0.10    # Was 0.20 — handwritten docs naturally have spatial irregularity
+  max_cheap_rail_ratio: 0.95
+  min_cheap_rail_ratio: 0.70
+
+accuracy_monitoring:
+  target_accuracy: 0.98
+  alert_threshold: 0.955
+  decay_detection:
+    window_minutes: 60
+    min_samples: 200
+    slope_threshold: -0.001  # Accuracy dropping per minute
+
+alerts:
+  channels:
+    - type: "log"
+      level: "error"
+    # - type: "slack"
+    #   webhook_url: ""
+    # - type: "pagerduty"
+    #   routing_key: ""

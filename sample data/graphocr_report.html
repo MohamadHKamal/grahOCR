@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GraphOCR Batch Test Report</title>
+<style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin: 2rem; background: #fafafa; }
+    h1 { color: #1a1a2e; }
+    h2 { color: #16213e; margin-top: 2rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; }
+    h3 { color: #0f3460; }
+    table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: 0.85rem; }
+    th { background: #1a1a2e; color: white; padding: 8px 10px; text-align: left; }
+    td { padding: 6px 10px; border-bottom: 1px solid #e2e8f0; }
+    tr:hover { background: #f1f5f9; }
+    .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin: 1rem 0; }
+    .summary-card { background: white; border-radius: 8px; padding: 1.2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .summary-card .label { font-size: 0.8rem; color: #64748b; text-transform: uppercase; }
+    .summary-card .value { font-size: 1.8rem; font-weight: 700; color: #1a1a2e; }
+    .doc-detail { background: white; border-radius: 8px; padding: 1.5rem; margin: 1rem 0; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .stats-row { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 0.5rem 0; font-size: 0.85rem; color: #475569; }
+    .text-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 1rem; max-height: 300px; overflow-y: auto; font-size: 0.85rem; direction: rtl; unicode-bidi: plaintext; }
+    .token { padding: 2px 0; direction: ltr; unicode-bidi: plaintext; }
+    .lang { color: #6366f1; font-weight: 600; font-size: 0.75rem; }
+    .conf { color: #94a3b8; font-size: 0.75rem; }
+    .prov-box { background: #1e293b; color: #e2e8f0; border-radius: 4px; padding: 1rem; font-family: monospace; font-size: 0.75rem; max-height: 200px; overflow-y: auto; }
+    .prov { padding: 1px 0; }
+    .failure { background: #fef2f2; border-left: 3px solid #ef4444; padding: 8px 12px; margin: 6px 0; font-size: 0.82rem; border-radius: 0 4px 4px 0; line-height: 1.5; }
+    .fulltext-box { background: #fffbeb; border: 1px solid #fbbf24; border-radius: 4px; padding: 1rem; font-size: 1rem; line-height: 1.8; direction: auto; unicode-bidi: plaintext; white-space: pre-wrap; word-wrap: break-word; max-height: 250px; overflow-y: auto; }
+    .token-table { font-size: 0.78rem; }
+    .token-table th { background: #334155; font-size: 0.72rem; padding: 6px 8px; }
+    .token-table td { padding: 4px 8px; font-size: 0.78rem; }
+    .token-table tr:nth-child(even) { background: #f8fafc; }
+</style>
+</head>
+<body>
+<h1>GraphOCR Batch Test Report</h1>
+<p style="color:#64748b">Generated: 2026-03-29 12:36 UTC | Documents: 6</p>
+
+<div class="summary-grid">
+    <div class="summary-card"><div class="label">Documents</div><div class="value">6</div></div>
+    <div class="summary-card"><div class="label">Successful</div><div class="value" style="color:#2d8a4e">6</div></div>
+    <div class="summary-card"><div class="label">Failed</div><div class="value" style="color:#d32f2f">0</div></div>
+    <div class="summary-card"><div class="label">Total Tokens</div><div class="value">153</div></div>
+    <div class="summary-card"><div class="label">Avg Confidence</div><div class="value">79.4%</div></div>
+    <div class="summary-card"><div class="label">Total Failures</div><div class="value">7</div></div>
+    <div class="summary-card"><div class="label">VLM Consensus</div><div class="value">2</div></div>
+    <div class="summary-card"><div class="label">Avg Latency</div><div class="value">127347ms</div></div>
+</div>
+
+<h2>Document Summary Table</h2>
+<table>
+<tr>
+    <th>#</th><th>File</th><th>Status</th><th>Pages</th><th>Tokens</th>
+    <th>Arabic</th><th>English</th><th>Avg Conf</th><th>Min Conf</th>
+    <th>Failures</th><th>Failure Types</th><th>Route</th><th>Uncertainty</th>
+    <th>Latency</th><th>Error</th>
+</tr>
+
+        <tr>
+            <td>1</td>
+            <td>1000093095.jpg</td>
+            <td style="color:#2d8a4e;font-weight:bold">PASS</td>
+            <td>1</td>
+            <td>39</td>
+            <td>22</td>
+            <td>13</td>
+            <td>45.04%</td>
+            <td>10.68%</td>
+            <td>0</td>
+            <td>None</td>
+            <td>vlm_consensus</td>
+            <td>0.6169</td>
+            <td>203817ms</td>
+            <td style="color:red"></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>1000093096.jpg</td>
+            <td style="color:#2d8a4e;font-weight:bold">PASS</td>
+            <td>1</td>
+            <td>77</td>
+            <td>26</td>
+            <td>37</td>
+            <td>51.57%</td>
+            <td>11.97%</td>
+            <td>6</td>
+            <td>spatial_blind, spatial_blind, spatial_blind, spatial_blind, spatial_blind, spatial_blind</td>
+            <td>vlm_consensus</td>
+            <td>0.6079</td>
+            <td>172447ms</td>
+            <td style="color:red"></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>1000093097.jpg</td>
+            <td style="color:#2d8a4e;font-weight:bold">PASS</td>
+            <td>1</td>
+            <td>18</td>
+            <td>10</td>
+            <td>7</td>
+            <td>83.18%</td>
+            <td>37.30%</td>
+            <td>0</td>
+            <td>None</td>
+            <td>cheap_rail</td>
+            <td>0.2305</td>
+            <td>171894ms</td>
+            <td style="color:red"></td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>test_column_issue.pdf</td>
+            <td style="color:#2d8a4e;font-weight:bold">PASS</td>
+            <td>1</td>
+            <td>10</td>
+            <td>0</td>
+            <td>10</td>
+            <td>99.10%</td>
+            <td>96.86%</td>
+            <td>1</td>
+            <td>spatial_blind</td>
+            <td>cheap_rail</td>
+            <td>0.1090</td>
+            <td>80495ms</td>
+            <td style="color:red"></td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>test_logical_conflict.pdf</td>
+            <td style="color:#2d8a4e;font-weight:bold">PASS</td>
+            <td>1</td>
+            <td>5</td>
+            <td>0</td>
+            <td>5</td>
+            <td>98.92%</td>
+            <td>97.36%</td>
+            <td>0</td>
+            <td>None</td>
+            <td>cheap_rail</td>
+            <td>0.0108</td>
+            <td>70738ms</td>
+            <td style="color:red"></td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>test_low_confidence.pdf</td>
+            <td style="color:#2d8a4e;font-weight:bold">PASS</td>
+            <td>1</td>
+            <td>4</td>
+            <td>0</td>
+            <td>4</td>
+            <td>98.80%</td>
+            <td>97.61%</td>
+            <td>0</td>
+            <td>None</td>
+            <td>cheap_rail</td>
+            <td>0.0120</td>
+            <td>64688ms</td>
+            <td style="color:red"></td>
+        </tr>
+</table>
+
+<h2>Per-Document Details</h2>
+
+        <div class="doc-detail">
+            <h3>1. 1000093095.jpg</h3>
+            <div class="stats-row">
+                <span>Tokens: 39</span>
+                <span>Arabic: 22</span>
+                <span>English: 13</span>
+                <span>Confidence: 45.04%</span>
+                <span>Route: <strong>vlm_consensus</strong></span>
+                <span>Uncertainty: 0.6169</span>
+                <span>Latency: 203817ms</span>
+            </div>
+
+            <h4>OCR Result &mdash; Full Text</h4>
+            <div class="fulltext-box">* ل يي وال مم ية ٨٤١٥٤٨ oh )r0 /d I yod to B ال امة We yhn 00: ي O ي  ي ي ـية   ييلة MOR000S0A340 i اعلا ل ............ FST ق عع ي   و ي و  ية ا ي المرييبيي و ي  ي ي ي    يي ة ا ره ة Y 74</div>
+
+            <h4>OCR Result &mdash; Annotated Tokens</h4>
+            <div class="text-box"><div class="token"><span class="lang">[unknown]</span> <span class="conf" style="color:#d32f2f">(11%)</span> *</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#d32f2f">(43%)</span> ل يي</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#d32f2f">(39%)</span> وال</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#d32f2f">(43%)</span> مم</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#e67e22">(57%)</span> ية</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#e67e22">(62%)</span> ٨٤١٥٤٨</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#e67e22">(58%)</span> oh</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(35%)</span> )r0</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#e67e22">(53%)</span> /d</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(20%)</span> I</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(37%)</span> yod</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#e67e22">(55%)</span> to</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(37%)</span> B</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#d32f2f">(43%)</span> ال</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#d32f2f">(41%)</span> امة</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(24%)</span> We</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(40%)</span> yhn</div>
+<div class="token"><span class="lang">[unknown]</span> <span class="conf" style="color:#d32f2f">(46%)</span> 00:</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#e67e22">(53%)</span> ي O ي  ي ي</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#d32f2f">(44%)</span> ـية   ييلة</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(32%)</span> MOR000S0A340</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(19%)</span> i</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#d32f2f">(40%)</span> اعلا</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#d32f2f">(40%)</span> ل</div>
+<div class="token"><span class="lang">[unknown]</span> <span class="conf" style="color:#e67e22">(57%)</span> ............</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(50%)</span> FST</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#d32f2f">(28%)</span> ق</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#d32f2f">(35%)</span> عع</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#e67e22">(65%)</span> ي   و ي</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#e67e22">(54%)</span> و  ية</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#e67e22">(50%)</span> ا ي</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#d32f2f">(48%)</span> المرييبيي</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#e67e22">(72%)</span> و</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#e67e22">(65%)</span> ي  ي ي ي    يي</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#e67e22">(52%)</span> ة</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#d32f2f">(40%)</span> ا ره</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#d32f2f">(36%)</span> ة</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(93%)</span> Y</div>
+<div class="token"><span class="lang">[unknown]</span> <span class="conf" style="color:#d32f2f">(39%)</span> 74</div>
+</div>
+
+            <h4>OCR Result &mdash; Token Detail Table</h4>
+            <div style="overflow-x:auto">
+            <table class="token-table">
+                <tr>
+                    <th>#</th><th>Text</th><th>Lang</th><th>Confidence</th>
+                    <th>Page</th><th>BBox</th><th>HW</th><th>Zone</th><th>ID</th>
+                </tr>
+                <tr><td>0</td><td style='direction:auto;unicode-bidi:plaintext'>*</td><td>unknown</td><td style='color:#d32f2f;font-weight:600'>10.68%</td><td>p1</td><td>(1504,766)-(1521,773)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>1</td><td style='direction:auto;unicode-bidi:plaintext'>ل يي</td><td>ar</td><td style='color:#d32f2f;font-weight:600'>43.43%</td><td>p1</td><td>(1238,1436)-(1561,1504)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>2</td><td style='direction:auto;unicode-bidi:plaintext'>وال</td><td>ar</td><td style='color:#d32f2f;font-weight:600'>39.19%</td><td>p1</td><td>(1400,1593)-(1560,1657)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>3</td><td style='direction:auto;unicode-bidi:plaintext'>مم</td><td>ar</td><td style='color:#d32f2f;font-weight:600'>42.85%</td><td>p1</td><td>(1764,213)-(1958,296)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>4</td><td style='direction:auto;unicode-bidi:plaintext'>ية</td><td>ar</td><td style='color:#e67e22;font-weight:600'>57.24%</td><td>p1</td><td>(1965,200)-(2199,304)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>5</td><td style='direction:auto;unicode-bidi:plaintext'>٨٤١٥٤٨</td><td>ar</td><td style='color:#e67e22;font-weight:600'>62.05%</td><td>p1</td><td>(1728,136)-(2030,213)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>6</td><td style='direction:auto;unicode-bidi:plaintext'>oh</td><td>en</td><td style='color:#e67e22;font-weight:600'>57.57%</td><td>p1</td><td>(1712,424)-(1911,578)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>7</td><td style='direction:auto;unicode-bidi:plaintext'>)r0</td><td>en</td><td style='color:#d32f2f;font-weight:600'>34.87%</td><td>p1</td><td>(2067,401)-(2498,557)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>8</td><td style='direction:auto;unicode-bidi:plaintext'>/d</td><td>en</td><td style='color:#e67e22;font-weight:600'>52.88%</td><td>p1</td><td>(2359,716)-(2478,828)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>9</td><td style='direction:auto;unicode-bidi:plaintext'>I</td><td>en</td><td style='color:#d32f2f;font-weight:600'>19.96%</td><td>p1</td><td>(2348,851)-(2481,977)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>10</td><td style='direction:auto;unicode-bidi:plaintext'>yod</td><td>en</td><td style='color:#d32f2f;font-weight:600'>37.08%</td><td>p1</td><td>(2001,1008)-(2482,1122)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>11</td><td style='direction:auto;unicode-bidi:plaintext'>to</td><td>en</td><td style='color:#e67e22;font-weight:600'>55.24%</td><td>p1</td><td>(1764,1027)-(1901,1123)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>12</td><td style='direction:auto;unicode-bidi:plaintext'>B</td><td>en</td><td style='color:#d32f2f;font-weight:600'>37.27%</td><td>p1</td><td>(1825,1095)-(2500,1302)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>13</td><td style='direction:auto;unicode-bidi:plaintext'>ال</td><td>ar</td><td style='color:#d32f2f;font-weight:600'>42.70%</td><td>p1</td><td>(1597,1293)-(2139,1415)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>14</td><td style='direction:auto;unicode-bidi:plaintext'>امة</td><td>ar</td><td style='color:#d32f2f;font-weight:600'>40.88%</td><td>p1</td><td>(1572,1432)-(1777,1522)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>15</td><td style='direction:auto;unicode-bidi:plaintext'>We</td><td>en</td><td style='color:#d32f2f;font-weight:600'>24.47%</td><td>p1</td><td>(1821,1432)-(2027,1525)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>16</td><td style='direction:auto;unicode-bidi:plaintext'>yhn</td><td>en</td><td style='color:#d32f2f;font-weight:600'>39.72%</td><td>p1</td><td>(1719,1506)-(1977,1611)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>17</td><td style='direction:auto;unicode-bidi:plaintext'>00:</td><td>unknown</td><td style='color:#d32f2f;font-weight:600'>45.83%</td><td>p1</td><td>(2,4)-(27,54)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>18</td><td style='direction:auto;unicode-bidi:plaintext'>ي O ي  ي ي</td><td>ar</td><td style='color:#e67e22;font-weight:600'>52.96%</td><td>p1</td><td>(1074,228)-(1653,342)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>19</td><td style='direction:auto;unicode-bidi:plaintext'>ـية   ييلة</td><td>ar</td><td style='color:#d32f2f;font-weight:600'>44.24%</td><td>p1</td><td>(517,269)-(990,367)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>20</td><td style='direction:auto;unicode-bidi:plaintext'>MOR000S0A340</td><td>en</td><td style='color:#d32f2f;font-weight:600'>31.95%</td><td>p1</td><td>(83,651)-(182,665)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>21</td><td style='direction:auto;unicode-bidi:plaintext'>i</td><td>en</td><td style='color:#d32f2f;font-weight:600'>18.69%</td><td>p1</td><td>(336,474)-(811,637)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>22</td><td style='direction:auto;unicode-bidi:plaintext'>اعلا</td><td>ar</td><td style='color:#d32f2f;font-weight:600'>39.74%</td><td>p1</td><td>(350,634)-(751,727)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>23</td><td style='direction:auto;unicode-bidi:plaintext'>ل</td><td>ar</td><td style='color:#d32f2f;font-weight:600'>40.07%</td><td>p1</td><td>(970,635)-(1172,711)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>24</td><td style='direction:auto;unicode-bidi:plaintext'>............</td><td>unknown</td><td style='color:#e67e22;font-weight:600'>57.24%</td><td>p1</td><td>(360,767)-(641,809)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>25</td><td style='direction:auto;unicode-bidi:plaintext'>FST</td><td>en</td><td style='color:#d32f2f;font-weight:600'>49.74%</td><td>p1</td><td>(1197,1656)-(1257,1696)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>26</td><td style='direction:auto;unicode-bidi:plaintext'>ق</td><td>ar</td><td style='color:#d32f2f;font-weight:600'>28.40%</td><td>p1</td><td>(1282,1649)-(1330,1681)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>27</td><td style='direction:auto;unicode-bidi:plaintext'>عع</td><td>ar</td><td style='color:#d32f2f;font-weight:600'>35.01%</td><td>p1</td><td>(937,1589)-(1121,1657)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>28</td><td style='direction:auto;unicode-bidi:plaintext'>ي   و ي</td><td>ar</td><td style='color:#e67e22;font-weight:600'>64.68%</td><td>p1</td><td>(1001,1508)-(1520,1582)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>29</td><td style='direction:auto;unicode-bidi:plaintext'>و  ية</td><td>ar</td><td style='color:#e67e22;font-weight:600'>54.24%</td><td>p1</td><td>(761,1436)-(1225,1524)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>30</td><td style='direction:auto;unicode-bidi:plaintext'>ا ي</td><td>ar</td><td style='color:#e67e22;font-weight:600'>50.20%</td><td>p1</td><td>(849,1374)-(1114,1450)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>31</td><td style='direction:auto;unicode-bidi:plaintext'>المرييبيي</td><td>ar</td><td style='color:#d32f2f;font-weight:600'>48.43%</td><td>p1</td><td>(1113,1381)-(1394,1438)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>32</td><td style='direction:auto;unicode-bidi:plaintext'>و</td><td>ar</td><td style='color:#e67e22;font-weight:600'>71.82%</td><td>p1</td><td>(749,1319)-(887,1392)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>33</td><td style='direction:auto;unicode-bidi:plaintext'>ي  ي ي ي    يي</td><td>ar</td><td style='color:#e67e22;font-weight:600'>65.05%</td><td>p1</td><td>(878,1307)-(1623,1391)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>34</td><td style='direction:auto;unicode-bidi:plaintext'>ة</td><td>ar</td><td style='color:#e67e22;font-weight:600'>52.45%</td><td>p1</td><td>(56,1113)-(1100,1334)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>35</td><td style='direction:auto;unicode-bidi:plaintext'>ا ره</td><td>ar</td><td style='color:#d32f2f;font-weight:600'>39.98%</td><td>p1</td><td>(40,996)-(998,1180)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>36</td><td style='direction:auto;unicode-bidi:plaintext'>ة</td><td>ar</td><td style='color:#d32f2f;font-weight:600'>35.63%</td><td>p1</td><td>(446,860)-(1224,1029)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>37</td><td style='direction:auto;unicode-bidi:plaintext'>Y</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>93.26%</td><td>p1</td><td>(85,783)-(308,812)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+<tr><td>38</td><td style='direction:auto;unicode-bidi:plaintext'>74</td><td>unknown</td><td style='color:#d32f2f;font-weight:600'>38.90%</td><td>p1</td><td>(1272,1803)-(1291,1828)</td><td></td><td></td><td><code>069c91a8</code></td></tr>
+
+            </table>
+            </div>
+
+            <p style="color:#2d8a4e;font-weight:600">No failures detected.</p>
+
+            <h4>Provenance Trail (first 15)</h4>
+            <div class="prov-box"><div class='prov'>[069c91a8] &#x27;*&#x27; page=1 (1504,766)-(1521,773) conf=0.11 lang=unknown engine=paddleocr</div>
+<div class='prov'>[069c91a8] &#x27;ل يي&#x27; page=1 (1238,1436)-(1561,1504) conf=0.43 lang=ar engine=paddleocr</div>
+<div class='prov'>[069c91a8] &#x27;وال&#x27; page=1 (1400,1593)-(1560,1657) conf=0.39 lang=ar engine=paddleocr</div>
+<div class='prov'>[069c91a8] &#x27;مم&#x27; page=1 (1764,213)-(1958,296) conf=0.43 lang=ar engine=paddleocr</div>
+<div class='prov'>[069c91a8] &#x27;ية&#x27; page=1 (1965,200)-(2199,304) conf=0.57 lang=ar engine=paddleocr</div>
+<div class='prov'>[069c91a8] &#x27;٨٤١٥٤٨&#x27; page=1 (1728,136)-(2030,213) conf=0.62 lang=ar engine=paddleocr</div>
+<div class='prov'>[069c91a8] &#x27;oh&#x27; page=1 (1712,424)-(1911,578) conf=0.58 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91a8] &#x27;)r0&#x27; page=1 (2067,401)-(2498,557) conf=0.35 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91a8] &#x27;/d&#x27; page=1 (2359,716)-(2478,828) conf=0.53 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91a8] &#x27;I&#x27; page=1 (2348,851)-(2481,977) conf=0.20 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91a8] &#x27;yod&#x27; page=1 (2001,1008)-(2482,1122) conf=0.37 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91a8] &#x27;to&#x27; page=1 (1764,1027)-(1901,1123) conf=0.55 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91a8] &#x27;B&#x27; page=1 (1825,1095)-(2500,1302) conf=0.37 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91a8] &#x27;ال&#x27; page=1 (1597,1293)-(2139,1415) conf=0.43 lang=ar engine=paddleocr</div>
+<div class='prov'>[069c91a8] &#x27;امة&#x27; page=1 (1572,1432)-(1777,1522) conf=0.41 lang=ar engine=paddleocr</div>
+</div>
+        </div>
+        <div class="doc-detail">
+            <h3>2. 1000093096.jpg</h3>
+            <div class="stats-row">
+                <span>Tokens: 77</span>
+                <span>Arabic: 26</span>
+                <span>English: 37</span>
+                <span>Confidence: 51.57%</span>
+                <span>Route: <strong>vlm_consensus</strong></span>
+                <span>Uncertainty: 0.6079</span>
+                <span>Latency: 172447ms</span>
+            </div>
+
+            <h4>OCR Result &mdash; Full Text</h4>
+            <div class="fulltext-box">ها wk 0105 06000 32 روكسى  شارع الخليفة المأمون كوين سنتر الدور الخامس 0106010 581 التجمع الخامس أوزون مولاللرجس عمارات 740 حجز كشف الطواريء Y بجد الرهناعة Flong 1 Hroona Imtran الومم R1 souson Fatavadk 4200 حيلين دهريعان D السوعي Diflucon الامم الممن استشاري الرضاعة الطبيعية دحى محمود خايخة أخصائي طب الاطفال جامعة عين شمس أخصاني الصحة النفسة و تعديل السلوك 25 nuppk creom bلaا 1So اليوم دنها دها الحاة عجل التب جل ٢ C ـ K O C o S c 4 . te T 70% C bO C طيeر 34 Jets gon ٩٣٦٥٠ج DaN A 0e بخ٠0و danode 2a TP C y ١٠ * ع 4 ٧NOت ي D0 ٠ ل R fae EE )</div>
+
+            <h4>OCR Result &mdash; Annotated Tokens</h4>
+            <div class="text-box"><div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#d32f2f">(38%)</span> ها</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(30%)</span> wk</div>
+<div class="token"><span class="lang">[unknown]</span> <span class="conf" style="color:#2d8a4e">(99%)</span> 0105 06000 32</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#2d8a4e">(93%)</span> روكسى  شارع الخليفة المأمون كوين سنتر الدور الخامس</div>
+<div class="token"><span class="lang">[unknown]</span> <span class="conf" style="color:#e67e22">(74%)</span> 0106010 581</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#2d8a4e">(96%)</span> التجمع الخامس أوزون مولاللرجس عمارات</div>
+<div class="token"><span class="lang">[unknown]</span> <span class="conf" style="color:#d32f2f">(34%)</span> 740</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#2d8a4e">(98%)</span> حجز كشف الطواريء</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(18%)</span> Y</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#e67e22">(70%)</span> بجد الرهناعة</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#e67e22">(74%)</span> Flong 1</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(81%)</span> Hroona</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#e67e22">(53%)</span> Imtran</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#e67e22">(61%)</span> الومم</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#e67e22">(76%)</span> R1 souson</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#e67e22">(61%)</span> Fatavadk</div>
+<div class="token"><span class="lang">[unknown]</span> <span class="conf" style="color:#2d8a4e">(99%)</span> 4200</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#e67e22">(63%)</span> حيلين دهريعان</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(18%)</span> D</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#2d8a4e">(85%)</span> السوعي</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(82%)</span> Diflucon</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#e67e22">(68%)</span> الامم</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#d32f2f">(41%)</span> الممن</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#2d8a4e">(98%)</span> استشاري الرضاعة الطبيعية</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#2d8a4e">(87%)</span> دحى محمود خايخة</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#2d8a4e">(93%)</span> أخصائي طب الاطفال جامعة عين شمس</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#2d8a4e">(94%)</span> أخصاني الصحة النفسة و تعديل السلوك</div>
+<div class="token"><span class="lang">[unknown]</span> <span class="conf" style="color:#d32f2f">(39%)</span> 25</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#e67e22">(71%)</span> nuppk creom</div>
+<div class="token"><span class="lang">[mixed]</span> <span class="conf" style="color:#d32f2f">(41%)</span> bلaا</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#e67e22">(70%)</span> 1So</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#e67e22">(69%)</span> اليوم دنها</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#e67e22">(62%)</span> دها الحاة عجل التب جل</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#d32f2f">(23%)</span> ٢</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#e67e22">(57%)</span> C</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#d32f2f">(46%)</span> ـ</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(17%)</span> K</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#e67e22">(64%)</span> O</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#e67e22">(51%)</span> C</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#e67e22">(59%)</span> o</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(24%)</span> S</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#e67e22">(51%)</span> c</div>
+<div class="token"><span class="lang">[unknown]</span> <span class="conf" style="color:#2d8a4e">(88%)</span> 4</div>
+<div class="token"><span class="lang">[unknown]</span> <span class="conf" style="color:#d32f2f">(33%)</span> .</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#e67e22">(52%)</span> te</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(30%)</span> T</div>
+<div class="token"><span class="lang">[unknown]</span> <span class="conf" style="color:#d32f2f">(38%)</span> 70%</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(36%)</span> C</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(36%)</span> bO</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#e67e22">(59%)</span> C</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#d32f2f">(43%)</span> طيeر</div>
+<div class="token"><span class="lang">[unknown]</span> <span class="conf" style="color:#d32f2f">(27%)</span> 34</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(43%)</span> Jets</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#e67e22">(53%)</span> gon</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#d32f2f">(47%)</span> ٩٣٦٥٠ج</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(33%)</span> DaN</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(50%)</span> A</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(29%)</span> 0e</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#d32f2f">(26%)</span> بخ٠0و</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#e67e22">(56%)</span> danode</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(36%)</span> 2a</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#e67e22">(69%)</span> TP</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(26%)</span> C</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(22%)</span> y</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#d32f2f">(40%)</span> ١٠</div>
+<div class="token"><span class="lang">[unknown]</span> <span class="conf" style="color:#d32f2f">(38%)</span> *</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#d32f2f">(39%)</span> ع</div>
+<div class="token"><span class="lang">[unknown]</span> <span class="conf" style="color:#d32f2f">(16%)</span> 4</div>
+<div class="token"><span class="lang">[mixed]</span> <span class="conf" style="color:#d32f2f">(25%)</span> ٧NOت</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#d32f2f">(27%)</span> ي</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(31%)</span> D0</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#e67e22">(53%)</span> ٠</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#d32f2f">(30%)</span> ل</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(19%)</span> R</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#d32f2f">(32%)</span> fae</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#e67e22">(50%)</span> EE</div>
+<div class="token"><span class="lang">[unknown]</span> <span class="conf" style="color:#d32f2f">(12%)</span> )</div>
+</div>
+
+            <h4>OCR Result &mdash; Token Detail Table</h4>
+            <div style="overflow-x:auto">
+            <table class="token-table">
+                <tr>
+                    <th>#</th><th>Text</th><th>Lang</th><th>Confidence</th>
+                    <th>Page</th><th>BBox</th><th>HW</th><th>Zone</th><th>ID</th>
+                </tr>
+                <tr><td>0</td><td style='direction:auto;unicode-bidi:plaintext'>ها</td><td>ar</td><td style='color:#d32f2f;font-weight:600'>38.12%</td><td>p1</td><td>(16,1488)-(59,1511)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>1</td><td style='direction:auto;unicode-bidi:plaintext'>wk</td><td>en</td><td style='color:#d32f2f;font-weight:600'>29.95%</td><td>p1</td><td>(174,10)-(202,31)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>2</td><td style='direction:auto;unicode-bidi:plaintext'>0105 06000 32</td><td>unknown</td><td style='color:#2d8a4e;font-weight:600'>98.81%</td><td>p1</td><td>(184,474)-(250,842)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>3</td><td style='direction:auto;unicode-bidi:plaintext'>روكسى  شارع الخليفة المأمون كوين سنتر الدور الخامس</td><td>ar</td><td style='color:#2d8a4e;font-weight:600'>93.18%</td><td>p1</td><td>(315,355)-(408,1281)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>4</td><td style='direction:auto;unicode-bidi:plaintext'>0106010 581</td><td>unknown</td><td style='color:#e67e22;font-weight:600'>73.52%</td><td>p1</td><td>(410,708)-(473,1002)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>5</td><td style='direction:auto;unicode-bidi:plaintext'>التجمع الخامس أوزون مولاللرجس عمارات</td><td>ar</td><td style='color:#2d8a4e;font-weight:600'>96.19%</td><td>p1</td><td>(250,588)-(335,1292)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>6</td><td style='direction:auto;unicode-bidi:plaintext'>740</td><td>unknown</td><td style='color:#d32f2f;font-weight:600'>33.93%</td><td>p1</td><td>(498,982)-(524,1029)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>7</td><td style='direction:auto;unicode-bidi:plaintext'>حجز كشف الطواريء</td><td>ar</td><td style='color:#2d8a4e;font-weight:600'>98.05%</td><td>p1</td><td>(181,822)-(264,1211)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>8</td><td style='direction:auto;unicode-bidi:plaintext'>Y</td><td>en</td><td style='color:#d32f2f;font-weight:600'>18.04%</td><td>p1</td><td>(1214,148)-(1359,308)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>9</td><td style='direction:auto;unicode-bidi:plaintext'>بجد الرهناعة</td><td>ar</td><td style='color:#e67e22;font-weight:600'>70.27%</td><td>p1</td><td>(1379,392)-(1483,854)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>10</td><td style='direction:auto;unicode-bidi:plaintext'>Flong 1</td><td>en</td><td style='color:#e67e22;font-weight:600'>73.98%</td><td>p1</td><td>(1208,312)-(1415,946)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>11</td><td style='direction:auto;unicode-bidi:plaintext'>Hroona</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>80.54%</td><td>p1</td><td>(1095,493)-(1223,855)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>12</td><td style='direction:auto;unicode-bidi:plaintext'>Imtran</td><td>en</td><td style='color:#e67e22;font-weight:600'>53.29%</td><td>p1</td><td>(959,575)-(1112,906)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>13</td><td style='direction:auto;unicode-bidi:plaintext'>الومم</td><td>ar</td><td style='color:#e67e22;font-weight:600'>61.12%</td><td>p1</td><td>(826,598)-(976,893)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>14</td><td style='direction:auto;unicode-bidi:plaintext'>R1 souson</td><td>en</td><td style='color:#e67e22;font-weight:600'>75.55%</td><td>p1</td><td>(1531,334)-(1653,763)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>15</td><td style='direction:auto;unicode-bidi:plaintext'>Fatavadk</td><td>en</td><td style='color:#e67e22;font-weight:600'>61.33%</td><td>p1</td><td>(1847,107)-(1930,423)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>16</td><td style='direction:auto;unicode-bidi:plaintext'>4200</td><td>unknown</td><td style='color:#2d8a4e;font-weight:600'>98.53%</td><td>p1</td><td>(1902,234)-(2004,415)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>17</td><td style='direction:auto;unicode-bidi:plaintext'>حيلين دهريعان</td><td>ar</td><td style='color:#e67e22;font-weight:600'>62.92%</td><td>p1</td><td>(2042,75)-(2198,627)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>18</td><td style='direction:auto;unicode-bidi:plaintext'>D</td><td>en</td><td style='color:#d32f2f;font-weight:600'>18.22%</td><td>p1</td><td>(1742,340)-(1832,447)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>19</td><td style='direction:auto;unicode-bidi:plaintext'>السوعي</td><td>ar</td><td style='color:#2d8a4e;font-weight:600'>84.62%</td><td>p1</td><td>(1987,284)-(2078,573)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>20</td><td style='direction:auto;unicode-bidi:plaintext'>Diflucon</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>82.49%</td><td>p1</td><td>(1743,436)-(1846,777)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>21</td><td style='direction:auto;unicode-bidi:plaintext'>الامم</td><td>ar</td><td style='color:#e67e22;font-weight:600'>68.07%</td><td>p1</td><td>(2078,633)-(2148,764)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>22</td><td style='direction:auto;unicode-bidi:plaintext'>الممن</td><td>ar</td><td style='color:#d32f2f;font-weight:600'>40.74%</td><td>p1</td><td>(2011,664)-(2068,764)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>23</td><td style='direction:auto;unicode-bidi:plaintext'>استشاري الرضاعة الطبيعية</td><td>ar</td><td style='color:#2d8a4e;font-weight:600'>98.31%</td><td>p1</td><td>(1982,1065)-(2058,1501)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>24</td><td style='direction:auto;unicode-bidi:plaintext'>دحى محمود خايخة</td><td>ar</td><td style='color:#2d8a4e;font-weight:600'>87.17%</td><td>p1</td><td>(2056,991)-(2149,1495)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>25</td><td style='direction:auto;unicode-bidi:plaintext'>أخصائي طب الاطفال جامعة عين شمس</td><td>ar</td><td style='color:#2d8a4e;font-weight:600'>92.70%</td><td>p1</td><td>(1916,899)-(2002,1522)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>26</td><td style='direction:auto;unicode-bidi:plaintext'>أخصاني الصحة النفسة و تعديل السلوك</td><td>ar</td><td style='color:#2d8a4e;font-weight:600'>93.99%</td><td>p1</td><td>(1855,906)-(1941,1514)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>27</td><td style='direction:auto;unicode-bidi:plaintext'>25</td><td>unknown</td><td style='color:#d32f2f;font-weight:600'>38.61%</td><td>p1</td><td>(1663,1007)-(1755,1210)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>28</td><td style='direction:auto;unicode-bidi:plaintext'>nuppk creom</td><td>en</td><td style='color:#e67e22;font-weight:600'>71.40%</td><td>p1</td><td>(1559,826)-(1660,1274)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>29</td><td style='direction:auto;unicode-bidi:plaintext'>bلaا</td><td>mixed</td><td style='color:#d32f2f;font-weight:600'>41.21%</td><td>p1</td><td>(1763,923)-(1833,1095)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>30</td><td style='direction:auto;unicode-bidi:plaintext'>1So</td><td>en</td><td style='color:#e67e22;font-weight:600'>70.40%</td><td>p1</td><td>(1756,830)-(1826,940)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>31</td><td style='direction:auto;unicode-bidi:plaintext'>اليوم دنها</td><td>ar</td><td style='color:#e67e22;font-weight:600'>68.58%</td><td>p1</td><td>(1648,593)-(1776,1055)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>32</td><td style='direction:auto;unicode-bidi:plaintext'>دها الحاة عجل التب جل</td><td>ar</td><td style='color:#e67e22;font-weight:600'>61.88%</td><td>p1</td><td>(1453,371)-(1590,1272)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>33</td><td style='direction:auto;unicode-bidi:plaintext'>٢</td><td>ar</td><td style='color:#d32f2f;font-weight:600'>23.22%</td><td>p1</td><td>(858,967)-(968,1087)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>34</td><td style='direction:auto;unicode-bidi:plaintext'>C</td><td>en</td><td style='color:#e67e22;font-weight:600'>56.95%</td><td>p1</td><td>(984,1010)-(1072,1111)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>35</td><td style='direction:auto;unicode-bidi:plaintext'>ـ</td><td>ar</td><td style='color:#d32f2f;font-weight:600'>45.98%</td><td>p1</td><td>(924,1090)-(987,1172)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>36</td><td style='direction:auto;unicode-bidi:plaintext'>K</td><td>en</td><td style='color:#d32f2f;font-weight:600'>16.57%</td><td>p1</td><td>(670,1112)-(838,1265)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>37</td><td style='direction:auto;unicode-bidi:plaintext'>O</td><td>en</td><td style='color:#e67e22;font-weight:600'>63.64%</td><td>p1</td><td>(748,1246)-(854,1339)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>38</td><td style='direction:auto;unicode-bidi:plaintext'>C</td><td>en</td><td style='color:#e67e22;font-weight:600'>51.25%</td><td>p1</td><td>(1120,907)-(1202,1020)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>39</td><td style='direction:auto;unicode-bidi:plaintext'>o</td><td>en</td><td style='color:#e67e22;font-weight:600'>58.98%</td><td>p1</td><td>(2278,130)-(2295,152)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>40</td><td style='direction:auto;unicode-bidi:plaintext'>S</td><td>en</td><td style='color:#d32f2f;font-weight:600'>24.23%</td><td>p1</td><td>(2334,0)-(2374,11)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>41</td><td style='direction:auto;unicode-bidi:plaintext'>c</td><td>en</td><td style='color:#e67e22;font-weight:600'>50.96%</td><td>p1</td><td>(2331,370)-(2345,382)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>42</td><td style='direction:auto;unicode-bidi:plaintext'>4</td><td>unknown</td><td style='color:#2d8a4e;font-weight:600'>88.13%</td><td>p1</td><td>(2289,461)-(2309,481)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>43</td><td style='direction:auto;unicode-bidi:plaintext'>.</td><td>unknown</td><td style='color:#d32f2f;font-weight:600'>33.02%</td><td>p1</td><td>(2314,607)-(2324,617)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>44</td><td style='direction:auto;unicode-bidi:plaintext'>te</td><td>en</td><td style='color:#e67e22;font-weight:600'>51.68%</td><td>p1</td><td>(2376,702)-(2387,712)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>45</td><td style='direction:auto;unicode-bidi:plaintext'>T</td><td>en</td><td style='color:#d32f2f;font-weight:600'>30.40%</td><td>p1</td><td>(2428,713)-(2443,726)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>46</td><td style='direction:auto;unicode-bidi:plaintext'>70%</td><td>unknown</td><td style='color:#d32f2f;font-weight:600'>37.51%</td><td>p1</td><td>(2430,885)-(2471,919)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>47</td><td style='direction:auto;unicode-bidi:plaintext'>C</td><td>en</td><td style='color:#d32f2f;font-weight:600'>35.97%</td><td>p1</td><td>(2400,1007)-(2442,1021)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>48</td><td style='direction:auto;unicode-bidi:plaintext'>bO</td><td>en</td><td style='color:#d32f2f;font-weight:600'>36.07%</td><td>p1</td><td>(1102,1800)-(1151,1817)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>49</td><td style='direction:auto;unicode-bidi:plaintext'>C</td><td>en</td><td style='color:#e67e22;font-weight:600'>58.88%</td><td>p1</td><td>(1365,1860)-(1376,1870)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>50</td><td style='direction:auto;unicode-bidi:plaintext'>طيeر</td><td>ar</td><td style='color:#d32f2f;font-weight:600'>42.69%</td><td>p1</td><td>(1452,1800)-(1512,1820)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>51</td><td style='direction:auto;unicode-bidi:plaintext'>34</td><td>unknown</td><td style='color:#d32f2f;font-weight:600'>27.33%</td><td>p1</td><td>(1609,1606)-(1637,1622)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>52</td><td style='direction:auto;unicode-bidi:plaintext'>Jets</td><td>en</td><td style='color:#d32f2f;font-weight:600'>42.56%</td><td>p1</td><td>(1830,1599)-(1871,1614)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>53</td><td style='direction:auto;unicode-bidi:plaintext'>gon</td><td>en</td><td style='color:#e67e22;font-weight:600'>52.78%</td><td>p1</td><td>(1697,1618)-(1871,1650)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>54</td><td style='direction:auto;unicode-bidi:plaintext'>٩٣٦٥٠ج</td><td>ar</td><td style='color:#d32f2f;font-weight:600'>47.10%</td><td>p1</td><td>(1689,1646)-(1787,1675)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>55</td><td style='direction:auto;unicode-bidi:plaintext'>DaN</td><td>en</td><td style='color:#d32f2f;font-weight:600'>32.99%</td><td>p1</td><td>(1811,1653)-(1868,1669)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>56</td><td style='direction:auto;unicode-bidi:plaintext'>A</td><td>en</td><td style='color:#d32f2f;font-weight:600'>49.78%</td><td>p1</td><td>(1810,1676)-(1866,1693)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>57</td><td style='direction:auto;unicode-bidi:plaintext'>0e</td><td>en</td><td style='color:#d32f2f;font-weight:600'>29.32%</td><td>p1</td><td>(1793,1700)-(1831,1726)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>58</td><td style='direction:auto;unicode-bidi:plaintext'>بخ٠0و</td><td>ar</td><td style='color:#d32f2f;font-weight:600'>25.84%</td><td>p1</td><td>(1674,1700)-(1780,1731)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>59</td><td style='direction:auto;unicode-bidi:plaintext'>danode</td><td>en</td><td style='color:#e67e22;font-weight:600'>55.74%</td><td>p1</td><td>(1668,1753)-(1751,1776)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>60</td><td style='direction:auto;unicode-bidi:plaintext'>2a</td><td>en</td><td style='color:#d32f2f;font-weight:600'>35.62%</td><td>p1</td><td>(1873,1776)-(1896,1784)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>61</td><td style='direction:auto;unicode-bidi:plaintext'>TP</td><td>en</td><td style='color:#e67e22;font-weight:600'>68.88%</td><td>p1</td><td>(1965,1714)-(1991,1734)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>62</td><td style='direction:auto;unicode-bidi:plaintext'>C</td><td>en</td><td style='color:#d32f2f;font-weight:600'>26.13%</td><td>p1</td><td>(2003,1719)-(2029,1737)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>63</td><td style='direction:auto;unicode-bidi:plaintext'>y</td><td>en</td><td style='color:#d32f2f;font-weight:600'>22.35%</td><td>p1</td><td>(1972,1736)-(2126,1771)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>64</td><td style='direction:auto;unicode-bidi:plaintext'>١٠</td><td>ar</td><td style='color:#d32f2f;font-weight:600'>40.00%</td><td>p1</td><td>(2312,1833)-(2352,1844)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>65</td><td style='direction:auto;unicode-bidi:plaintext'>*</td><td>unknown</td><td style='color:#d32f2f;font-weight:600'>37.68%</td><td>p1</td><td>(2112,1709)-(2123,1718)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>66</td><td style='direction:auto;unicode-bidi:plaintext'>ع</td><td>ar</td><td style='color:#d32f2f;font-weight:600'>38.95%</td><td>p1</td><td>(2184,1647)-(2291,1678)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>67</td><td style='direction:auto;unicode-bidi:plaintext'>4</td><td>unknown</td><td style='color:#d32f2f;font-weight:600'>16.45%</td><td>p1</td><td>(2162,1696)-(2188,1720)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>68</td><td style='direction:auto;unicode-bidi:plaintext'>٧NOت</td><td>mixed</td><td style='color:#d32f2f;font-weight:600'>25.15%</td><td>p1</td><td>(2194,1697)-(2294,1730)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>69</td><td style='direction:auto;unicode-bidi:plaintext'>ي</td><td>ar</td><td style='color:#d32f2f;font-weight:600'>26.74%</td><td>p1</td><td>(2133,1751)-(2261,1776)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>70</td><td style='direction:auto;unicode-bidi:plaintext'>D0</td><td>en</td><td style='color:#d32f2f;font-weight:600'>31.00%</td><td>p1</td><td>(2193,1773)-(2292,1797)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>71</td><td style='direction:auto;unicode-bidi:plaintext'>٠</td><td>ar</td><td style='color:#e67e22;font-weight:600'>53.17%</td><td>p1</td><td>(2195,1795)-(2282,1824)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>72</td><td style='direction:auto;unicode-bidi:plaintext'>ل</td><td>ar</td><td style='color:#d32f2f;font-weight:600'>30.07%</td><td>p1</td><td>(2085,1801)-(2196,1824)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>73</td><td style='direction:auto;unicode-bidi:plaintext'>R</td><td>en</td><td style='color:#d32f2f;font-weight:600'>18.93%</td><td>p1</td><td>(2086,1824)-(2165,1841)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>74</td><td style='direction:auto;unicode-bidi:plaintext'>fae</td><td>en</td><td style='color:#d32f2f;font-weight:600'>32.44%</td><td>p1</td><td>(2153,1845)-(2186,1866)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>75</td><td style='direction:auto;unicode-bidi:plaintext'>EE</td><td>en</td><td style='color:#e67e22;font-weight:600'>50.22%</td><td>p1</td><td>(2389,1721)-(2416,1739)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+<tr><td>76</td><td style='direction:auto;unicode-bidi:plaintext'>)</td><td>unknown</td><td style='color:#d32f2f;font-weight:600'>11.97%</td><td>p1</td><td>(2457,1681)-(2464,1688)</td><td></td><td></td><td><code>069c91b3</code></td></tr>
+
+            </table>
+            </div>
+
+            <h4>Failures Detected</h4><div class="failure"><strong style="color:#e67e22">[spatial_blind]</strong> severity=0.60 | remedy=vlm_rescan<br><span style="color:#475569">Rapidly alternating token types in reading order: [&#x27;text&#x27;, &#x27;mixed&#x27;, &#x27;text&#x27;, &#x27;mixed&#x27;, &#x27;text&#x27;]</span></div>
+<div class="failure"><strong style="color:#e67e22">[spatial_blind]</strong> severity=0.60 | remedy=vlm_rescan<br><span style="color:#475569">Rapidly alternating token types in reading order: [&#x27;mixed&#x27;, &#x27;text&#x27;, &#x27;mixed&#x27;, &#x27;text&#x27;, &#x27;num&#x27;]</span></div>
+<div class="failure"><strong style="color:#e67e22">[spatial_blind]</strong> severity=0.60 | remedy=vlm_rescan<br><span style="color:#475569">Rapidly alternating token types in reading order: [&#x27;text&#x27;, &#x27;mixed&#x27;, &#x27;text&#x27;, &#x27;num&#x27;, &#x27;text&#x27;]</span></div>
+<div class="failure"><strong style="color:#e67e22">[spatial_blind]</strong> severity=0.60 | remedy=vlm_rescan<br><span style="color:#475569">Rapidly alternating token types in reading order: [&#x27;text&#x27;, &#x27;mixed&#x27;, &#x27;text&#x27;, &#x27;num&#x27;, &#x27;text&#x27;]</span></div>
+<div class="failure"><strong style="color:#e67e22">[spatial_blind]</strong> severity=0.60 | remedy=vlm_rescan<br><span style="color:#475569">Rapidly alternating token types in reading order: [&#x27;text&#x27;, &#x27;num&#x27;, &#x27;mixed&#x27;, &#x27;text&#x27;, &#x27;num&#x27;]</span></div>
+<div class="failure"><strong style="color:#e67e22">[spatial_blind]</strong> severity=0.60 | remedy=vlm_rescan<br><span style="color:#475569">Rapidly alternating token types in reading order: [&#x27;num&#x27;, &#x27;mixed&#x27;, &#x27;text&#x27;, &#x27;num&#x27;, &#x27;text&#x27;]</span></div>
+
+
+            <h4>Provenance Trail (first 15)</h4>
+            <div class="prov-box"><div class='prov'>[069c91b3] &#x27;ها&#x27; page=1 (16,1488)-(59,1511) conf=0.38 lang=ar engine=paddleocr</div>
+<div class='prov'>[069c91b3] &#x27;wk&#x27; page=1 (174,10)-(202,31) conf=0.30 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91b3] &#x27;0105 06000 32&#x27; page=1 (184,474)-(250,842) conf=0.99 lang=unknown engine=paddleocr</div>
+<div class='prov'>[069c91b3] &#x27;روكسى  شارع الخليفة المأمون كوين سنتر الدور الخامس&#x27; page=1 (315,355)-(408,1281) conf=0.93 lang=ar engine=paddleocr</div>
+<div class='prov'>[069c91b3] &#x27;0106010 581&#x27; page=1 (410,708)-(473,1002) conf=0.74 lang=unknown engine=paddleocr</div>
+<div class='prov'>[069c91b3] &#x27;التجمع الخامس أوزون مولاللرجس عمارات&#x27; page=1 (250,588)-(335,1292) conf=0.96 lang=ar engine=paddleocr</div>
+<div class='prov'>[069c91b3] &#x27;740&#x27; page=1 (498,982)-(524,1029) conf=0.34 lang=unknown engine=paddleocr</div>
+<div class='prov'>[069c91b3] &#x27;حجز كشف الطواريء&#x27; page=1 (181,822)-(264,1211) conf=0.98 lang=ar engine=paddleocr</div>
+<div class='prov'>[069c91b3] &#x27;Y&#x27; page=1 (1214,148)-(1359,308) conf=0.18 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91b3] &#x27;بجد الرهناعة&#x27; page=1 (1379,392)-(1483,854) conf=0.70 lang=ar engine=paddleocr</div>
+<div class='prov'>[069c91b3] &#x27;Flong 1&#x27; page=1 (1208,312)-(1415,946) conf=0.74 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91b3] &#x27;Hroona&#x27; page=1 (1095,493)-(1223,855) conf=0.81 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91b3] &#x27;Imtran&#x27; page=1 (959,575)-(1112,906) conf=0.53 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91b3] &#x27;الومم&#x27; page=1 (826,598)-(976,893) conf=0.61 lang=ar engine=paddleocr</div>
+<div class='prov'>[069c91b3] &#x27;R1 souson&#x27; page=1 (1531,334)-(1653,763) conf=0.76 lang=en engine=paddleocr</div>
+</div>
+        </div>
+        <div class="doc-detail">
+            <h3>3. 1000093097.jpg</h3>
+            <div class="stats-row">
+                <span>Tokens: 18</span>
+                <span>Arabic: 10</span>
+                <span>English: 7</span>
+                <span>Confidence: 83.18%</span>
+                <span>Route: <strong>cheap_rail</strong></span>
+                <span>Uncertainty: 0.2305</span>
+                <span>Latency: 171894ms</span>
+            </div>
+
+            <h4>OCR Result &mdash; Full Text</h4>
+            <div class="fulltext-box">مارلها م ى DATE :15127024 Diagnosis : ١١٢ت يعيا بمستشفيات القوات المسلحة والكلى والسكر أخصائتي الباطنة العامة دكتوراخالديوسف P T B.P Wt ECL٨ عن اللم الاستشارة بيو (c/ccلأص ت٠١٠٠٥٧٢٩٨٦٩٠٢٢٢٨٩٢٢٢ مدينة السلام طريق سبيكو مساكن الوادي القديم باوك  مدخ  شق٣</div>
+
+            <h4>OCR Result &mdash; Annotated Tokens</h4>
+            <div class="text-box"><div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#e67e22">(65%)</span> مارلها م ى</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(84%)</span> DATE :15127024</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(100%)</span> Diagnosis :</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#e67e22">(63%)</span> ١١٢ت يعيا</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#2d8a4e">(97%)</span> بمستشفيات القوات المسلحة</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#2d8a4e">(96%)</span> والكلى والسكر</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#2d8a4e">(87%)</span> أخصائتي الباطنة العامة</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#2d8a4e">(90%)</span> دكتوراخالديوسف</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(100%)</span> P</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(100%)</span> T</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(100%)</span> B.P</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(100%)</span> Wt</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#e67e22">(64%)</span> ECL٨</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#e67e22">(62%)</span> عن اللم</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#2d8a4e">(88%)</span> الاستشارة بيو</div>
+<div class="token"><span class="lang">[mixed]</span> <span class="conf" style="color:#d32f2f">(37%)</span> (c/ccلأص</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#2d8a4e">(88%)</span> ت٠١٠٠٥٧٢٩٨٦٩٠٢٢٢٨٩٢٢٢</div>
+<div class="token"><span class="lang">[ar]</span> <span class="conf" style="color:#e67e22">(77%)</span> مدينة السلام طريق سبيكو مساكن الوادي القديم باوك  مدخ  شق٣</div>
+</div>
+
+            <h4>OCR Result &mdash; Token Detail Table</h4>
+            <div style="overflow-x:auto">
+            <table class="token-table">
+                <tr>
+                    <th>#</th><th>Text</th><th>Lang</th><th>Confidence</th>
+                    <th>Page</th><th>BBox</th><th>HW</th><th>Zone</th><th>ID</th>
+                </tr>
+                <tr><td>0</td><td style='direction:auto;unicode-bidi:plaintext'>مارلها م ى</td><td>ar</td><td style='color:#e67e22;font-weight:600'>65.15%</td><td>p1</td><td>(162,376)-(866,466)</td><td></td><td></td><td><code>069c91bd</code></td></tr>
+<tr><td>1</td><td style='direction:auto;unicode-bidi:plaintext'>DATE :15127024</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>83.88%</td><td>p1</td><td>(164,460)-(870,548)</td><td></td><td></td><td><code>069c91bd</code></td></tr>
+<tr><td>2</td><td style='direction:auto;unicode-bidi:plaintext'>Diagnosis :</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.73%</td><td>p1</td><td>(166,557)-(428,624)</td><td></td><td></td><td><code>069c91bd</code></td></tr>
+<tr><td>3</td><td style='direction:auto;unicode-bidi:plaintext'>١١٢ت يعيا</td><td>ar</td><td style='color:#e67e22;font-weight:600'>62.53%</td><td>p1</td><td>(368,956)-(854,1092)</td><td></td><td></td><td><code>069c91bd</code></td></tr>
+<tr><td>4</td><td style='direction:auto;unicode-bidi:plaintext'>بمستشفيات القوات المسلحة</td><td>ar</td><td style='color:#2d8a4e;font-weight:600'>97.06%</td><td>p1</td><td>(1122,397)-(1432,438)</td><td></td><td></td><td><code>069c91bd</code></td></tr>
+<tr><td>5</td><td style='direction:auto;unicode-bidi:plaintext'>والكلى والسكر</td><td>ar</td><td style='color:#2d8a4e;font-weight:600'>95.73%</td><td>p1</td><td>(1193,355)-(1361,400)</td><td></td><td></td><td><code>069c91bd</code></td></tr>
+<tr><td>6</td><td style='direction:auto;unicode-bidi:plaintext'>أخصائتي الباطنة العامة</td><td>ar</td><td style='color:#2d8a4e;font-weight:600'>86.98%</td><td>p1</td><td>(1133,308)-(1416,366)</td><td></td><td></td><td><code>069c91bd</code></td></tr>
+<tr><td>7</td><td style='direction:auto;unicode-bidi:plaintext'>دكتوراخالديوسف</td><td>ar</td><td style='color:#2d8a4e;font-weight:600'>90.46%</td><td>p1</td><td>(972,166)-(1576,310)</td><td></td><td></td><td><code>069c91bd</code></td></tr>
+<tr><td>8</td><td style='direction:auto;unicode-bidi:plaintext'>P</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.65%</td><td>p1</td><td>(1124,527)-(1171,581)</td><td></td><td></td><td><code>069c91bd</code></td></tr>
+<tr><td>9</td><td style='direction:auto;unicode-bidi:plaintext'>T</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.93%</td><td>p1</td><td>(1125,592)-(1175,645)</td><td></td><td></td><td><code>069c91bd</code></td></tr>
+<tr><td>10</td><td style='direction:auto;unicode-bidi:plaintext'>B.P</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.53%</td><td>p1</td><td>(1126,656)-(1215,711)</td><td></td><td></td><td><code>069c91bd</code></td></tr>
+<tr><td>11</td><td style='direction:auto;unicode-bidi:plaintext'>Wt</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.90%</td><td>p1</td><td>(1131,723)-(1208,775)</td><td></td><td></td><td><code>069c91bd</code></td></tr>
+<tr><td>12</td><td style='direction:auto;unicode-bidi:plaintext'>ECL٨</td><td>en</td><td style='color:#e67e22;font-weight:600'>63.75%</td><td>p1</td><td>(705,1324)-(1081,1441)</td><td></td><td></td><td><code>069c91bd</code></td></tr>
+<tr><td>13</td><td style='direction:auto;unicode-bidi:plaintext'>عن اللم</td><td>ar</td><td style='color:#e67e22;font-weight:600'>62.19%</td><td>p1</td><td>(992,1638)-(1504,1821)</td><td></td><td></td><td><code>069c91bd</code></td></tr>
+<tr><td>14</td><td style='direction:auto;unicode-bidi:plaintext'>الاستشارة بيو</td><td>ar</td><td style='color:#2d8a4e;font-weight:600'>87.66%</td><td>p1</td><td>(551,2036)-(735,2099)</td><td></td><td></td><td><code>069c91bd</code></td></tr>
+<tr><td>15</td><td style='direction:auto;unicode-bidi:plaintext'>(c/ccلأص</td><td>mixed</td><td style='color:#d32f2f;font-weight:600'>37.30%</td><td>p1</td><td>(3,1918)-(551,2204)</td><td></td><td></td><td><code>069c91bd</code></td></tr>
+<tr><td>16</td><td style='direction:auto;unicode-bidi:plaintext'>ت٠١٠٠٥٧٢٩٨٦٩٠٢٢٢٨٩٢٢٢</td><td>ar</td><td style='color:#2d8a4e;font-weight:600'>88.37%</td><td>p1</td><td>(729,2221)-(1086,2272)</td><td></td><td></td><td><code>069c91bd</code></td></tr>
+<tr><td>17</td><td style='direction:auto;unicode-bidi:plaintext'>مدينة السلام طريق سبيكو مساكن الوادي القديم باوك  مدخ  شق٣</td><td>ar</td><td style='color:#e67e22;font-weight:600'>77.44%</td><td>p1</td><td>(480,2169)-(1324,2237)</td><td></td><td></td><td><code>069c91bd</code></td></tr>
+
+            </table>
+            </div>
+
+            <p style="color:#2d8a4e;font-weight:600">No failures detected.</p>
+
+            <h4>Provenance Trail (first 15)</h4>
+            <div class="prov-box"><div class='prov'>[069c91bd] &#x27;مارلها م ى&#x27; page=1 (162,376)-(866,466) conf=0.65 lang=ar engine=paddleocr</div>
+<div class='prov'>[069c91bd] &#x27;DATE :15127024&#x27; page=1 (164,460)-(870,548) conf=0.84 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91bd] &#x27;Diagnosis :&#x27; page=1 (166,557)-(428,624) conf=1.00 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91bd] &#x27;١١٢ت يعيا&#x27; page=1 (368,956)-(854,1092) conf=0.63 lang=ar engine=paddleocr</div>
+<div class='prov'>[069c91bd] &#x27;بمستشفيات القوات المسلحة&#x27; page=1 (1122,397)-(1432,438) conf=0.97 lang=ar engine=paddleocr</div>
+<div class='prov'>[069c91bd] &#x27;والكلى والسكر&#x27; page=1 (1193,355)-(1361,400) conf=0.96 lang=ar engine=paddleocr</div>
+<div class='prov'>[069c91bd] &#x27;أخصائتي الباطنة العامة&#x27; page=1 (1133,308)-(1416,366) conf=0.87 lang=ar engine=paddleocr</div>
+<div class='prov'>[069c91bd] &#x27;دكتوراخالديوسف&#x27; page=1 (972,166)-(1576,310) conf=0.90 lang=ar engine=paddleocr</div>
+<div class='prov'>[069c91bd] &#x27;P&#x27; page=1 (1124,527)-(1171,581) conf=1.00 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91bd] &#x27;T&#x27; page=1 (1125,592)-(1175,645) conf=1.00 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91bd] &#x27;B.P&#x27; page=1 (1126,656)-(1215,711) conf=1.00 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91bd] &#x27;Wt&#x27; page=1 (1131,723)-(1208,775) conf=1.00 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91bd] &#x27;ECL٨&#x27; page=1 (705,1324)-(1081,1441) conf=0.64 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91bd] &#x27;عن اللم&#x27; page=1 (992,1638)-(1504,1821) conf=0.62 lang=ar engine=paddleocr</div>
+<div class='prov'>[069c91bd] &#x27;الاستشارة بيو&#x27; page=1 (551,2036)-(735,2099) conf=0.88 lang=ar engine=paddleocr</div>
+</div>
+        </div>
+        <div class="doc-detail">
+            <h3>4. test_column_issue.pdf</h3>
+            <div class="stats-row">
+                <span>Tokens: 10</span>
+                <span>Arabic: 0</span>
+                <span>English: 10</span>
+                <span>Confidence: 99.10%</span>
+                <span>Route: <strong>cheap_rail</strong></span>
+                <span>Uncertainty: 0.1090</span>
+                <span>Latency: 80495ms</span>
+            </div>
+
+            <h4>OCR Result &mdash; Full Text</h4>
+            <div class="fulltext-box">Patient Details: Name: Ahmed Ali DOB: 15-05-1985 ID: PAT-99201 Hospital Discharge Summary Clinical Diagnosis: Code: ICD-10-J45 (Asthma) Admission: 10-02-2026 Ward: Respiratory Unit Metadata: Generated for Spatial-Aware OCR Testing</div>
+
+            <h4>OCR Result &mdash; Annotated Tokens</h4>
+            <div class="text-box"><div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(99%)</span> Patient Details:</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(97%)</span> Name: Ahmed Ali</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(100%)</span> DOB: 15-05-1985</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(99%)</span> ID: PAT-99201</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(100%)</span> Hospital Discharge Summary</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(100%)</span> Clinical Diagnosis:</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(100%)</span> Code: ICD-10-J45 (Asthma)</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(100%)</span> Admission: 10-02-2026</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(98%)</span> Ward: Respiratory Unit</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(99%)</span> Metadata: Generated for Spatial-Aware OCR Testing</div>
+</div>
+
+            <h4>OCR Result &mdash; Token Detail Table</h4>
+            <div style="overflow-x:auto">
+            <table class="token-table">
+                <tr>
+                    <th>#</th><th>Text</th><th>Lang</th><th>Confidence</th>
+                    <th>Page</th><th>BBox</th><th>HW</th><th>Zone</th><th>ID</th>
+                </tr>
+                <tr><td>0</td><td style='direction:auto;unicode-bidi:plaintext'>Patient Details:</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.44%</td><td>p1</td><td>(143,239)-(406,276)</td><td></td><td></td><td><code>069c91c2</code></td></tr>
+<tr><td>1</td><td style='direction:auto;unicode-bidi:plaintext'>Name: Ahmed Ali</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>96.86%</td><td>p1</td><td>(144,288)-(382,320)</td><td></td><td></td><td><code>069c91c2</code></td></tr>
+<tr><td>2</td><td style='direction:auto;unicode-bidi:plaintext'>DOB: 15-05-1985</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.76%</td><td>p1</td><td>(145,335)-(383,366)</td><td></td><td></td><td><code>069c91c2</code></td></tr>
+<tr><td>3</td><td style='direction:auto;unicode-bidi:plaintext'>ID: PAT-99201</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.02%</td><td>p1</td><td>(143,375)-(346,412)</td><td></td><td></td><td><code>069c91c2</code></td></tr>
+<tr><td>4</td><td style='direction:auto;unicode-bidi:plaintext'>Hospital Discharge Summary</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.89%</td><td>p1</td><td>(590,79)-(1254,135)</td><td></td><td></td><td><code>069c91c2</code></td></tr>
+<tr><td>5</td><td style='direction:auto;unicode-bidi:plaintext'>Clinical Diagnosis:</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.93%</td><td>p1</td><td>(1035,238)-(1358,279)</td><td></td><td></td><td><code>069c91c2</code></td></tr>
+<tr><td>6</td><td style='direction:auto;unicode-bidi:plaintext'>Code: ICD-10-J45 (Asthma)</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.54%</td><td>p1</td><td>(1034,287)-(1407,324)</td><td></td><td></td><td><code>069c91c2</code></td></tr>
+<tr><td>7</td><td style='direction:auto;unicode-bidi:plaintext'>Admission: 10-02-2026</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.89%</td><td>p1</td><td>(1036,335)-(1346,366)</td><td></td><td></td><td><code>069c91c2</code></td></tr>
+<tr><td>8</td><td style='direction:auto;unicode-bidi:plaintext'>Ward: Respiratory Unit</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>97.70%</td><td>p1</td><td>(1034,377)-(1342,413)</td><td></td><td></td><td><code>069c91c2</code></td></tr>
+<tr><td>9</td><td style='direction:auto;unicode-bidi:plaintext'>Metadata: Generated for Spatial-Aware OCR Testing</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>98.93%</td><td>p1</td><td>(590,2327)-(1151,2359)</td><td></td><td></td><td><code>069c91c2</code></td></tr>
+
+            </table>
+            </div>
+
+            <h4>Failures Detected</h4><div class="failure"><strong style="color:#d32f2f">[spatial_blind]</strong> severity=1.00 | remedy=vlm_rescan<br><span style="color:#475569">Reading order jump: tokens 8-&gt;9 are 1974px apart spatially</span></div>
+
+
+            <h4>Provenance Trail (first 15)</h4>
+            <div class="prov-box"><div class='prov'>[069c91c2] &#x27;Patient Details:&#x27; page=1 (143,239)-(406,276) conf=0.99 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91c2] &#x27;Name: Ahmed Ali&#x27; page=1 (144,288)-(382,320) conf=0.97 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91c2] &#x27;DOB: 15-05-1985&#x27; page=1 (145,335)-(383,366) conf=1.00 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91c2] &#x27;ID: PAT-99201&#x27; page=1 (143,375)-(346,412) conf=0.99 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91c2] &#x27;Hospital Discharge Summary&#x27; page=1 (590,79)-(1254,135) conf=1.00 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91c2] &#x27;Clinical Diagnosis:&#x27; page=1 (1035,238)-(1358,279) conf=1.00 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91c2] &#x27;Code: ICD-10-J45 (Asthma)&#x27; page=1 (1034,287)-(1407,324) conf=1.00 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91c2] &#x27;Admission: 10-02-2026&#x27; page=1 (1036,335)-(1346,366) conf=1.00 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91c2] &#x27;Ward: Respiratory Unit&#x27; page=1 (1034,377)-(1342,413) conf=0.98 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91c2] &#x27;Metadata: Generated for Spatial-Aware OCR Testing&#x27; page=1 (590,2327)-(1151,2359) conf=0.99 lang=en engine=paddleocr</div>
+</div>
+        </div>
+        <div class="doc-detail">
+            <h3>5. test_logical_conflict.pdf</h3>
+            <div class="stats-row">
+                <span>Tokens: 5</span>
+                <span>Arabic: 0</span>
+                <span>English: 5</span>
+                <span>Confidence: 98.92%</span>
+                <span>Route: <strong>cheap_rail</strong></span>
+                <span>Uncertainty: 0.0108</span>
+                <span>Latency: 70738ms</span>
+            </div>
+
+            <h4>OCR Result &mdash; Full Text</h4>
+            <div class="fulltext-box">Status: Approved (System Error Expected) Date of Birth: 12-10-2020 Policy Effective Date: 01-01-2015 Client Name: Mohamed Hussein Insurance Policy Enrollment</div>
+
+            <h4>OCR Result &mdash; Annotated Tokens</h4>
+            <div class="text-box"><div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(98%)</span> Status: Approved (System Error Expected)</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(100%)</span> Date of Birth: 12-10-2020</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(97%)</span> Policy Effective Date: 01-01-2015</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(99%)</span> Client Name: Mohamed Hussein</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(100%)</span> Insurance Policy Enrollment</div>
+</div>
+
+            <h4>OCR Result &mdash; Token Detail Table</h4>
+            <div style="overflow-x:auto">
+            <table class="token-table">
+                <tr>
+                    <th>#</th><th>Text</th><th>Lang</th><th>Confidence</th>
+                    <th>Page</th><th>BBox</th><th>HW</th><th>Zone</th><th>ID</th>
+                </tr>
+                <tr><td>0</td><td style='direction:auto;unicode-bidi:plaintext'>Status: Approved (System Error Expected)</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>98.46%</td><td>p1</td><td>(1918,289)-(1957,901)</td><td></td><td></td><td><code>069c91c7</code></td></tr>
+<tr><td>1</td><td style='direction:auto;unicode-bidi:plaintext'>Date of Birth: 12-10-2020</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.60%</td><td>p1</td><td>(2129,291)-(2169,699)</td><td></td><td></td><td><code>069c91c7</code></td></tr>
+<tr><td>2</td><td style='direction:auto;unicode-bidi:plaintext'>Policy Effective Date: 01-01-2015</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>97.36%</td><td>p1</td><td>(2063,286)-(2114,830)</td><td></td><td></td><td><code>069c91c7</code></td></tr>
+<tr><td>3</td><td style='direction:auto;unicode-bidi:plaintext'>Client Name: Mohamed Hussein</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.26%</td><td>p1</td><td>(2220,289)-(2260,812)</td><td></td><td></td><td><code>069c91c7</code></td></tr>
+<tr><td>4</td><td style='direction:auto;unicode-bidi:plaintext'>Insurance Policy Enrollment</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.91%</td><td>p1</td><td>(2364,527)-(2417,1178)</td><td></td><td></td><td><code>069c91c7</code></td></tr>
+
+            </table>
+            </div>
+
+            <p style="color:#2d8a4e;font-weight:600">No failures detected.</p>
+
+            <h4>Provenance Trail (first 15)</h4>
+            <div class="prov-box"><div class='prov'>[069c91c7] &#x27;Status: Approved (System Error Expected)&#x27; page=1 (1918,289)-(1957,901) conf=0.98 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91c7] &#x27;Date of Birth: 12-10-2020&#x27; page=1 (2129,291)-(2169,699) conf=1.00 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91c7] &#x27;Policy Effective Date: 01-01-2015&#x27; page=1 (2063,286)-(2114,830) conf=0.97 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91c7] &#x27;Client Name: Mohamed Hussein&#x27; page=1 (2220,289)-(2260,812) conf=0.99 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91c7] &#x27;Insurance Policy Enrollment&#x27; page=1 (2364,527)-(2417,1178) conf=1.00 lang=en engine=paddleocr</div>
+</div>
+        </div>
+        <div class="doc-detail">
+            <h3>6. test_low_confidence.pdf</h3>
+            <div class="stats-row">
+                <span>Tokens: 4</span>
+                <span>Arabic: 0</span>
+                <span>English: 4</span>
+                <span>Confidence: 98.80%</span>
+                <span>Route: <strong>cheap_rail</strong></span>
+                <span>Uncertainty: 0.0120</span>
+                <span>Latency: 64688ms</span>
+            </div>
+
+            <h4>OCR Result &mdash; Full Text</h4>
+            <div class="fulltext-box">(Handwritten Note: Urgent Delivery) Drug Name: Amoxicillin 500mg Total Amount: $ 1500.00 Pharmacy Invoice</div>
+
+            <h4>OCR Result &mdash; Annotated Tokens</h4>
+            <div class="text-box"><div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(98%)</span> (Handwritten Note: Urgent Delivery)</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(99%)</span> Drug Name: Amoxicillin 500mg</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(99%)</span> Total Amount: $ 1500.00</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(100%)</span> Pharmacy Invoice</div>
+</div>
+
+            <h4>OCR Result &mdash; Token Detail Table</h4>
+            <div style="overflow-x:auto">
+            <table class="token-table">
+                <tr>
+                    <th>#</th><th>Text</th><th>Lang</th><th>Confidence</th>
+                    <th>Page</th><th>BBox</th><th>HW</th><th>Zone</th><th>ID</th>
+                </tr>
+                <tr><td>0</td><td style='direction:auto;unicode-bidi:plaintext'>(Handwritten Note: Urgent Delivery)</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>97.61%</td><td>p1</td><td>(1978,145)-(2023,628)</td><td></td><td></td><td><code>069c91cb</code></td></tr>
+<tr><td>1</td><td style='direction:auto;unicode-bidi:plaintext'>Drug Name: Amoxicillin 500mg</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>98.66%</td><td>p1</td><td>(2035,145)-(2090,647)</td><td></td><td></td><td><code>069c91cb</code></td></tr>
+<tr><td>2</td><td style='direction:auto;unicode-bidi:plaintext'>Total Amount: $ 1500.00</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.04%</td><td>p1</td><td>(2127,144)-(2180,552)</td><td></td><td></td><td><code>069c91cb</code></td></tr>
+<tr><td>3</td><td style='direction:auto;unicode-bidi:plaintext'>Pharmacy Invoice</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.90%</td><td>p1</td><td>(2354,589)-(2426,1013)</td><td></td><td></td><td><code>069c91cb</code></td></tr>
+
+            </table>
+            </div>
+
+            <p style="color:#2d8a4e;font-weight:600">No failures detected.</p>
+
+            <h4>Provenance Trail (first 15)</h4>
+            <div class="prov-box"><div class='prov'>[069c91cb] &#x27;(Handwritten Note: Urgent Delivery)&#x27; page=1 (1978,145)-(2023,628) conf=0.98 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91cb] &#x27;Drug Name: Amoxicillin 500mg&#x27; page=1 (2035,145)-(2090,647) conf=0.99 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91cb] &#x27;Total Amount: $ 1500.00&#x27; page=1 (2127,144)-(2180,552) conf=0.99 lang=en engine=paddleocr</div>
+<div class='prov'>[069c91cb] &#x27;Pharmacy Invoice&#x27; page=1 (2354,589)-(2426,1013) conf=1.00 lang=en engine=paddleocr</div>
+</div>
+        </div>
+
+</body>
+</html>

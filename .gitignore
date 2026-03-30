@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+
+# Data & artifacts
+data/
+*.sqlite3
+*.db
+
+# Coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Notebooks checkpoints
+.ipynb_checkpoints/
+
+# Model weights (large files)
+optimized_modules/
+*.bin
+*.pt
+*.safetensors
+
+# Sample data (optional - remove if you want to track it)
+# sample data/

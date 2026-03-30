@@ -1,0 +1,47 @@
+agents:
+  extractor:
+    llm:
+      cheap_rail: "qwen2.5-7b-instruct"
+      vlm_consensus: "llama-3.1-70b-instruct"
+    temperature: 0.1
+    max_tokens: 4096
+    dspy_module: "ClaimFieldExtractor"
+
+  validator:
+    llm: "qwen2.5-7b-instruct"
+    temperature: 0.0
+    max_tokens: 2048
+    neo4j_checks:
+      - "procedure_diagnosis_compatibility"
+      - "drug_dosage_limits"
+      - "contraindicated_drugs"
+      - "provider_specialty"
+      - "date_sanity"
+      - "amount_reasonableness"
+      - "age_plausibility"
+
+  challenger:
+    llm: "llama-3.1-70b-instruct"
+    temperature: 0.3
+    max_tokens: 3072
+    max_challenges_per_round: 5
+    challenge_strategies:
+      - "arabic_character_confusion"
+      - "digit_ocr_errors"
+      - "stamp_obscuration"
+      - "merged_line_items"
+      - "date_format_ambiguity"
+      - "currency_symbol_misread"
+      - "handwriting_ambiguity"
+
+  postmortem:
+    llm: "qwen2.5-7b-instruct"
+    temperature: 0.0
+    max_tokens: 2048
+    min_severity_to_log: 0.3
+    dspy_training_threshold: 0.5
+
+consensus:
+  min_agreement_ratio: 0.8
+  max_rounds: 2
+  escalation_threshold: 0.5

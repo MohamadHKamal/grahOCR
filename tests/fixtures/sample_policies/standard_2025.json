@@ -1,0 +1,30 @@
+{
+  "policy_number": "SA-2025-STD-001",
+  "policy_type": "standard",
+  "status": "active",
+  "effective_date": "2025-01-01",
+  "expiry_date": "2026-12-31",
+  "version": "2025-v1",
+  "supersedes": "SA-2018-STD-001",
+  "insurer_name": "Gulf Health Insurance",
+  "plan_name": "Standard Health Plan 2025",
+  "plan_name_ar": "خطة التأمين الصحي القياسية 2025",
+  "jurisdiction": "SA",
+  "general_exclusions": ["cosmetic surgery", "experimental treatments", "weight loss surgery"],
+  "coverage_rules": [
+    {
+      "description": "Office visits covered at 90% after deductible",
+      "procedure_codes": ["99213", "99214"],
+      "diagnosis_codes": ["E11", "I10", "J06", "M54"],
+      "copay_percentage": 10.0,
+      "annual_limit": "75000"
+    },
+    {
+      "description": "Lab work covered at 100%",
+      "procedure_codes": ["85025", "80053", "36415"],
+      "copay_percentage": 0.0
+    }
+  ],
+  "full_text": "Gulf Health Insurance - Standard Health Plan 2025\n\nSection 1: Coverage\nThis plan covers medically necessary services including office visits, laboratory tests, and hospitalization. Office visits (CPT 99213, 99214) are covered at 90% after the annual deductible of SAR 300. Laboratory work including CBC (85025), metabolic panel (80053), and venipuncture (36415) are covered at 100% with no copay.\n\nSection 2: Exclusions\nThe following are excluded from coverage: cosmetic surgery, experimental treatments, weight loss surgery, services not medically necessary.\n\nSection 3: Benefit Limits\nAnnual maximum benefit: SAR 1,000,000. Per-incident maximum: SAR 200,000. Office visit annual limit: SAR 75,000.",
+  "full_text_ar": "تأمين الخليج الصحي - خطة التأمين الصحي القياسية 2025\n\nالقسم 1: التغطية\nتغطي هذه الخطة الخدمات الطبية اللازمة بما في ذلك زيارات العيادة والفحوصات المخبرية والاستشفاء."
+}

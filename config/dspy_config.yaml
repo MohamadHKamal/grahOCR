@@ -1,0 +1,36 @@
+dspy:
+  lm_provider: "vllm"
+  lm_endpoint: "http://localhost:8000/v1"
+  lm_model: "qwen2.5-7b-instruct"
+
+  modules:
+    ClaimFieldExtractor:
+      optimizer: "mipro"
+      metric: "field_level_f1"
+      baseline_f1: 0.92
+      degradation_threshold: 0.05
+      max_bootstrapped_demos: 4
+      max_labeled_demos: 8
+
+    ArabicMedicalNormalizer:
+      optimizer: "bootstrap_fewshot"
+      metric: "exact_match"
+      baseline_accuracy: 0.88
+      max_bootstrapped_demos: 8
+
+    DiagnosisCodeMapper:
+      optimizer: "mipro"
+      metric: "code_accuracy"
+      baseline_accuracy: 0.90
+      degradation_threshold: 0.05
+
+  supervisor:
+    check_interval_minutes: 30
+    performance_window_minutes: 60
+    min_samples_for_reoptimize: 100
+    max_reoptimize_per_day: 3
+
+  gradient_monitor:
+    stability_threshold: 0.7
+    window_size: 5
+    divergence_alert_threshold: 0.3

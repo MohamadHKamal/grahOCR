@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GraphOCR Batch Test Report</title>
+<style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin: 2rem; background: #fafafa; }
+    h1 { color: #1a1a2e; }
+    h2 { color: #16213e; margin-top: 2rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; }
+    h3 { color: #0f3460; }
+    table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: 0.85rem; }
+    th { background: #1a1a2e; color: white; padding: 8px 10px; text-align: left; }
+    td { padding: 6px 10px; border-bottom: 1px solid #e2e8f0; }
+    tr:hover { background: #f1f5f9; }
+    .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin: 1rem 0; }
+    .summary-card { background: white; border-radius: 8px; padding: 1.2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .summary-card .label { font-size: 0.8rem; color: #64748b; text-transform: uppercase; }
+    .summary-card .value { font-size: 1.8rem; font-weight: 700; color: #1a1a2e; }
+    .doc-detail { background: white; border-radius: 8px; padding: 1.5rem; margin: 1rem 0; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .stats-row { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 0.5rem 0; font-size: 0.85rem; color: #475569; }
+    .text-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 1rem; max-height: 300px; overflow-y: auto; font-size: 0.85rem; direction: rtl; unicode-bidi: plaintext; }
+    .token { padding: 2px 0; direction: ltr; unicode-bidi: plaintext; }
+    .lang { color: #6366f1; font-weight: 600; font-size: 0.75rem; }
+    .conf { color: #94a3b8; font-size: 0.75rem; }
+    .prov-box { background: #1e293b; color: #e2e8f0; border-radius: 4px; padding: 1rem; font-family: monospace; font-size: 0.75rem; max-height: 200px; overflow-y: auto; }
+    .prov { padding: 1px 0; }
+    .failure { background: #fef2f2; border-left: 3px solid #ef4444; padding: 8px 12px; margin: 6px 0; font-size: 0.82rem; border-radius: 0 4px 4px 0; line-height: 1.5; }
+    .fulltext-box { background: #fffbeb; border: 1px solid #fbbf24; border-radius: 4px; padding: 1rem; font-size: 1rem; line-height: 1.8; direction: auto; unicode-bidi: plaintext; white-space: pre-wrap; word-wrap: break-word; max-height: 250px; overflow-y: auto; }
+    .token-table { font-size: 0.78rem; }
+    .token-table th { background: #334155; font-size: 0.72rem; padding: 6px 8px; }
+    .token-table td { padding: 4px 8px; font-size: 0.78rem; }
+    .token-table tr:nth-child(even) { background: #f8fafc; }
+</style>
+</head>
+<body>
+<h1>GraphOCR Batch Test Report</h1>
+<p style="color:#64748b">Generated: 2026-03-29 03:48 UTC | Documents: 3</p>
+
+<div class="summary-grid">
+    <div class="summary-card"><div class="label">Documents</div><div class="value">3</div></div>
+    <div class="summary-card"><div class="label">Successful</div><div class="value" style="color:#2d8a4e">0</div></div>
+    <div class="summary-card"><div class="label">Failed</div><div class="value" style="color:#d32f2f">3</div></div>
+    <div class="summary-card"><div class="label">Total Tokens</div><div class="value">0</div></div>
+    <div class="summary-card"><div class="label">Avg Confidence</div><div class="value">0.0%</div></div>
+    <div class="summary-card"><div class="label">Total Failures</div><div class="value">0</div></div>
+    <div class="summary-card"><div class="label">VLM Consensus</div><div class="value">3</div></div>
+    <div class="summary-card"><div class="label">Avg Latency</div><div class="value">2995ms</div></div>
+</div>
+
+<h2>Document Summary Table</h2>
+<table>
+<tr>
+    <th>#</th><th>File</th><th>Status</th><th>Pages</th><th>Tokens</th>
+    <th>Arabic</th><th>English</th><th>Avg Conf</th><th>Min Conf</th>
+    <th>Failures</th><th>Failure Types</th><th>Route</th><th>Uncertainty</th>
+    <th>Latency</th><th>Error</th>
+</tr>
+
+        <tr>
+            <td>1</td>
+            <td>1000093095.jpg</td>
+            <td style="color:#d32f2f;font-weight:bold">FAIL</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0.00%</td>
+            <td>0.00%</td>
+            <td>0</td>
+            <td>None</td>
+            <td>vlm_consensus</td>
+            <td>1.0000</td>
+            <td>2985ms</td>
+            <td style="color:red"></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>1000093096.jpg</td>
+            <td style="color:#d32f2f;font-weight:bold">FAIL</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0.00%</td>
+            <td>0.00%</td>
+            <td>0</td>
+            <td>None</td>
+            <td>vlm_consensus</td>
+            <td>1.0000</td>
+            <td>2969ms</td>
+            <td style="color:red"></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>1000093097.jpg</td>
+            <td style="color:#d32f2f;font-weight:bold">FAIL</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0.00%</td>
+            <td>0.00%</td>
+            <td>0</td>
+            <td>None</td>
+            <td>vlm_consensus</td>
+            <td>1.0000</td>
+            <td>3031ms</td>
+            <td style="color:red"></td>
+        </tr>
+</table>
+
+<h2>Per-Document Details</h2>
+
+        <div class="doc-detail">
+            <h3>1. 1000093095.jpg</h3>
+            <div class="stats-row">
+                <span>Tokens: 0</span>
+                <span>Arabic: 0</span>
+                <span>English: 0</span>
+                <span>Confidence: 0.00%</span>
+                <span>Route: <strong>vlm_consensus</strong></span>
+                <span>Uncertainty: 1.0000</span>
+                <span>Latency: 2985ms</span>
+            </div>
+
+            <h4>OCR Result &mdash; Full Text</h4>
+            <div class="fulltext-box"></div>
+
+            <h4>OCR Result &mdash; Annotated Tokens</h4>
+            <div class="text-box"></div>
+
+            <h4>OCR Result &mdash; Token Detail Table</h4>
+            <div style="overflow-x:auto">
+            <table class="token-table">
+                <tr>
+                    <th>#</th><th>Text</th><th>Lang</th><th>Confidence</th>
+                    <th>Page</th><th>BBox</th><th>HW</th><th>Zone</th><th>ID</th>
+                </tr>
+                
+            </table>
+            </div>
+
+            <p style="color:#2d8a4e;font-weight:600">No failures detected.</p>
+
+            <h4>Provenance Trail (first 15)</h4>
+            <div class="prov-box"></div>
+        </div>
+        <div class="doc-detail">
+            <h3>2. 1000093096.jpg</h3>
+            <div class="stats-row">
+                <span>Tokens: 0</span>
+                <span>Arabic: 0</span>
+                <span>English: 0</span>
+                <span>Confidence: 0.00%</span>
+                <span>Route: <strong>vlm_consensus</strong></span>
+                <span>Uncertainty: 1.0000</span>
+                <span>Latency: 2969ms</span>
+            </div>
+
+            <h4>OCR Result &mdash; Full Text</h4>
+            <div class="fulltext-box"></div>
+
+            <h4>OCR Result &mdash; Annotated Tokens</h4>
+            <div class="text-box"></div>
+
+            <h4>OCR Result &mdash; Token Detail Table</h4>
+            <div style="overflow-x:auto">
+            <table class="token-table">
+                <tr>
+                    <th>#</th><th>Text</th><th>Lang</th><th>Confidence</th>
+                    <th>Page</th><th>BBox</th><th>HW</th><th>Zone</th><th>ID</th>
+                </tr>
+                
+            </table>
+            </div>
+
+            <p style="color:#2d8a4e;font-weight:600">No failures detected.</p>
+
+            <h4>Provenance Trail (first 15)</h4>
+            <div class="prov-box"></div>
+        </div>
+        <div class="doc-detail">
+            <h3>3. 1000093097.jpg</h3>
+            <div class="stats-row">
+                <span>Tokens: 0</span>
+                <span>Arabic: 0</span>
+                <span>English: 0</span>
+                <span>Confidence: 0.00%</span>
+                <span>Route: <strong>vlm_consensus</strong></span>
+                <span>Uncertainty: 1.0000</span>
+                <span>Latency: 3031ms</span>
+            </div>
+
+            <h4>OCR Result &mdash; Full Text</h4>
+            <div class="fulltext-box"></div>
+
+            <h4>OCR Result &mdash; Annotated Tokens</h4>
+            <div class="text-box"></div>
+
+            <h4>OCR Result &mdash; Token Detail Table</h4>
+            <div style="overflow-x:auto">
+            <table class="token-table">
+                <tr>
+                    <th>#</th><th>Text</th><th>Lang</th><th>Confidence</th>
+                    <th>Page</th><th>BBox</th><th>HW</th><th>Zone</th><th>ID</th>
+                </tr>
+                
+            </table>
+            </div>
+
+            <p style="color:#2d8a4e;font-weight:600">No failures detected.</p>
+
+            <h4>Provenance Trail (first 15)</h4>
+            <div class="prov-box"></div>
+        </div>
+
+</body>
+</html>

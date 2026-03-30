@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GraphOCR Documentation</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg:#fff;--text:#1a1a2e;--text2:#4a4a6a;--accent:#1565C0;--accent-light:#E3F2FD;--border:#e0e0e0;--code-bg:#f5f5f5;--th-bg:#f0f4ff;--stripe:#fafbff;--tab-bg:#f5f7fa}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--bg);line-height:1.7}
+.tab-bar{display:flex;gap:2px;background:var(--tab-bg);padding:8px 8px 0;border-bottom:2px solid var(--border);position:sticky;top:0;z-index:100;flex-wrap:wrap}
+.tab-btn{padding:10px 20px;border:1px solid var(--border);border-bottom:none;border-radius:8px 8px 0 0;background:var(--tab-bg);cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:var(--text2);transition:all .2s}
+.tab-btn.active{background:#fff;color:var(--accent);border-color:var(--accent);border-bottom:2px solid #fff;margin-bottom:-2px}
+.tab-btn:hover:not(.active){background:#e8ecf1}
+.dl-btn{margin-left:auto;padding:10px 20px;background:var(--accent);color:#fff;border:none;border-radius:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;align-self:center;margin-bottom:4px}
+.dl-btn:hover{background:#0d47a1}
+.doc-panel{display:none;padding:40px 60px;max-width:1100px;margin:0 auto}
+.doc-panel.active{display:block}
+@media print{.tab-bar{display:none!important}.doc-panel{display:none!important}.doc-panel.active{display:block!important}.dc{break-inside:avoid}h2{break-before:page}}
+@media(max-width:768px){.doc-panel{padding:20px}.tab-btn{padding:8px 12px;font-size:12px}}
+h1{font-size:2em;font-weight:700;color:var(--accent);margin-bottom:4px;border-bottom:3px solid var(--accent);padding-bottom:12px}
+.meta{font-size:.9em;color:var(--text2);margin-bottom:32px}
+h2{font-size:1.5em;font-weight:700;margin-top:48px;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid var(--border)}
+h3{font-size:1.2em;font-weight:600;margin-top:32px;margin-bottom:12px}
+h4{font-size:1.05em;font-weight:600;margin-top:24px;margin-bottom:8px}
+p{margin-bottom:14px}
+code{font-family:'JetBrains Mono',monospace;font-size:.88em;background:var(--code-bg);padding:2px 6px;border-radius:4px}
+pre{background:var(--code-bg);padding:16px 20px;border-radius:8px;overflow-x:auto;margin:12px 0 16px;font-family:'JetBrains Mono',monospace;font-size:.88em;line-height:1.5}
+.dc{background:#fafbff;border:1px solid var(--border);border-radius:10px;padding:24px;margin:20px 0 28px;overflow-x:auto;text-align:center;min-height:80px}
+.dc svg{max-width:100%}
+table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:.92em}
+th{background:var(--th-bg);font-weight:600;text-align:left;padding:10px 14px;border:1px solid var(--border)}
+td{padding:9px 14px;border:1px solid var(--border);vertical-align:top}
+tr:nth-child(even) td{background:var(--stripe)}
+ol,ul{margin:10px 0 14px 24px}
+li{margin-bottom:6px}
+.section-hr{border:none;border-top:2px solid var(--border);margin:40px 0}
+blockquote{border-left:4px solid var(--accent);padding:12px 20px;margin:16px 0;background:var(--accent-light);border-radius:0 8px 8px 0}
+blockquote p{margin-bottom:0}
+.nl{counter-reset:step;list-style:none;margin-left:0}
+.nl li{counter-increment:step;padding-left:32px;position:relative}
+.nl li::before{content:counter(step) ".";position:absolute;left:0;font-weight:600;color:var(--accent)}
+.ld{display:flex;align-items:center;justify-content:center;padding:20px;color:var(--text2);font-size:14px}
+</style>
+</head>
+<body>
+
+<div class="tab-bar">
+  <button class="tab-btn active" data-tab="overview">Architecture Overview</button>
+  <button class="tab-btn" data-tab="detailed">Detailed Architecture</button>
+  <button class="tab-btn" data-tab="evaluation">Evaluation</button>
+  <button class="tab-btn" data-tab="task">Task Response</button>
+  <button class="dl-btn" id="dlBtn">⬇ Download as HTML</button>
+</div>
+
+<!-- TAB 1: ARCHITECTURE_OVERVIEW.md -->
+<div id="tab-overview" class="doc-panel active">
+<h1>GraphOCR — Architecture Overview</h1>
+<p class="meta"><strong>Author</strong>: Mohamed Hussein | <strong>Date</strong>: 2026-03-28 | <strong>Version</strong>: 1.0<br><strong>System</strong>: Hybrid Graph-OCR Deterministic Trust Layer for Insurance Claim Processing</p>
+<hr class="section-hr">
+<h2>1. System Overview</h2>
+<p>GraphOCR is a <strong>Deterministic Trust Layer</strong> built to process 100K complex, multi-lingual, handwritten insurance claims per day. Standard "off-the-shelf" AI pipelines fail at this institutional scale due to two fatal errors:</p>
+<ol>
+<li><strong>Input Failure (Spatial-Blind OCR)</strong>: When a pharmacy stamp overlaps a policy number or a doctor writes a diagnosis across two columns, standard OCR reads horizontally across the page, creating a "meaningless soup" of text.</li>
+<li><strong>Intelligence Failure (Contextual Hallucination)</strong>: Because naive RAG systems cannot "see" the paper, they retrieve the most semantically similar policy (e.g., a "2025 Standard Plan") even if the handwritten claim explicitly refers to an obsolete "2018 Rider", causing the AI to hallucinate a denial by looking at the wrong map.</li>
+</ol>
+<p>GraphOCR solves this by grounding the AI in the reality of the document. The Neo4j Graph Database tests the OCR output for <strong>"Logical Impossibilities"</strong> (e.g., a drug dosage of 1500 mg when the max is 15 mg), which triggers a <strong>Back-Propagation</strong> mechanism: using the exact bounding box coordinates to initiate a targeted VLM re-scan, completely bypassing the need to restart the batch.</p>
+<h3>Overall Architecture</h3>
+<div class="dc" id="d1"><div class="ld">Loading diagram…</div></div>
+<hr class="section-hr">
+<h2>2. Layer 1 — OCR + Spatial Foundation</h2>
+<p>Layer 1 transforms raw scanned documents into an ordered stream of <strong>SpatialToken</strong> objects — the atomic unit that carries provenance through the entire pipeline.</p>
+<h3>2.1 Processing Sequence</h3>
+<div class="dc" id="d2"><div class="ld">Loading diagram…</div></div>
+<h3>2.2 Document Ingestion</h3>
+<p>The ingestion module normalizes raw scans through an <strong>8-step image processing pipeline</strong>, optimized for Arabic medical documents:</p>
+<ol class="nl">
+<li><strong>EXIF rotation fix</strong> — Corrects phone camera orientation stored in metadata.</li>
+<li><strong>Orientation detection</strong> — Visual fallback using contour analysis for scans without EXIF data. Detects sideways (90/270) and upside-down (180) pages.</li>
+<li><strong>Auto-resize</strong> — Keeps images within PaddleOCR's optimal 1500-2500px range.</li>
+<li><strong>Stamp suppression</strong> — Fades colored stamps (red, blue, green) by +80 brightness rather than erasing, preserving underlying ink.</li>
+<li><strong>Lighting correction</strong> — Flattens gradients from phone camera shadows using morphological background division. Highest-impact step for phone-captured documents.</li>
+<li><strong>Mild denoising</strong> — Low-threshold FNLM that preserves Arabic diacritical dots (which change character meaning, e.g., 'ب' vs 'ت').</li>
+<li><strong>CLAHE contrast</strong> — Recovers faded prescription ink and light strokes.</li>
+<li><strong>Deskew</strong> — Projection profile analysis (not Hough lines, which Arabic vertical strokes confuse).</li>
+</ol>
+<p><strong>Critical</strong>: No binarization. PaddleOCR's internal text detector relies on grayscale gradients — pre-binarizing destroys this information.</p>
+<h3>2.3 Dual-Engine OCR</h3>
+<p>Two OCR engines work in parallel, each contributing different strengths:</p>
+<ul>
+<li><strong>PaddleOCR</strong> (always active): Best Arabic script support. Extracts <strong>text content</strong> with bounding boxes and per-token confidence scores.</li>
+<li><strong>Surya</strong> (optional): Detects <strong>layout regions</strong> — text blocks, columns, tables, headers, footers, stamps. Provides zone labels but no text content.</li>
+</ul>
+<p>The <strong>Spatial Assembler</strong> merges outputs from both engines: PaddleOCR provides the text, Surya provides the zone labels, and when both detect the same region, confidence is boosted using independent-detector math.</p>
+<h3>2.4 Reading Order — XY-Cut with RTL Awareness</h3>
+<p>The XY-Cut algorithm recursively decomposes the page into columns and rows by finding white-space valleys between token clusters. When >50% of tokens contain Arabic script, the reading order reverses: right column first, then left. This prevents "serialization gore" — reading haphazardly across two distinct columns.</p>
+<h3>2.5 Failure Classifier — Type A Detection</h3>
+<p>The failure classifier detects four patterns of spatial-blind OCR failure. All four trigger a <strong>targeted VLM re-scan</strong> of the affected region rather than restarting the batch:</p>
+<ol class="nl">
+<li><strong>Spatial jumps</strong> — Consecutive tokens in reading order that are far apart spatially, indicating wrong reading order.</li>
+<li><strong>Nonsensical type alternation</strong> — Rapid alternation between numeric and text tokens (e.g., num-text-num-text-num), a classic sign of horizontal-scan corruption across columns.</li>
+<li><strong>Stamp/seal overlap</strong> — A stamp or seal bounding box overlapping body text, indicating obscured fields.</li>
+<li><strong>Cross-column merge</strong> — Tokens alternating between left and right columns in reading order, indicating two columns were incorrectly serialized as one.</li>
+</ol>
+<h3>2.6 The SpatialToken</h3>
+<p>Every token in the system is a <strong>SpatialToken</strong> carrying: token ID, text, confidence, bounding box coordinates, reading order, language, OCR engine provenance, handwritten flag, and zone label. Every extraction field downstream carries <code>source_tokens</code> (list of token IDs), enabling coordinate-level traceability from final output back to pixel positions on the original scan.</p>
+<hr class="section-hr">
+<h2>3. Layer 3 — Tiered Inference &amp; Monitoring</h2>
+<blockquote><p><strong>Note on execution order</strong>: Layer 3 runs <em>before</em> Layer 2. It acts as a <strong>router/gatekeeper</strong> — triaging documents by difficulty so that 90% of easy claims skip the expensive Layer 2 pipeline entirely.</p></blockquote>
+<h3>3.1 Traffic Controller</h3>
+<p>The Traffic Controller computes an <strong>uncertainty score</strong> for every document based on OCR confidence, handwriting ratio, language mixing, failure severity, and confidence entropy. Documents are routed to one of two paths:</p>
+<ul>
+<li><strong>Cheap Rail (U ≤ 0.35, ~90%)</strong>: Regex extraction + single LLM call + quick Neo4j check. ~2-3 sec latency.</li>
+<li><strong>VLM Consensus (U > 0.35, ~10%)</strong>: Full adversarial multi-agent pipeline. ~15-30 sec latency.</li>
+</ul>
+<h3>3.2 Circuit Breaker &amp; Monitoring</h3>
+<div class="dc" id="d3"><div class="ld">Loading diagram…</div></div>
+<ul>
+<li><strong>Circuit Breaker</strong>: Three-state sliding-window pattern (CLOSED → OPEN → HALF_OPEN). Automatically disables the pipeline when failure rate exceeds 15%, preventing cascading errors.</li>
+<li><strong>Accuracy Tracker</strong>: Detects gradual accuracy decay using linear regression over a rolling window, catching systemic degradation early.</li>
+</ul>
+<h3>3.3 DSPy Supervisor — Automated Prompt Maintenance</h3>
+<p>The pipeline uses <strong>MIPRO (Multi-prompt Instruction PRoposal Optimizer)</strong> from the DSPy framework to automatically maintain prompt quality. Instead of manual prompt tuning:</p>
+<ol class="nl">
+<li>The <strong>Postmortem Agent</strong> tags production failures for DSPy training.</li>
+<li>The <strong>DSPy Supervisor</strong> pulls failure reports every 30 minutes.</li>
+<li><strong>MIPRO</strong> uses Bayesian optimization to reoptimize prompt instructions and few-shot examples against real failure data (max 3 reoptimizations/day).</li>
+<li>A <strong>Gradient Monitor</strong> tracks prompt stability, alerting on oscillation or hallucinated prompt changes.</li>
+</ol>
+<p>The Supervisor also serves as an <strong>Agentic Mentor</strong> for junior engineers, generating human-readable explanations of what the textual gradients are doing and why — turning DSPy from a black box into a learning tool.</p>
+<hr class="section-hr">
+<h2>4. Layer 2 — Adversarial Verification &amp; Self-Healing</h2>
+<p>Layer 2 is the core intelligence layer. It uses four specialized agents in an adversarial configuration, a Neo4j knowledge graph for deterministic constraint checking, temporal-aware RAG for policy retrieval, and a self-healing loop that re-scans specific document regions when conflicts are detected.</p>
+<h3>4.1 Agent Pipeline</h3>
+<div class="dc" id="d4"><div class="ld">Loading diagram…</div></div>
+<h3>4.2 Agent Roles</h3>
+<table>
+<tr><th>Agent</th><th>Model</th><th>Temp</th><th>Role</th></tr>
+<tr><td><strong>Extractor</strong></td><td>Qwen2.5-7B or Llama-3.1-70B</td><td>0.1</td><td>Extracts structured fields from SpatialTokens using DSPy-optimized prompts. Every field carries source token IDs.</td></tr>
+<tr><td><strong>Validator</strong></td><td>Qwen2.5-7B</td><td>0</td><td>Runs Neo4j constraint queries. Catches logical impossibilities. The "deterministic anchor."</td></tr>
+<tr><td><strong>Challenger</strong></td><td>Llama-3.1-70B</td><td>0.3</td><td>Adversarially questions extraction using 7 strategies: Arabic char confusion, OCR digit errors, stamp obscuration, merged lines, date ambiguity, currency misreads, handwriting ambiguity.</td></tr>
+<tr><td><strong>Postmortem</strong></td><td>Qwen2.5-7B</td><td>—</td><td>Classifies failures into root causes. Tags for DSPy training, creates new Neo4j rules when rule gaps found.</td></tr>
+</table>
+<h3>4.3 Temporal RAG — Curing Contextual Hallucinations</h3>
+<p>The pipeline works with two document types: <strong>Claims</strong> (scanned paper docs processed by OCR) and <strong>Policies</strong> (insurance contracts pre-ingested into ChromaDB). OCR output <strong>never enters the vector database</strong>. The Temporal RAG Retriever ensures the correct historical policy via three stages:</p>
+<ol class="nl">
+<li><strong>EXTRACT</strong>: Regex extraction of policy reference and dates from SpatialTokens.</li>
+<li><strong>FILTER</strong>: Hard temporal filtering on ChromaDB — only policies valid on the claim date.</li>
+<li><strong>RANK</strong>: Semantic similarity within the temporally-filtered set using multilingual-e5-large embeddings.</li>
+</ol>
+<h3>4.4 Neo4j Knowledge Graph</h3>
+<p>The Neo4j Knowledge Graph catches <strong>Logical Impossibilities</strong> caused by OCR errors:</p>
+<ul>
+<li><strong>Clinical rules</strong>: OCR misreads "15 mg" as "1500 mg" → graph catches it exceeds <code>max_daily_dosage_mg</code>.</li>
+<li><strong>Chronological impossibilities</strong>: A "1940 birthdate on a 2026 policy".</li>
+<li><strong>Medical compatibility</strong>: Contraindicated drug combinations seemingly prescribed due to column merging.</li>
+</ul>
+<div class="dc" id="d5"><div class="ld">Loading diagram…</div></div>
+<p>The graph is seeded from CMS.gov (ICD-10/CPT codes), FDA/Lexicomp (drug data), internal business rules, and provider registries. It also grows at runtime: when the Postmortem Agent identifies a rule gap, it automatically creates a new <code>LearnedRule</code> node.</p>
+<h3>4.5 Self-Healing Back-Propagation Loop</h3>
+<p>When a logical conflict is detected, the pipeline does NOT restart the batch. Instead:</p>
+<div class="dc" id="d6"><div class="ld">Loading diagram…</div></div>
+<ol class="nl">
+<li><strong>Conflict Detection</strong>: Collects token IDs from high-confidence challenges, severe graph violations, and low-confidence fields. Groups them into minimal re-scan regions.</li>
+<li><strong>Targeted VLM Re-Scan</strong>: Crops the conflicting region from the original page image and sends it to Qwen2-VL-7B with a specialized prompt. Avoids restarting the entire batch.</li>
+<li><strong>Token Stream Patch</strong>: Replaces old tokens with VLM rescan tokens, re-sorts reading order, and re-extracts only affected fields.</li>
+<li><strong>Postmortem Learning</strong>: Classifies root cause, stores in Redis, tags for DSPy training. The system learns from its own failures.</li>
+</ol>
+<p>The loop runs up to 2 rounds. If consensus isn't reached, the document is escalated to human review with full provenance.</p>
+<hr class="section-hr">
+<h2>5. Data Sources Summary</h2>
+<h3>What Feeds Neo4j</h3>
+<table><tr><th>Source</th><th>Data</th><th>Update Frequency</th></tr>
+<tr><td>CMS.gov</td><td>ICD-10 codes, CPT codes, valid pairs</td><td>Annually (October)</td></tr>
+<tr><td>FDA / Lexicomp / First Databank</td><td>Drug names, max dosages, contraindications</td><td>Quarterly</td></tr>
+<tr><td>Internal Policy (Actuarial)</td><td>Amount limits, date ranges, age limits</td><td>As needed</td></tr>
+<tr><td>Provider Registry</td><td>Provider-specialty credentialing</td><td>Monthly</td></tr>
+<tr><td>Postmortem Feedback</td><td>New rules from rule_gap root causes</td><td>Runtime (human-reviewed)</td></tr></table>
+<h3>What Feeds ChromaDB</h3>
+<table><tr><th>Source</th><th>Data</th><th>Metadata</th></tr>
+<tr><td>Policy library</td><td>Every version of every plan, rider, endorsement, amendment</td><td>policy_number, effective_date, expiry_date, jurisdiction, section_title</td></tr>
+<tr><td>Embedding model</td><td>multilingual-e5-large (balanced Arabic/English)</td><td>Sentence transformers</td></tr></table>
+<h3>What Feeds the Self-Healing Loop</h3>
+<table><tr><th>Source</th><th>Stored In</th><th>Consumed By</th></tr>
+<tr><td>Postmortem Agent FailureReports</td><td>Redis FailureStore</td><td>DSPy Supervisor</td></tr>
+<tr><td>DSPy Supervisor reoptimized prompts</td><td>Filesystem (versioned)</td><td>Extractor Agent</td></tr></table>
+<hr class="section-hr">
+<h2>6. Infrastructure</h2>
+<table><tr><th>Service</th><th>Purpose</th></tr>
+<tr><td>Neo4j 5.x</td><td>Knowledge graph with domain rules</td></tr>
+<tr><td>Redis 7</td><td>Cache, queue, failure store</td></tr>
+<tr><td>MinIO</td><td>Object storage for page images</td></tr>
+<tr><td>vLLM (GPU)</td><td>Serves Qwen2.5-7B, Llama-3.1-70B, Qwen2-VL-7B</td></tr>
+<tr><td>ChromaDB</td><td>Vector store for policy embeddings</td></tr>
+<tr><td>Langfuse</td><td>Full pipeline tracing and observability</td></tr></table>
+<h3>Federated Architecture &amp; Sovereign Data Compliance</h3>
+<p>The pipeline operates under <strong>federated deployment constraints</strong> where health data must respect jurisdictional sovereignty (Gulf Cooperation Council data residency, HIPAA, GDPR).</p>
+<ul>
+<li><strong>Jurisdictional Routing</strong>: Every document is tagged with a jurisdiction code. Documents are processed exclusively within infrastructure zones that satisfy their data residency requirements.</li>
+<li><strong>Data Residency Enforcement</strong>: Storage (MinIO), processing (vLLM), and graph validation (Neo4j) are all partitioned by jurisdiction. No raw document data crosses sovereign boundaries.</li>
+<li><strong>Federated Self-Healing</strong>: Learned rules are scoped to their originating jurisdiction by default, with a global review queue for universal medical constraints.</li>
+</ul>
+</div>
+
+<!-- TAB 2: ARCHITECTURE.md (Detailed) -->
+<div id="tab-detailed" class="doc-panel">
+<h1>GraphOCR — Detailed Architecture Design</h1>
+<p class="meta"><strong>Author</strong>: Mohamed Hussein | <strong>Date</strong>: 2026-03-28 | <strong>Version</strong>: 1.0<br><strong>System</strong>: Hybrid Graph-OCR Deterministic Trust Layer for Insurance Claim Processing</p>
+<hr class="section-hr">
+<h2>1. System Overview</h2>
+<p>GraphOCR is a <strong>Deterministic Trust Layer</strong> built to process 100K complex, multi-lingual, handwritten insurance claims per day. Standard "off-the-shelf" AI pipelines fail at this institutional scale due to two fatal errors:</p>
+<ol>
+<li><strong>Input Failure (Spatial-Blind OCR / Serialization Gore)</strong>: When a pharmacy stamp overlaps a policy number or a doctor writes a diagnosis across two columns, standard OCR reads horizontally across the page, creating a "meaningless soup" of text.</li>
+<li><strong>Intelligence Failure (Contextual Hallucination)</strong>: Because naive RAG systems cannot "see" the paper, they retrieve the most semantically similar policy (e.g., a "2025 Standard Plan") even if the handwritten claim explicitly refers to an obsolete "2018 Rider", causing the AI to hallucinate a denial by looking at the wrong map.</li>
+</ol>
+<p>GraphOCR solves this by grounding the AI in the reality of the document. The Neo4j Graph Database tests the OCR output for <strong>"Logical Impossibilities"</strong> (e.g., substituting an OCR typo for a clinical stoichiometric limit violation), which heavily triggers a <strong>Back-Propagation</strong> mechanism: using the exact bounding box coordinates to initiate a targeted VLM re-scan, completely bypassing the need to restart the batch.</p>
+<h3>Overall Architecture</h3>
+<div class="dc" id="d7"><div class="ld">Loading diagram…</div></div>
+<hr class="section-hr">
+<h2>2. Layer 1 — OCR + Spatial Foundation</h2>
+<p>Layer 1 transforms raw scanned documents into an ordered stream of <code>SpatialToken</code> objects — the atomic unit that carries provenance through the entire pipeline. Every downstream component consumes and references these tokens.</p>
+<h3>2.1 Processing Sequence</h3>
+<div class="dc" id="d8"><div class="ld">Loading diagram…</div></div>
+<h3>2.2 Document Ingestion Pipeline</h3>
+<p>The ingestion module (<code>layer1_foundation/ingestion.py</code>) normalizes raw scans through an 8-step image processing pipeline, optimized for Arabic medical documents based on Invizo (2025), Arabic OCR surveys, and PaddleOCR best practices.</p>
+<p><strong>Pre-OCR steps (before pixel processing):</strong></p>
+<ol class="nl">
+<li><strong>EXIF rotation fix</strong>: Phone cameras embed orientation in EXIF tag 274 rather than rotating pixels. The pipeline applies the stored rotation (90/180/270) so pixels match what a human sees.</li>
+<li><strong>Orientation detection</strong>: OpenCV contour analysis finds text-region bounding rectangles and checks aspect ratios. If >60% of regions are taller than wide, the image is sideways (90/270). Upside-down detection compares ink density in top 15% vs bottom 15%.</li>
+<li><strong>Auto-resize</strong>: Images larger than 2500px (max side) are resized with Lanczos interpolation. PaddleOCR is optimal at 1500-2500px.</li>
+</ol>
+<p><strong>Image enhancement pipeline (the <code>_normalize_image</code> function):</strong></p>
+<ol class="nl" start="4">
+<li><strong>Stamp suppression</strong> (<code>_suppress_stamps</code>): While still in color (BGR), converts to HSV and detects high-saturation pixels (saturation > 80, value > 50). Also targets specific stamp colors: red (hue 0-10/170-180), blue (hue 100-130), green (hue 35-85). Conservative approach: fades stamps by +80 brightness rather than erasing, preserving underlying dark ink strokes.</li>
+<li><strong>Lighting correction</strong> (<code>_correct_lighting</code>): Estimates background illumination via morphological closing with a large elliptical kernel (~6% of image smaller dimension). Divides the original by the background to flatten gradients from phone camera shadows. This is the single highest-impact step for phone-captured documents.</li>
+<li><strong>Mild denoising (FNLM)</strong>: Fast Non-Local Means (FNLM) with <code>h=3</code>, <code>templateWindow=7</code>, <code>searchWindow=21</code>. Standard aggressive denoising (<code>h>5</code>) destroys the tiny, essential diacritical dots in Arabic script (which fundamentally change character meanings, e.g., 'ب' vs 'ت'). The low threshold preserves these strokes.</li>
+<li><strong>CLAHE contrast enhancement</strong>: <code>clipLimit=2.5</code> (up from 2.0), <code>tileGridSize=8x8</code>. Tuned for faded medical prescription ink. Recovers diacritical dots and light strokes effectively.</li>
+<li><strong>Deskew</strong> (<code>_deskew_projection</code>): Projection profile analysis — rotates the binarized image in 0.2-degree steps from -5 to +5, picks the angle that maximizes horizontal projection variance (sharpest text lines). More robust than Hough lines for Arabic because Arabic has dense vertical strokes that easily confuse standard Hough transformations.</li>
+</ol>
+<p><strong>Critical: no binarization.</strong> PaddleOCR's internal DBNet text detector relies on grayscale spatial gradients to locate text boundaries. Pre-binarizing destroys this sub-pixel gradient information and severely hurts detection accuracy. The output is grayscale-in-BGR (3-channel) for PaddleOCR compatibility.</p>
+<p>All output images are 300 DPI grayscale PNGs, max 2500px on any side.</p>
+<h3>2.3 Dual-Engine OCR Strategy</h3>
+<p>The pipeline supports two modes: <strong>PaddleOCR-only</strong> (fast, default) and <strong>PaddleOCR + Surya</strong> (full accuracy, enabled via <code>Pipeline(use_surya=True)</code>).</p>
+<p><strong>PaddleOCR</strong> (text extraction): Best Arabic script support with built-in angle correction. Handles mixed Arabic/English text natively. Returns text content + bounding box polygons + per-token confidence scores. Always active — this is the primary engine for all text extraction.</p>
+<p><strong>Surya</strong> (layout region detection, optional): Outputs <strong>bounding box coordinates</strong> for every detected region on the page. Each region bbox comes with a zone label (Title, Text, Table, Header, Footer, Figure, Caption) and a confidence score. Surya provides two levels of output:</p>
+<ol>
+<li><code>RecognitionPredictor</code> → text extraction with bounding boxes, line-level confidence, and sorted reading order</li>
+<li><code>LayoutPredictor</code> → zone-labeled bounding boxes (what TYPE of region each area is: header, body, table, stamp)</li>
+</ol>
+<p>When Surya is active, its outputs are used in three ways: the <strong>spatial assembler</strong> merges Surya region bboxes with PaddleOCR tokens; the <strong>metadata enricher</strong> assigns <code>zone_label</code> to unmerged tokens; the <strong>failure classifier</strong> uses zone labels to detect stamp-over-body overlap.</p>
+<table><tr><th>Mode</th><th>Engines</th><th>Zone Labels</th><th>Text Recognition</th><th>Stamp Detection</th><th>Confidence Boost</th><th>Latency</th></tr>
+<tr><td><code>Pipeline()</code></td><td>PaddleOCR only</td><td>None</td><td>PaddleOCR</td><td>Not available</td><td>No</td><td>Fast</td></tr>
+<tr><td><code>Pipeline(use_surya=True)</code></td><td>PaddleOCR + Surya</td><td>Full</td><td>Both (merged)</td><td>Active</td><td>Yes</td><td>+2-4 min/page</td></tr>
+<tr><td><code>Pipeline(use_surya=True, use_paddle=False)</code></td><td>Surya only</td><td>Full</td><td>Surya</td><td>Active</td><td>No</td><td>+2-4 min/page</td></tr></table>
+<h3>2.4 Spatial Assembler — Token Merge Strategy</h3>
+<p>The spatial assembler (<code>layer1_foundation/spatial_assembler.py</code>) merges token streams from both engines. Instead of discarding overlapping detections, it <strong>combines the best attributes of both</strong> into a single enriched token.</p>
+<p><strong>Merge logic</strong> (when IoU >= 0.3 between a PaddleOCR token and a Surya region):</p>
+<table><tr><th>Attribute</th><th>Source</th><th>Strategy</th></tr>
+<tr><td>Text</td><td>PaddleOCR</td><td>Surya has no text — PaddleOCR always provides content</td></tr>
+<tr><td>Bounding box</td><td>Both</td><td><strong>Union</strong> (IoU 0.3-0.7) for coverage, <strong>intersection</strong> (IoU > 0.7) for precision</td></tr>
+<tr><td>Confidence</td><td>Both</td><td><strong>Boosted</strong>: <code>1 - (1 - conf_a) * (1 - conf_b)</code></td></tr>
+<tr><td>Zone label</td><td>Surya</td><td>Inherited (HEADER, BODY, STAMP, TABLE)</td></tr>
+<tr><td>Language</td><td>Either</td><td>Prefer non-UNKNOWN</td></tr>
+<tr><td>Handwriting</td><td>Either</td><td>OR — if either detects it, flag it</td></tr>
+<tr><td>Engine</td><td>Both</td><td>Recorded as <code>"paddleocr+surya"</code> for provenance</td></tr></table>
+<p><strong>IoU threshold is 0.3</strong> (not 0.5) — different engines produce slightly different bounding boxes for the same text region. <strong>Confidence boosting formula</strong>: When PaddleOCR detects at 0.7 and Surya at 0.8, merged = <code>1 - (1-0.7)(1-0.8) = 0.94</code>.</p>
+<h3>2.5 Reading Order — XY-Cut with RTL Awareness</h3>
+<p>The <strong>XY-Cut algorithm</strong> (<code>layer1_foundation/reading_order.py</code>) recursively decomposes the page into columns and rows by finding the widest horizontal and vertical "valleys" between token clusters. Vertical splits (gap >= 30px) detect column separators, horizontal splits (gap >= 10px) detect line separators. When >50% of tokens contain Arabic script, the right column is read before the left.</p>
+<h3>2.6 Failure Classifier — Type A Detection</h3>
+<p>The failure classifier (<code>layer1_foundation/failure_classifier.py</code>) detects four patterns of Type A (spatial-blind) failure:</p>
+<ol class="nl">
+<li><strong>Spatial jumps</strong>: Consecutive tokens in reading order >800px apart spatially. Severity: <code>min(1.0, distance / 1000)</code>.</li>
+<li><strong>Nonsensical type alternation</strong>: Sliding window of 5 tokens checking for rapid num/text alternation. Requires >= 4 alternations. Severity: <code>0.6</code>.</li>
+<li><strong>Stamp/seal overlap</strong>: IoU > 0.05 between STAMP/LOGO/SIGNATURE zones and BODY tokens. Severity: <code>min(1.0, 0.5 + 0.1 * count)</code>.</li>
+<li><strong>Cross-column merge</strong>: Requires >=10 tokens, X-spread >= 40% page width. Clusters into left/right columns. Severity: <code>min(1.0, 0.4 + 0.05 * switches)</code>.</li>
+</ol>
+<h3>2.7 The SpatialToken — Metadata Schema</h3>
+<p>Every token is a <code>SpatialToken</code> (<code>models/token.py</code>) carrying: token_id (UUID7), text, confidence, BoundingBox (x_min, y_min, x_max, y_max, page_number), reading_order, language, ocr_engine, is_handwritten, zone_label, line_group_id, and normalized_text. The <code>to_provenance_str()</code> method generates audit-ready strings like <code>[a1b2c3d4] 'metformin' page=1 (234,567)-(345,589) conf=0.92 lang=en engine=paddleocr</code>.</p>
+<p>This is the <strong>Single Source of Truth</strong>. Every extraction field carries <code>source_tokens</code>, enabling coordinate-level traceability from final output back to pixel positions.</p>
+<hr class="section-hr">
+<h2>3. Layer 3 — Tiered Inference &amp; Monitoring</h2>
+<h3>3.1 Traffic Controller &amp; Circuit Breaker State Machine</h3>
+<div class="dc" id="d9"><div class="ld">Loading diagram…</div></div>
+<h3>3.2 Uncertainty Score — Mathematical Definition</h3>
+<pre>U = (1 - C̄) + 0.15 · R_hw + 0.02 · R_mix + 0.10 · S_fail + 0.10 · H_norm</pre>
+<p>Where: <strong>C̄</strong> = mean OCR confidence, <strong>R_hw</strong> = handwriting ratio (0.15), <strong>R_mix</strong> = language mixing entropy (0.02), <strong>S_fail</strong> = max failure severity (0.10), <strong>H_norm</strong> = normalized confidence entropy (0.10). Threshold T = 0.35; U ≤ 0.35 → cheap rail, U > 0.35 → VLM consensus.</p>
+<h3>3.3 Circuit Breaker</h3>
+<p>Three-state sliding-window pattern: <strong>CLOSED</strong> → <strong>OPEN</strong> (failure rate >= 15% over 50+ calls in 300s) → <strong>HALF_OPEN</strong> (after 60s; 10 successes close, any failure reopens). Thread-safe with <code>threading.Lock</code>.</p>
+<h3>3.4 Accuracy Monitoring &amp; Decay Detection</h3>
+<p>The <code>AccuracyTracker</code> detects gradual accuracy decay using linear regression over a 60-minute window. If slope < -0.001, it signals systemic degradation.</p>
+<h3>3.5 DSPy Supervisor — Automated Prompt Maintenance (MIPRO)</h3>
+<p>Background async loop on 30-minute intervals: (1) Fetch metrics from Langfuse API. (2) Check degradation against F1 baseline of 0.92. (3) If degradation > 5%, trigger MIPRO reoptimization (max 3/day). (4) Monitor gradient stability via <code>GradientMonitor</code>.</p>
+<h3>3.6 DSPy Mentorship Mode — Gradient Explanation Interface</h3>
+<p>The DSPy Supervisor doubles as an <strong>Agentic Mentor</strong>. It explains in real-time:</p>
+<ol class="nl">
+<li><strong>Gradient direction</strong>: "The optimizer is pushing toward more explicit Arabic character handling — 3 of 5 gradients mention Arabic digit confusion (٥ vs 5)."</li>
+<li><strong>Convergence status</strong>: "F1 plateaued at 0.94 for 4 trials. Gradients are contradictory — convergence reached."</li>
+<li><strong>Drift/oscillation alerts</strong>: "WARNING: Prompt oscillating — Trial 7 added stamp rule, Trial 8 removed it, Trial 9 re-added. Review flagged training examples."</li>
+<li><strong>Hallucination detection</strong>: "Optimizer proposed ICD-11 codes but Neo4j only has ICD-10. Gradient rejected."</li>
+</ol>
+<hr class="section-hr">
+<h2>4. Layer 2 — Adversarial Verification &amp; Self-Healing</h2>
+<h3>4.1 Agent Pipeline Sequence</h3>
+<div class="dc" id="d10"><div class="ld">Loading diagram…</div></div>
+<h3>4.2 Agent Roles &amp; Model Selection</h3>
+<p><strong>Extractor Agent</strong> (<code>agents/extractor.py</code>): Qwen2.5-7B or Llama-3.1-70B, temp 0.1. DSPy-optimized extraction with full spatial token stream. Every field carries <code>source_tokens</code>.</p>
+<p><strong>Validator Agent</strong> (<code>agents/validator.py</code>): Qwen2.5-7B, temp 0 — fully deterministic. Runs Neo4j constraint queries. Returns pass/fail verdicts with severity scores.</p>
+<p><strong>Challenger Agent</strong> (<code>agents/challenger.py</code>): Llama-3.1-70B, temp 0.3 — intentionally creative. 7 adversarial strategies. Up to 5 challenges per round.</p>
+<p><strong>Postmortem Agent</strong> (<code>agents/postmortem.py</code>): Qwen2.5-7B. Classifies into 4 root causes: <code>ocr_misread</code>, <code>prompt_failure</code>, <code>rule_gap</code>, <code>layout_confusion</code>.</p>
+<h3>4.3 Temporal RAG — Curing Contextual Hallucinations</h3>
+<p><strong>Stage 1 (EXTRACT)</strong>: Regex extraction of policy reference and dates from SpatialTokens.<br><strong>Stage 2 (FILTER)</strong>: Hard temporal filtering on ChromaDB (<code>effective_date ≤ claim_date ≤ expiry_date</code>).<br><strong>Stage 3 (RANK)</strong>: Semantic similarity within filtered set using <code>multilingual-e5-large</code>.</p>
+<h3>4.4 Neo4j Knowledge Graph — Hybrid Graph-OCR Validation</h3>
+<p>Cypher queries detect: Clinical/stoichiometric violations, chronological impossibilities, and contraindicated drug combinations from OCR serialization gore.</p>
+<h3>4.5 Neo4j Data Model</h3>
+<div class="dc" id="d11"><div class="ld">Loading diagram…</div></div>
+<h3>4.6 Neo4j Data Construction</h3>
+<p><strong>Seed-time</strong>: <code>scripts/seed_neo4j.py</code> reads <code>neo4j_rules.yaml</code> → entity nodes first → relationships → constraints. <strong>Runtime</strong>: Postmortem creates <code>LearnedRule</code> nodes for <code>rule_gap</code> root causes.</p>
+<h3>4.7 Self-Healing Back-Propagation Loop</h3>
+<div class="dc" id="d12"><div class="ld">Loading diagram…</div></div>
+<p><strong>Phase 1</strong>: Collect token_ids from challenges (>0.6), violations (>0.7), low-confidence fields (<0.5). Group by page, merge with 50px padding.<br>
+<strong>Phase 2</strong>: Crop region from original page, send to Qwen2-VL-7B with specialized prompt.<br>
+<strong>Phase 3</strong>: Remove old tokens, insert VLM tokens, re-sort, re-extract only affected fields.<br>
+<strong>Phase 4</strong>: Classify root cause, store FailureReport in Redis, tag for DSPy training.</p>
+<p>Max 2 rounds. If no consensus → escalate to human review with full provenance.</p>
+<hr class="section-hr">
+<h2>5. Data Sources Summary</h2>
+<h3>5.1 What Feeds Neo4j</h3>
+<table><tr><th>Source</th><th>Data</th><th>Update Frequency</th></tr>
+<tr><td>CMS.gov</td><td>ICD-10 codes, CPT codes, valid pairs</td><td>Annually (October)</td></tr>
+<tr><td>FDA / Lexicomp / First Databank</td><td>Drug names, max dosages, contraindications</td><td>Quarterly</td></tr>
+<tr><td>Internal Policy (Actuarial)</td><td>Amount limits, date ranges, age limits</td><td>As needed</td></tr>
+<tr><td>Provider Registry</td><td>Provider-specialty credentialing</td><td>Monthly</td></tr>
+<tr><td>Postmortem Feedback</td><td>New rules from rule_gap root causes</td><td>Runtime (human-reviewed)</td></tr></table>
+<h3>5.2 What Feeds ChromaDB</h3>
+<table><tr><th>Source</th><th>Data</th><th>Metadata</th></tr>
+<tr><td>Policy library</td><td>Every version of every plan, rider, endorsement, amendment</td><td>policy_number, effective_date, expiry_date, jurisdiction, section_title</td></tr>
+<tr><td>Embedding model</td><td>multilingual-e5-large</td><td>Sentence transformers</td></tr>
+<tr><td>Chunking</td><td>PolicyChunker ~200-500 tokens/chunk</td><td>Parent policy ID for context</td></tr></table>
+<h3>5.3 What Feeds the Self-Healing Loop</h3>
+<table><tr><th>Source</th><th>Stored In</th><th>Consumed By</th></tr>
+<tr><td>Postmortem FailureReports</td><td>Redis FailureStore</td><td>DSPy Supervisor</td></tr>
+<tr><td>Reoptimized prompts</td><td>Filesystem (versioned)</td><td>Extractor Agent</td></tr>
+<tr><td>Gradient snapshots</td><td>In-memory</td><td>DSPy Supervisor alerts</td></tr></table>
+<hr class="section-hr">
+<h2>6. Infrastructure</h2>
+<table><tr><th>Service</th><th>Image</th><th>Port</th><th>Purpose</th></tr>
+<tr><td>Neo4j 5.x</td><td>neo4j:5-community</td><td>7474, 7687</td><td>Knowledge graph with APOC plugin</td></tr>
+<tr><td>Redis 7</td><td>redis:7-alpine</td><td>6379</td><td>Cache, queue, failure store</td></tr>
+<tr><td>MinIO</td><td>minio/minio</td><td>9000, 9001</td><td>Object storage for page images</td></tr>
+<tr><td>vLLM (GPU)</td><td>vllm/vllm-openai</td><td>8000</td><td>Serves Qwen2.5-7B, Llama-3.1-70B, Qwen2-VL-7B</td></tr></table>
+<p><strong>API</strong>: <code>POST /process</code>, <code>GET /health</code>, <code>GET /metrics</code>, <code>GET /supervisor/status</code>, <code>GET /audit/stats</code>, <code>GET /audit/failure/{report_id}</code>, <code>GET /audit/metadata-schema</code>, <code>GET /audit/learned-rules</code></p>
+<p><strong>CLI</strong>: <code>graphocr process FILE</code>, <code>graphocr serve</code>, <code>graphocr seed-graph</code>, <code>graphocr supervisor-status</code></p>
+<h3>6.1 Federated Architecture &amp; Sovereign Data Compliance</h3>
+<p><strong>Jurisdictional Routing</strong>: Every document tagged with <code>jurisdiction_code</code>. Processed exclusively within compliant infrastructure zones.</p>
+<p><strong>Data Residency Enforcement</strong>: (1) Storage locality — MinIO partitioned by jurisdiction. (2) Processing locality — vLLM per-region. (3) Graph isolation — Neo4j federated cluster with jurisdiction-scoped databases.</p>
+<p><strong>Audit trail</strong>: Every SpatialToken carries <code>jurisdiction_code</code>. Langfuse logs routing decisions.</p>
+<p><strong>Federated self-healing</strong>: LearnedRules scoped to originating jurisdiction. Universal medical constraints can be promoted globally via review queue.</p>
+<hr class="section-hr">
+<h2>7. File-to-Architecture Mapping</h2>
+<table><tr><th>Component</th><th>Source Files</th></tr>
+<tr><td>Document Ingestion</td><td><code>layer1_foundation/ingestion.py</code></td></tr>
+<tr><td>Dual-Engine OCR</td><td><code>layer1_foundation/ocr_engine.py</code>, <code>ocr_paddleocr.py</code>, <code>ocr_surya.py</code></td></tr>
+<tr><td>Spatial Assembly</td><td><code>layer1_foundation/spatial_assembler.py</code>, <code>metadata_enricher.py</code></td></tr>
+<tr><td>Reading Order</td><td><code>layer1_foundation/reading_order.py</code></td></tr>
+<tr><td>Language Detection</td><td><code>layer1_foundation/language_detector.py</code></td></tr>
+<tr><td>Failure Classification</td><td><code>layer1_foundation/failure_classifier.py</code></td></tr>
+<tr><td>SpatialToken Schema</td><td><code>models/token.py</code></td></tr>
+<tr><td>Neo4j Node Models</td><td><code>models/graph_nodes.py</code></td></tr>
+<tr><td>Agents</td><td><code>layer2_verification/agents/extractor.py</code>, <code>validator.py</code>, <code>challenger.py</code>, <code>postmortem.py</code></td></tr>
+<tr><td>Neo4j Rules</td><td><code>layer2_verification/knowledge_graph/client.py</code>, <code>rule_engine.py</code>, <code>validators.py</code>, <code>schema_loader.py</code></td></tr>
+<tr><td>Self-Healing</td><td><code>layer2_verification/self_healing/conflict_detector.py</code>, <code>vlm_rescanner.py</code>, <code>feedback_loop.py</code></td></tr>
+<tr><td>Temporal RAG</td><td><code>rag/retriever.py</code>, <code>vector_store.py</code>, <code>policy_chunker.py</code>, <code>context_injector.py</code></td></tr>
+<tr><td>Traffic Controller</td><td><code>layer3_inference/traffic_controller.py</code></td></tr>
+<tr><td>Circuit Breaker</td><td><code>layer3_inference/circuit_breaker.py</code></td></tr>
+<tr><td>Monitoring</td><td><code>monitoring/langfuse_tracer.py</code>, <code>metrics_collector.py</code></td></tr>
+<tr><td>DSPy Layer</td><td><code>dspy_layer/modules.py</code>, <code>optimizers.py</code>, <code>metrics.py</code>, <code>supervisor.py</code>, <code>gradient_monitor.py</code></td></tr>
+<tr><td>Pipeline</td><td><code>pipeline.py</code></td></tr>
+<tr><td>Compliance</td><td><code>compliance/jurisdiction.py</code>, <code>data_residency.py</code></td></tr>
+<tr><td>Audit</td><td><code>audit/dashboard.py</code>, <code>failure_analyzer.py</code></td></tr>
+<tr><td>Core</td><td><code>core/exceptions.py</code>, <code>logging.py</code>, <code>async_utils.py</code>, <code>config.py</code></td></tr>
+<tr><td>Config</td><td><code>config/pipeline.yaml</code>, <code>agents.yaml</code>, <code>neo4j_rules.yaml</code>, <code>dspy_config.yaml</code>, <code>monitoring.yaml</code>, <code>rag.yaml</code></td></tr>
+<tr><td>API + CLI</td><td><code>app.py</code>, <code>cli.py</code></td></tr>
+<tr><td>Scripts</td><td><code>scripts/batch_test.py</code>, <code>test_document.py</code>, <code>calibrate_threshold.py</code>, <code>seed_neo4j.py</code>, <code>ingest_policies.py</code></td></tr>
+<tr><td>Sample Data</td><td><code>sample data/images/</code> (3 Arabic prescriptions), <code>sample data/pdfs/</code> (3 synthetic PDFs)</td></tr></table>
+</div>
+
+<!-- TAB 3: EVALUATION.md -->
+<div id="tab-evaluation" class="doc-panel">
+<h1>GraphOCR Codebase Evaluation — Against the Problem Brief</h1>
+<p class="meta"><strong>Evaluator</strong>: Claude (Opus 4.6) | <strong>Date</strong>: 2026-03-28<br><strong>Scope</strong>: Full source review of <code>src/graphocr/</code>, <code>config/</code>, <code>tests/</code>, and infrastructure files</p>
+<hr class="section-hr">
+<h2>Executive Summary</h2>
+<p>The codebase represents a <strong>well-architected, structurally complete</strong> response to all three tasks. The three-layer pipeline directly mirrors the three tasks, and the code demonstrates genuine understanding of the dual-failure model. The metadata schema (<code>SpatialToken</code>) is coherent and carries provenance end-to-end.</p>
+<p><strong>However</strong>, several critical components remain at the <strong>scaffold/placeholder</strong> stage — the architecture is sound, but production-readiness has gaps.</p>
+<hr class="section-hr">
+<h2>Task 1: Audit — Diagnostic Tool &amp; Metadata Schema</h2>
+<h4>1A. Failure Classification — SOLVED (with caveats)</h4>
+<p>The classifier correctly distinguishes Type A failures via spatial jumps and nonsensical sequences. Type B failures deferred to Layer 2 (architecturally correct).</p>
+<p><strong>Gap</strong>: No stamp overlap detection. No cross-column merge detection.</p>
+<h4>1B. Metadata Schema (SpatialToken) — SOLVED</h4>
+<p>The <code>SpatialToken</code> is the strongest part of the codebase. Full provenance chain: every word traceable to specific coordinates on a specific page.</p>
+<h4>1C. Federated Systems — PARTIALLY SOLVED</h4>
+<p>Data residency routing present but thin — no encryption-at-rest, no audit log for cross-jurisdiction access.</p>
+<h3>Task 1 Verdict: <strong>75% Solved</strong></h3>
+<hr class="section-hr">
+<h2>Task 2: Adversarial — Multi-Agent Red Team &amp; Self-Healing</h2>
+<h4>2A. Multi-Agent Red Team — SOLVED</h4>
+<p>Genuinely adversarial: 4 agents, different models, different temperatures. Not passive scoring.</p>
+<h4>2B. Post-Mortem Agent — PARTIALLY SOLVED</h4>
+<p>Root cause classification works. <strong>Gap</strong>: <code>_fetch_training_data()</code> is a placeholder. No persistence layer for FailureReports. Self-healing loop architecturally designed but not wired end-to-end.</p>
+<h4>2C. Neo4j Logical Impossibilities — SOLVED</h4>
+<p>6 validation categories with real Cypher queries. Well-structured, parameterized inputs.</p>
+<h4>2D. Back-Propagation / VLM Re-Scan — SOLVED</h4>
+<p>Most impressive part. Conflict detect → crop → VLM rescan → patch tokens → re-extract affected fields only. Directly solves the brief's requirement.</p>
+<h3>Task 2 Verdict: <strong>80% Solved</strong></h3>
+<hr class="section-hr">
+<h2>Task 3: Tiered Inference Pipeline &amp; Monitoring</h2>
+<h4>3A. Traffic Controller — SOLVED</h4>
+<p>5-component weighted formula. Threshold configurable. Each component maps to real Layer 1 signals.</p>
+<h4>3B. Circuit Breaker &amp; Accuracy Monitoring — SOLVED</h4>
+<p>Production-quality sliding-window circuit breaker. Linear regression decay detection.</p>
+<h4>3C. DSPy Supervisor — PARTIALLY SOLVED</h4>
+<p>Architecture complete. <strong>Gap</strong>: <code>_fetch_module_metrics()</code> and <code>_fetch_training_data()</code> are placeholders.</p>
+<h3>Task 3 Verdict: <strong>75% Solved</strong></h3>
+<hr class="section-hr">
+<h2>Summary Scorecard</h2>
+<table>
+<tr><th>Requirement</th><th>Status</th><th>Score</th></tr>
+<tr><td>Task 1: Failure Classifier</td><td>Type A heuristics implemented; Type B deferred to L2</td><td>7/10</td></tr>
+<tr><td>Task 1: Metadata Schema</td><td>Excellent — full provenance</td><td>10/10</td></tr>
+<tr><td>Task 1: Federated Compliance</td><td>Present but thin</td><td>5/10</td></tr>
+<tr><td>Task 2: Multi-Agent Red Team</td><td>4 agents, distinct roles/models/temps</td><td>9/10</td></tr>
+<tr><td>Task 2: Post-Mortem → Learning</td><td>Architecture correct; persistence is stub</td><td>6/10</td></tr>
+<tr><td>Task 2: Neo4j Impossibilities</td><td>6 rule categories with Cypher</td><td>9/10</td></tr>
+<tr><td>Task 2: VLM Re-Scan</td><td>Conflict → crop → rescan → patch</td><td>9/10</td></tr>
+<tr><td>Task 3: Traffic Controller</td><td>5-component math formula</td><td>8/10</td></tr>
+<tr><td>Task 3: Circuit Breaker</td><td>Sliding window + linear regression</td><td>9/10</td></tr>
+<tr><td>Task 3: DSPy Supervisor</td><td>Architecture complete; I/O stubs</td><td>6/10</td></tr>
+<tr><td>Cross-cutting: Provenance</td><td>Full coordinate tracing</td><td>10/10</td></tr>
+<tr><td>Cross-cutting: Arabic</td><td>RTL, Arabic regex, char confusion</td><td>8/10</td></tr>
+</table>
+<p><strong>Overall: ~78/120 (65%) production-ready, ~105/120 (88%) architecturally complete.</strong></p>
+<hr class="section-hr">
+<h2>Top 5 Items to Close the Gaps</h2>
+<ol class="nl">
+<li><strong>Wire the feedback loop end-to-end</strong>: Implement persistence for <code>FailureReport</code> objects.</li>
+<li><strong>Implement <code>_fetch_module_metrics()</code></strong> against Langfuse API.</li>
+<li><strong>Add stamp/overlay zone detection</strong> to the failure classifier.</li>
+<li><strong>Add end-to-end integration test</strong> through all three layers.</li>
+<li><strong>Empirically calibrate threshold</strong> via ROC analysis.</li>
+</ol>
+</div>
+
+<!-- TAB 4: TASK_RESPONSE.md -->
+<div id="tab-task" class="doc-panel">
+<h1>Technical Task Response — Hybrid Graph-OCR Deterministic Trust Layer</h1>
+<p class="meta"><strong>Author</strong>: Mohamed Hussein | <strong>Date</strong>: 2026-03-29<br><strong>Repository</strong>: <a href="#">grahpOCR</a> | <strong>Architecture Document</strong>: ARCHITECTURE.md</p>
+<hr class="section-hr">
+<h2>Task 1: Audit — Diagnostic Tool &amp; Metadata Schema</h2>
+<h3>Q: How do you architect the diagnostic tool between Input Failure and Intelligence Failure?</h3>
+<p><strong>Input Failure (Type A)</strong> detected at Layer 1 by <code>failure_classifier.py</code>:</p>
+<table><tr><th>Detector</th><th>What it catches</th><th>How it works</th></tr>
+<tr><td>Spatial jump</td><td>OCR read across columns</td><td>Consecutive tokens >800px apart spatially</td></tr>
+<tr><td>Nonsensical sequences</td><td>Serialization gore</td><td>Sliding window of 5 tokens, rapid num/text alternation</td></tr>
+<tr><td>Stamp overlap</td><td>Pharmacy stamp overlaps policy number</td><td>BBox IoU > 0.05 between STAMP and BODY zones</td></tr>
+<tr><td>Cross-column merge</td><td>Two columns serialized as one</td><td>Clusters tokens by X-center, counts column switches</td></tr></table>
+<p><strong>Intelligence Failure (Type B)</strong> detected at Layer 2 by temporal RAG retriever. Degrades through 4 confidence levels:</p>
+<table><tr><th>Mode</th><th>Condition</th><th>Confidence</th><th>Risk</th></tr>
+<tr><td>temporal_filtered</td><td>Reference + date found</td><td>0.9</td><td>Low</td></tr>
+<tr><td>temporal_semantic_hybrid</td><td>Date only</td><td>0.7</td><td>Medium</td></tr>
+<tr><td>reference_only</td><td>Reference only</td><td>0.5</td><td>Medium-High</td></tr>
+<tr><td>semantic_only</td><td>Neither found</td><td>0.3</td><td><strong>Type B risk</strong></td></tr></table>
+<hr class="section-hr">
+<h3>Q: How do you ensure "Single Source of Truth" for both Senior and Junior engineers?</h3>
+<p>The <strong>SpatialToken</strong> schema: token_id (UUID7), text, bbox, reading_order, language, confidence, ocr_engine, zone_label, is_handwritten, line_group_id, normalized_text. Provenance chain: <code>pixel coordinates → SpatialToken → FieldExtraction → InsuranceClaim</code>.</p>
+<hr class="section-hr">
+<h3>Q: Metadata schema for "Semantic Spatial" mapping?</h3>
+<p>Enforced by: (1) Pydantic validation, (2) Single <code>OCREngine</code> ABC entry point, (3) Spatial assembler IoU merge, (4) XY-Cut canonical reading order assignment.</p>
+<hr class="section-hr">
+<h3>Q: Federated systems with sovereign data constraints?</h3>
+<p>Jurisdiction resolver maps country codes to rules. Data residency enforcer: jurisdiction-specific MinIO buckets, routing validation, federated-mode aggregate-only sharing.</p>
+<hr class="section-hr">
+<h2>Task 2: Adversarial — Multi-Agent Red Team &amp; Self-Healing</h2>
+<h3>Q: Multi-agent red team architecture?</h3>
+<table><tr><th>Agent</th><th>LLM</th><th>Temp</th><th>Role</th></tr>
+<tr><td>Extractor</td><td>Qwen2.5-7B / Llama-3.1-70B</td><td>0.1</td><td>Extract structured fields with provenance</td></tr>
+<tr><td>Validator</td><td>Qwen2.5-7B</td><td>0.0</td><td>Neo4j rules + consistency checks</td></tr>
+<tr><td>Challenger</td><td>Llama-3.1-70B</td><td>0.3</td><td>7 adversarial strategies</td></tr>
+<tr><td>PostMortem</td><td>Qwen2.5-7B</td><td>0.0</td><td>Root cause → update system logic</td></tr></table>
+<pre>Extractor → Validator (+ Neo4j) → Challenger → Consensus Check
+  ├─ Agreed → PostMortem → END
+  └─ Disagreed → Self-Healing → Extractor (max 2 rounds) → Escalate → END</pre>
+<hr class="section-hr">
+<h3>Q: Post-Mortem Agent that updates core logic globally?</h3>
+<p>(1) Classifies root cause into 4 categories. (2) Persists FailureReport to Redis (30-day TTL). (3) Creates <code>LearnedRule</code> in Neo4j for rule_gap. (4) Tags for DSPy training. DSPy Supervisor runs MIPRO every 30 min (max 3/day).</p>
+<hr class="section-hr">
+<h3>Q: Neo4j "Logical Impossibilities"?</h3>
+<table><tr><th>Rule</th><th>Example</th><th>Severity</th></tr>
+<tr><td>Procedure-Diagnosis compatibility</td><td>Knee MRI + diabetes diagnosis</td><td>0.8</td></tr>
+<tr><td>Drug dosage limits</td><td>Metformin 5000mg/day (max 2550)</td><td>0.9</td></tr>
+<tr><td>Contraindicated combinations</td><td>Warfarin + Aspirin</td><td>0.95</td></tr>
+<tr><td>Provider specialty</td><td>GP performing cardiac surgery</td><td>0.7</td></tr>
+<tr><td>Date sanity</td><td>1940 birthdate on 2026 policy</td><td>0.9</td></tr>
+<tr><td>Amount reasonableness</td><td>Negative total, items don't sum</td><td>0.6-0.9</td></tr></table>
+<hr class="section-hr">
+<h3>Q: Back-Propagation mechanism?</h3>
+<p><strong>Phase 1</strong>: Collect affected token_ids → lookup bboxes → group by page → merge regions (50px padding).<br>
+<strong>Phase 2</strong>: Crop exact region from original page → base64 → Qwen2-VL-7B with specialized prompt.<br>
+<strong>Phase 3</strong>: Remove old tokens → insert VLM tokens → re-sort → re-extract only affected fields.<br>
+<strong>Batch never restarted.</strong> Max 2 rounds before escalation.</p>
+<hr class="section-hr">
+<h2>Task 3: Tiered Inference Pipeline &amp; Monitoring</h2>
+<h3>Q: Mathematically define the threshold?</h3>
+<pre>U = (1 - C̄) + 0.15 · R_hw + 0.02 · R_mix + 0.10 · S_fail + 0.10 · H_norm</pre>
+<p>T set via ROC analysis (<code>scripts/calibrate_threshold.py</code>), maximizing Youden index. Default T = 0.35. U ≤ T → Cheap Rail. U > T → VLM Consensus.</p>
+<hr class="section-hr">
+<h3>Q: Accuracy Decay monitoring &amp; Circuit Breaker?</h3>
+<p><strong>AccuracyTracker</strong>: Linear regression over 60-min rolling window. <strong>Circuit Breaker</strong>: CLOSED → OPEN (≥15% failure over 50+ calls) → HALF_OPEN (60s timeout, 10 successes to close).</p>
+<p>Automated response: (1) Tracker detects slope → alerts. (2) Breaker opens → reroute to VLM. (3) DSPy triggers MIPRO. (4) Gradient Monitor checks stability.</p>
+<hr class="section-hr">
+<h3>Q: Agentic Supervisor explaining textual gradients?</h3>
+<table><tr><th>Metric</th><th>Formula</th><th>Detects</th></tr>
+<tr><td>Prompt similarity chain</td><td><code>SequenceMatcher</code> ratio</td><td>How much prompt changes between runs</td></tr>
+<tr><td>Direction consistency</td><td>Sign changes in metric deltas</td><td>Oscillation</td></tr>
+<tr><td>Stability score</td><td><code>0.4 * similarity + 0.6 * consistency</code></td><td>Overall prompt health</td></tr>
+<tr><td>Magnitude trend</td><td>increasing/decreasing/oscillating/stable</td><td>Whether optimization is improving</td></tr></table>
+<p>Deterministic system: thresholds trigger actions, not human intuition.</p>
+<hr class="section-hr">
+<h2>Evidence: Working System</h2>
+<table><tr><th>Document</th><th>Type</th><th>Tokens</th><th>Arabic</th><th>Confidence</th><th>Failures</th><th>Auto-Rotation</th><th>Route</th></tr>
+<tr><td>1000093095.jpg</td><td>Pediatric Rx</td><td>39</td><td>34</td><td>45%</td><td>0</td><td>270° corrected</td><td>VLM consensus</td></tr>
+<tr><td>1000093096.jpg</td><td>Psychiatric Rx</td><td>77</td><td>31</td><td>52%</td><td>6</td><td>None needed</td><td>VLM consensus</td></tr>
+<tr><td>1000093097.jpg</td><td>Internal Med Rx</td><td>18</td><td>16</td><td>83%</td><td>0</td><td>90° corrected</td><td>Cheap rail</td></tr></table>
+<p>Typed PDFs: 3/3 successful, 98.94% avg confidence, 100% cheap rail. Unit tests: <strong>112 passed in 0.55s</strong>.</p>
+<hr class="section-hr">
+<h2>Deliverables</h2>
+<table><tr><th>Deliverable</th><th>Location</th></tr>
+<tr><td>Architecture document</td><td>ARCHITECTURE.md</td></tr>
+<tr><td>Source code</td><td><code>src/graphocr/</code> — 80+ Python files</td></tr>
+<tr><td>Tests</td><td><code>tests/</code> — 112 unit + integration tests</td></tr>
+<tr><td>Sample data</td><td><code>sample data/images/</code>, <code>sample data/pdfs/</code></td></tr>
+<tr><td>Configuration</td><td><code>config/</code> — 6 YAML files</td></tr>
+<tr><td>Infrastructure</td><td><code>docker-compose.yml</code></td></tr></table>
+<h2>How to Run</h2>
+<pre>conda create -n graphocr python=3.11 -y && conda activate graphocr
+pip install -e ".[dev]" && conda install -c conda-forge poppler -y
+python -m pytest tests/ -v                           # 112 tests
+python scripts/batch_test.py "sample data/images" --format both
+docker compose up -d && python scripts/seed_neo4j.py && graphocr serve</pre>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js"></script>
+<script>
+mermaid.initialize({startOnLoad:false,theme:'default',securityLevel:'loose',
+flowchart:{useMaxWidth:true,htmlLabels:true,curve:'basis'},
+sequence:{useMaxWidth:true,actorMargin:50,messageFontSize:12,noteFontSize:11}});
+
+const D={
+arch:`flowchart TB
+  subgraph INPUT["Document Intake"]
+    A["Scanned Claims<br/>PDF / TIFF / JPEG / PNG<br/>Arabic + English<br/>Handwritten + Printed"]
+  end
+  subgraph L1["LAYER 1 — OCR + SPATIAL FOUNDATION"]
+    direction TB
+    B["Document Ingestion<br/>EXIF → Orientation → Resize → Stamp Suppress<br/>→ Lighting Correct → Denoise → CLAHE → Deskew<br/>Output: 300 DPI Normalized PNG"]
+    C["Dual-Engine OCR<br/>PaddleOCR ← text + bboxes<br/>Surya ← layout bboxes"]
+    DD["Spatial Assembler<br/>IoU Merge θ=0.3<br/>Combine text + bbox + zone + confidence boost"]
+    E["Reading Order<br/>XY-Cut Algorithm<br/>RTL Arabic Detection"]
+    F["Language Detector<br/>Per-token Unicode script<br/>Arabic / English / Unknown"]
+    G["Failure Classifier<br/>Type A: Spatial-Blind<br/>Spatial jumps + Sequences + Stamp overlap + Column merge"]
+    B --> C --> DD --> E --> F --> G
+  end
+  subgraph L1OUT["SpatialToken Stream"]
+    H["Token ID + Text + Confidence<br/>BoundingBox x,y page<br/>Reading Order + Language<br/>Handwritten flag + Zone label<br/>OCR Engine provenance"]
+  end
+  subgraph L3["LAYER 3 — TIERED INFERENCE"]
+    direction TB
+    I["Traffic Controller<br/>Uncertainty Score<br/>Threshold T = 0.35"]
+    J["CHEAP RAIL ~90%<br/>Regex + Qwen2.5-7B<br/>~2-3 sec latency"]
+    K["VLM CONSENSUS ~10%<br/>Full Red Team pipeline<br/>~15-30 sec latency"]
+    I -->|"U ≤ 0.35"| J
+    I -->|"U > 0.35"| K
+  end
+  subgraph L2["LAYER 2 — ADVERSARIAL VERIFICATION"]
+    direction TB
+    L["Extractor Agent<br/>Qwen2.5-7B / Llama-3.1-70B"]
+    M["Validator Agent<br/>Qwen2.5-7B temp=0<br/>Neo4j 6-rule check"]
+    N["Challenger Agent<br/>Llama-3.1-70B temp=0.3<br/>7 adversarial strategies"]
+    CC["Consensus Check"]
+    O["Self-Healing Loop<br/>VLM Re-scan → Token Patch"]
+    P["Postmortem Agent<br/>Root cause → FailureStore"]
+    L --> M --> N --> CC
+    CC -->|"agreed"| P
+    CC -->|"disagreed"| O
+    O -->|"round < 2"| L
+    O -->|"round >= 2"| ESC["Escalate"]
+    ESC --> P
+  end
+  subgraph INFRA["INFRASTRUCTURE"]
+    direction LR
+    Q[("Neo4j 5.x<br/>Knowledge Graph")]
+    R[("ChromaDB<br/>Vector Store")]
+    S[("Redis 7<br/>Cache + Queue")]
+    T[("MinIO<br/>Object Storage")]
+    U["vLLM<br/>GPU Inference"]
+  end
+  subgraph MONITOR["OBSERVABILITY"]
+    direction LR
+    V["Langfuse Tracer"]
+    W["Circuit Breaker"]
+    X["DSPy Supervisor"]
+    Y["Accuracy Tracker"]
+  end
+  subgraph OUTPUT["Final Output"]
+    Z["ExtractionResult<br/>Structured fields + Confidence<br/>Source token provenance<br/>Neo4j violations + Agent verdicts<br/>Escalation flag"]
+  end
+  INPUT --> L1
+  L1 --> L1OUT
+  L1OUT --> L3
+  J -->|"~90%"| OUTPUT
+  K -->|"~10%"| L2
+  L2 --> OUTPUT
+  L3 <--> INFRA
+  L2 <--> INFRA
+  L3 <--> MONITOR
+  L2 <--> MONITOR
+  style INPUT fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
+  style L1 fill:#FFF3E0,stroke:#E65100,stroke-width:2px
+  style L1OUT fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px
+  style L2 fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px
+  style L3 fill:#FCE4EC,stroke:#C62828,stroke-width:2px
+  style INFRA fill:#ECEFF1,stroke:#37474F,stroke-width:2px
+  style MONITOR fill:#FFF8E1,stroke:#F57F17,stroke-width:2px
+  style OUTPUT fill:#E0F7FA,stroke:#00695C,stroke-width:2px`,
+
+seq:`sequenceDiagram
+  autonumber
+  participant Doc as Scanned Document
+  participant Ing as Ingestion
+  participant Img as Image Normalizer
+  participant P as PaddleOCR
+  participant S as Surya
+  participant SA as Spatial Assembler
+  participant RO as Reading Order
+  participant LD as Language Detector
+  participant FC as Failure Classifier
+  participant ST as SpatialToken Stream
+  Doc->>Ing: PDF / TIFF / JPEG / PNG
+  Ing->>Img: Raw page images
+  Note over Img: 1. EXIF rotation fix
+  Note over Img: 2. Orientation detect (90/180/270)
+  Note over Img: 3. Resize if > 2500px
+  Note over Img: 4. Stamp suppression (HSV)
+  Note over Img: 5. Lighting correction
+  Note over Img: 6. Denoise FNLM h=3
+  Note over Img: 7. CLAHE clipLimit=2.5
+  Note over Img: 8. Deskew (projection profile)
+  Img->>P: 300 DPI normalized PNG
+  Img->>S: 300 DPI normalized PNG
+  par Dual-Engine OCR
+    P->>SA: Text tokens + bboxes
+    S->>SA: Region bboxes + zone labels
+  end
+  Note over SA: IoU > 0.3: MERGE
+  Note over SA: Confidence boost: 1-(1-a)(1-b)
+  Note over SA: Zone labels from Surya
+  SA->>RO: Merged tokens
+  Note over RO: XY-Cut decomposition
+  Note over RO: RTL if >50% Arabic
+  RO->>LD: Ordered tokens
+  Note over LD: Unicode script analysis
+  Note over LD: ARABIC / ENGLISH / UNKNOWN
+  LD->>FC: Tokens with language tags
+  Note over FC: Check 1: Spatial jumps >800px
+  Note over FC: Check 2: Type alternation
+  Note over FC: Check 3: Stamp overlap IoU>0.05
+  Note over FC: Check 4: Cross-column merge
+  FC->>ST: Complete SpatialToken stream`,
+
+state:`stateDiagram-v2
+  [*] --> DocumentArrives
+  state "Traffic Controller" as TC {
+    DocumentArrives --> ComputeUncertainty
+    ComputeUncertainty --> CheckTH
+    state CheckTH <<choice>>
+    CheckTH --> CheapRail: U <= 0.35
+    CheckTH --> VLMConsensus: U > 0.35
+  }
+  state "Cheap Rail 90%" as CheapRail {
+    RegexExtraction --> SingleLLMCall
+    SingleLLMCall --> QuickNeo4jCheck
+    QuickNeo4jCheck --> CheapResult
+  }
+  state "VLM Consensus 10%" as VLMConsensus {
+    FullRedTeam --> ExtractorAgent
+    ExtractorAgent --> ValidatorAgent
+    ValidatorAgent --> ChallengerAgent
+    ChallengerAgent --> ConflictCk
+    state ConflictCk <<choice>>
+    ConflictCk --> SelfHealing: conflicts found
+    ConflictCk --> ConsensusReached: no conflicts
+    SelfHealing --> VLMRescan
+    VLMRescan --> TokenPatch
+    TokenPatch --> ReExtract
+    state ReExtract <<choice>>
+    ReExtract --> ExtractorAgent: round < max
+    ReExtract --> Escalation: max exceeded
+  }
+  state "Circuit Breaker" as CB {
+    state Closed
+    state Open
+    state HalfOpen
+    Closed --> Open: fail >= 15%
+    Open --> HalfOpen: 60s timeout
+    HalfOpen --> Closed: 10 successes
+    HalfOpen --> Open: any failure
+  }
+  CheapRail --> CB: report result
+  CheapResult --> FinalOutput
+  ConsensusReached --> FinalOutput
+  Escalation --> HumanReview
+  state "DSPy Supervisor" as DSPy {
+    MonitorMetrics --> CheckDeg
+    CheckDeg --> TriggerReopt: F1 drops > 5%
+    CheckDeg --> Healthy: OK
+    TriggerReopt --> FetchFail
+    FetchFail --> RunMIPRO
+    RunMIPRO --> ValidatePrompt
+    ValidatePrompt --> DeployPrompt
+    DeployPrompt --> CheckStability
+    CheckStability --> MonitorMetrics: stable
+    CheckStability --> AlertOsc: diverging
+  }
+  FinalOutput --> [*]
+  HumanReview --> [*]`,
+
+agent:`sequenceDiagram
+  autonumber
+  participant TC as Traffic Controller
+  participant RAG as Temporal RAG
+  participant VS as ChromaDB
+  participant EX as Extractor Agent
+  participant VA as Validator Agent
+  participant Neo as Neo4j Graph
+  participant CH as Challenger Agent
+  participant CD as Conflict Detector
+  participant VLM as VLM Re-Scanner
+  participant FL as Feedback Loop
+  participant PM as Postmortem Agent
+  participant DS as DSPy Supervisor
+  participant OUT as ExtractionResult
+  TC->>RAG: SpatialTokens + claim date
+  Note over RAG: Extract policy ref (regex)
+  RAG->>VS: Query with temporal filter
+  Note over VS: effective_date <= claim <= expiry
+  VS-->>RAG: Valid policy chunks
+  RAG-->>EX: Policy context injected
+  Note over EX: DSPy-optimized prompt
+  EX->>VA: ExtractionResult + token_id map
+  Note over VA: Qwen2.5-7B, temp=0
+  VA->>Neo: Query 6 rule categories
+  Note over Neo: 1. Procedure-Diagnosis
+  Note over Neo: 2. Drug dosage limits
+  Note over Neo: 3. Contraindicated drugs
+  Note over Neo: 4. Provider specialty
+  Note over Neo: 5. Date sanity
+  Note over Neo: 6. Amount reasonableness
+  Neo-->>VA: GraphViolations + severity
+  VA->>CH: Extraction + violations
+  Note over CH: Llama-3.1-70B, temp=0.3
+  Note over CH: 7 adversarial strategies
+  CH->>CD: Challenges + token_ids
+  Note over CD: Merge nearby tokens (50px)
+  alt Conflicts detected
+    CD->>VLM: Conflicting BBox regions
+    Note over VLM: Crop + Qwen2-VL-7B
+    VLM->>FL: New SpatialTokens
+    FL->>EX: Patched token stream
+  else No conflicts
+    CD->>OUT: Final ExtractionResult
+  end
+  alt Failure occurred
+    CH->>PM: Failure data
+    PM->>DS: FailureReport
+  end`,
+
+neo4j:`flowchart TB
+  subgraph NODES["NODE TYPES"]
+    direction TB
+    PC["ProcedureCode<br/>code: string UNIQUE<br/>description: string<br/>category: string"]
+    DC["DiagnosisCode<br/>code: string UNIQUE<br/>description: string<br/>category: string"]
+    MED["Medication<br/>name: string UNIQUE<br/>max_daily_dosage_mg: float<br/>unit: string"]
+    SPEC["Specialty<br/>name: string UNIQUE<br/>department: string"]
+    PROV["Provider<br/>id: string UNIQUE<br/>name: string<br/>facility: string"]
+    PAT["Patient<br/>id: string UNIQUE<br/>dob: date"]
+    LR["LearnedRule<br/>report_id: string<br/>affected_field: string<br/>root_cause: string<br/>active: bool"]
+  end
+  subgraph SOURCES["DATA SOURCES"]
+    direction LR
+    S1["CMS.gov<br/>ICD-10 + CPT"]
+    S2["FDA / Lexicomp<br/>Drug databases"]
+    S3["Internal Policy<br/>Business rules"]
+    S4["Provider Registry<br/>Credentialing"]
+  end
+  PC ---|"COMPATIBLE_WITH"| DC
+  MED ---|"CONTRAINDICATED_WITH"| MED
+  PC ---|"REQUIRES_SPECIALTY"| SPEC
+  PROV ---|"HAS_SPECIALTY"| SPEC
+  DC ---|"TREATED_BY"| MED
+  MED ---|"HAS_DOSAGE_LIMIT"| LR
+  S1 -.->|"seeds"| PC
+  S1 -.->|"seeds"| DC
+  S2 -.->|"seeds"| MED
+  S3 -.->|"seeds"| LR
+  S4 -.->|"seeds"| PROV
+  style NODES fill:#E8EAF6,stroke:#283593,stroke-width:2px
+  style SOURCES fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px`,
+
+heal:`flowchart LR
+  subgraph DETECT["1. CONFLICT DETECTION"]
+    direction TB
+    A["Challenger challenge<br/>confidence > 0.6"]
+    B["Validator violation<br/>severity > 0.7"]
+    C["Extractor field<br/>confidence < 0.5"]
+    A --> DT["Collect affected token_ids"]
+    B --> DT
+    C --> DT
+    DT --> E2["Lookup SpatialToken bboxes"]
+    E2 --> F2["Group by page_number"]
+    F2 --> G2["Greedy merge 50px padding"]
+    G2 --> H2["Conflicting BBox regions"]
+  end
+  subgraph RESCAN["2. TARGETED VLM RE-SCAN"]
+    direction TB
+    I2["Load page PNG from MinIO"]
+    J2["PIL crop region coords"]
+    K2["Encode to base64 PNG"]
+    L2["Send to Qwen2-VL-7B"]
+    M2["Parse VLM JSON into SpatialTokens"]
+    I2 --> J2 --> K2 --> L2 --> M2
+  end
+  subgraph PATCH["3. TOKEN STREAM PATCH"]
+    direction TB
+    O2["Remove old tokens"]
+    P2["Insert VLM rescan tokens"]
+    Q2["Re-sort by position"]
+    R2["Re-assign reading order"]
+    S2["Identify affected fields"]
+    T2["Re-extract ONLY affected"]
+    O2 --> P2 --> Q2 --> R2 --> S2 --> T2
+  end
+  subgraph LEARN["4. POSTMORTEM LEARNING"]
+    direction TB
+    U2["Classify root cause"]
+    V2["Generate FailureReport"]
+    W2["Tag: add_to_dspy_training"]
+    X2["Store in Redis"]
+    Y2["DSPy Supervisor pulls"]
+    Z2["MIPRO reoptimization"]
+    U2 --> V2 --> W2 --> X2 --> Y2 --> Z2
+  end
+  H2 --> I2
+  M2 --> O2
+  T2 -->|"round < 2"| DETECT
+  T2 -->|"round >= 2"| ESCALATE["Escalate to human"]
+  T2 --> U2
+  style DETECT fill:#FCE4EC,stroke:#C62828,stroke-width:2px
+  style RESCAN fill:#E3F2FD,stroke:#1565C0,stroke-width:2px
+  style PATCH fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px
+  style LEARN fill:#FFF3E0,stroke:#E65100,stroke-width:2px
+  style ESCALATE fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px`
+};
+
+const slots={d1:'arch',d2:'seq',d3:'state',d4:'agent',d5:'neo4j',d6:'heal',
+d7:'arch',d8:'seq',d9:'state',d10:'agent',d11:'neo4j',d12:'heal'};
+
+let cnt=0;
+async function renderAll(){
+  for(const[id,key]of Object.entries(slots)){
+    const el=document.getElementById(id);
+    if(!el)continue;
+    try{
+      const{svg}=await mermaid.render('msvg'+(cnt++),D[key]);
+      el.innerHTML=svg;
+    }catch(e){
+      el.innerHTML='<div style="color:#c62828;padding:12px;font-size:13px">Diagram render error: '+e.message+'</div>';
+    }
+  }
+}
+renderAll();
+
+// Tab switching
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    const t=this.dataset.tab;
+    document.querySelectorAll('.doc-panel').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.getElementById('tab-'+t).classList.add('active');
+    this.classList.add('active');
+  });
+});
+
+// Download as standalone HTML file
+document.getElementById('dlBtn').addEventListener('click',function(){
+  const panel=document.querySelector('.doc-panel.active');
+  const title=panel.querySelector('h1')?.textContent||'GraphOCR Document';
+  const css=document.querySelector('style').textContent;
+  const html=`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>`+title+`</title><style>`+css+`
+  .doc-panel{display:block!important;padding:40px 60px;max-width:1100px;margin:0 auto}
+  @media print{h2{break-before:page}.dc{break-inside:avoid}}
+  </style></head><body>`+panel.outerHTML.replace('display: none','display:block').replace('class="doc-panel"','class="doc-panel active"')+`</body></html>`;
+  const blob=new Blob([html],{type:'text/html'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=title.replace(/[^a-zA-Z0-9 ]/g,'').replace(/ +/g,'_')+'.html';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(a.href);},100);
+});
+</script>
+</body>
+</html>

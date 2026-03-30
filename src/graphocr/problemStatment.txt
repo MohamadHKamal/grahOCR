@@ -1,0 +1,47 @@
+
+Problem 
+
+The Analog Legacy: 90% of global health history (especially in the Global South) is handwritten, multi-lingual, and physically archived on paper.
+
+ Current "off-the-shelf" AI pipelines (Standard OCR + RAG) are failing at the institutional level because they are "Spatial-Blind.” And  OCR inaccuracy.  When a doctor writes a diagnosis across two columns, or a pharmacy stamp overlaps a policy number, standard systems commit two fatal errors:
+
+Serialization Gore: The OCR reads horizontally across the page, mixing two different patients' data or merging a price with a date, creating a "meaningless soup" of text.
+
+Contextual Hallucination: Because the RAG system doesn't "see" the paper, it retrieves the most semantically similar policy (e.g., a 2025 standard plan) even if the handwritten claim explicitly refers to an Obsolete 2018 Rider. The AI "hallucinates" a denial because it’s looking at the wrong map.
+
+ 
+
+The context
+
+We have a dataset of 100k complex insurance claims. These aren't clean PDFs; they are multilingual (Arabic/English) scans of handwritten/illegible doctor notes, receipts with overlapping stamps, and inconsistent policy references.
+
+ Our current pipeline fails because the OCR extracts text in the wrong order and not the best accuracy  (reading across columns instead of down), and the RAG system retrieves "Standard data " chunks when the claim actually refers to an "Obsolete 2018 Rider."
+
+ 
+
+ The Mission for the Next 72 Hours
+
+ We are looking for a Deterministic Trust Layer.
+
+Your goal is to architect a system that grounds the AI in the reality of the document. You must prove that every word the AI says is accurate and can be traced back to a specific set of coordinates on a specific page, and that our "Adjudicator Agents" are robust enough to catch medical inconsistencies that would trick a human auditor.
+
+ 
+
+Task 1 (Audit): Architect the diagnostic/ evaluation tool between Input Failure (OCR messed up the reading order) and Intelligence Failure (RAG grabbed the 2025 policy instead of the 2018 rider). l. The Challenge: How do you ensure this tool works as a "Single Source of Truth" for both the Senior and Junior engineers? What is the metadata schema you’d enforce to ensure the "Semantic Spatial" mapping is consistent across the whole team's work? Also, assume you are using Federated systems that respect sovereign data constraints 
+
+Task 2 (Adversarial): The Challenge: Beyond the A/B agents, explain the Governance. If the "Adjuster" agent gets tricked, how do you architect an automated "Post-Mortem Agent" that updates the system’s core logic to prevent that specific failure pattern globally? A layered verification pipeline. This is not a passive "LLM as a judge,” but rather a multi-agent red team. In other words, at 100k docs/day, manual review is impossible. You need a "Self-Healing" pipeline.
+
+The Task: Architect a Hybrid Graph-OCR Validation Check. How do you use the Neo4j Knowledge Graph to detect "Logical Impossibilities" in the OCR output (e.g., a 1940 birthdate on a 2026 policy, or a drug dosage that exceeds clinical stoichiometric limits)?
+
+The Challenge: Describe the "Back-Propagation" mechanism: When the Graph identifies a logical conflict, how does the system automatically trigger a targeted VLM Re-Scan of the specific source coordinates without restarting the entire 100k-doc batch or batches?
+
+
+
+Task 3: Design a Tiered Inference Pipeline to maintain 98% accuracy at scale.
+The Architecture: Propose a "Traffic Controller" agent that uses a low-cost model to assign an "Uncertainty Score" to every document. How do you mathematically define the "Threshold" that determines which 10% of docs get the expensive VLM-Consensus treatment versus the 90% that pass through standard rails?
+
+The Scale Challenge: How do you use Langfuse at this scale to monitor "Accuracy Decay" in real-time? If accuracy dips to 95.5% at 2:00 PM, what is your automated "Circuit Breaker" strategy?
+
+(Mentorship): How do you design an "Agentic Supervisor" that watches the Junior use DSPy? Describe how this supervisor agent would step in to explain the "math of textual gradients" when the Junior's prompt optimization starts to hallucinate or drift.
+
+The Twist: (Clearly do not suggest "better prompting.” We are after a deterministic and automated system to handle large volumes at scale and maintain accuracy at 98%

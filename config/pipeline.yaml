@@ -1,0 +1,33 @@
+pipeline:
+  batch_size: 32
+  max_concurrent_claims: 64
+  max_agent_rounds: 2
+
+ingestion:
+  supported_formats: ["pdf", "tiff", "jpeg", "png"]
+  target_dpi: 300
+  max_page_size_mb: 10
+  deskew: true
+  contrast_enhance: true
+  storage:
+    backend: "minio"
+    bucket_prefix: "claims"
+
+ocr:
+  primary_engine: "paddleocr"   # Text extraction + bounding boxes
+  layout_engine: "surya"        # Layout detection only (columns, tables, zones)
+  merge_iou_threshold: 0.3
+  min_confidence: 0.3
+
+  paddleocr:
+    lang: "ar"
+
+  surya:
+    use_layout: true
+    use_recognition: true
+
+reading_order:
+  algorithm: "xy_cut"
+  rtl_detection: true
+  column_gap_threshold: 30
+  line_merge_threshold: 10

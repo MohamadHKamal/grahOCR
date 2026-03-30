@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GraphOCR Batch Test Report</title>
+<style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin: 2rem; background: #fafafa; }
+    h1 { color: #1a1a2e; }
+    h2 { color: #16213e; margin-top: 2rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; }
+    h3 { color: #0f3460; }
+    table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: 0.85rem; }
+    th { background: #1a1a2e; color: white; padding: 8px 10px; text-align: left; }
+    td { padding: 6px 10px; border-bottom: 1px solid #e2e8f0; }
+    tr:hover { background: #f1f5f9; }
+    .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin: 1rem 0; }
+    .summary-card { background: white; border-radius: 8px; padding: 1.2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .summary-card .label { font-size: 0.8rem; color: #64748b; text-transform: uppercase; }
+    .summary-card .value { font-size: 1.8rem; font-weight: 700; color: #1a1a2e; }
+    .doc-detail { background: white; border-radius: 8px; padding: 1.5rem; margin: 1rem 0; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .stats-row { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 0.5rem 0; font-size: 0.85rem; color: #475569; }
+    .text-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 1rem; max-height: 300px; overflow-y: auto; font-size: 0.85rem; direction: rtl; unicode-bidi: plaintext; }
+    .token { padding: 2px 0; direction: ltr; unicode-bidi: plaintext; }
+    .lang { color: #6366f1; font-weight: 600; font-size: 0.75rem; }
+    .conf { color: #94a3b8; font-size: 0.75rem; }
+    .prov-box { background: #1e293b; color: #e2e8f0; border-radius: 4px; padding: 1rem; font-family: monospace; font-size: 0.75rem; max-height: 200px; overflow-y: auto; }
+    .prov { padding: 1px 0; }
+    .failure { background: #fef2f2; border-left: 3px solid #ef4444; padding: 8px 12px; margin: 6px 0; font-size: 0.82rem; border-radius: 0 4px 4px 0; line-height: 1.5; }
+    .fulltext-box { background: #fffbeb; border: 1px solid #fbbf24; border-radius: 4px; padding: 1rem; font-size: 1rem; line-height: 1.8; direction: auto; unicode-bidi: plaintext; white-space: pre-wrap; word-wrap: break-word; max-height: 250px; overflow-y: auto; }
+    .token-table { font-size: 0.78rem; }
+    .token-table th { background: #334155; font-size: 0.72rem; padding: 6px 8px; }
+    .token-table td { padding: 4px 8px; font-size: 0.78rem; }
+    .token-table tr:nth-child(even) { background: #f8fafc; }
+</style>
+</head>
+<body>
+<h1>GraphOCR Batch Test Report</h1>
+<p style="color:#64748b">Generated: 2026-03-28 23:29 UTC | Documents: 3</p>
+
+<div class="summary-grid">
+    <div class="summary-card"><div class="label">Documents</div><div class="value">3</div></div>
+    <div class="summary-card"><div class="label">Successful</div><div class="value" style="color:#2d8a4e">3</div></div>
+    <div class="summary-card"><div class="label">Failed</div><div class="value" style="color:#d32f2f">0</div></div>
+    <div class="summary-card"><div class="label">Total Tokens</div><div class="value">19</div></div>
+    <div class="summary-card"><div class="label">Avg Confidence</div><div class="value">98.9%</div></div>
+    <div class="summary-card"><div class="label">Total Failures</div><div class="value">1</div></div>
+    <div class="summary-card"><div class="label">VLM Consensus</div><div class="value">0</div></div>
+    <div class="summary-card"><div class="label">Avg Latency</div><div class="value">62843ms</div></div>
+</div>
+
+<h2>Document Summary Table</h2>
+<table>
+<tr>
+    <th>#</th><th>File</th><th>Status</th><th>Pages</th><th>Tokens</th>
+    <th>Arabic</th><th>English</th><th>Avg Conf</th><th>Min Conf</th>
+    <th>Failures</th><th>Failure Types</th><th>Route</th><th>Uncertainty</th>
+    <th>Latency</th><th>Error</th>
+</tr>
+
+        <tr>
+            <td>1</td>
+            <td>test_column_issue.pdf</td>
+            <td style="color:#2d8a4e;font-weight:bold">PASS</td>
+            <td>1</td>
+            <td>10</td>
+            <td>0</td>
+            <td>10</td>
+            <td>99.10%</td>
+            <td>96.86%</td>
+            <td>1</td>
+            <td>spatial_blind</td>
+            <td>cheap_rail</td>
+            <td>0.1090</td>
+            <td>71164ms</td>
+            <td style="color:red"></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>test_logical_conflict.pdf</td>
+            <td style="color:#2d8a4e;font-weight:bold">PASS</td>
+            <td>1</td>
+            <td>5</td>
+            <td>0</td>
+            <td>5</td>
+            <td>98.92%</td>
+            <td>97.36%</td>
+            <td>0</td>
+            <td>None</td>
+            <td>cheap_rail</td>
+            <td>0.0108</td>
+            <td>62688ms</td>
+            <td style="color:red"></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>test_low_confidence.pdf</td>
+            <td style="color:#2d8a4e;font-weight:bold">PASS</td>
+            <td>1</td>
+            <td>4</td>
+            <td>0</td>
+            <td>4</td>
+            <td>98.80%</td>
+            <td>97.61%</td>
+            <td>0</td>
+            <td>None</td>
+            <td>cheap_rail</td>
+            <td>0.0120</td>
+            <td>54677ms</td>
+            <td style="color:red"></td>
+        </tr>
+</table>
+
+<h2>Per-Document Details</h2>
+
+        <div class="doc-detail">
+            <h3>1. test_column_issue.pdf</h3>
+            <div class="stats-row">
+                <span>Tokens: 10</span>
+                <span>Arabic: 0</span>
+                <span>English: 10</span>
+                <span>Confidence: 99.10%</span>
+                <span>Route: <strong>cheap_rail</strong></span>
+                <span>Uncertainty: 0.1090</span>
+                <span>Latency: 71164ms</span>
+            </div>
+
+            <h4>OCR Result &mdash; Full Text</h4>
+            <div class="fulltext-box">Patient Details: Name: Ahmed Ali DOB: 15-05-1985 ID: PAT-99201 Hospital Discharge Summary Clinical Diagnosis: Code: ICD-10-J45 (Asthma) Admission: 10-02-2026 Ward: Respiratory Unit Metadata: Generated for Spatial-Aware OCR Testing</div>
+
+            <h4>OCR Result &mdash; Annotated Tokens</h4>
+            <div class="text-box"><div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(99%)</span> Patient Details:</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(97%)</span> Name: Ahmed Ali</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(100%)</span> DOB: 15-05-1985</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(99%)</span> ID: PAT-99201</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(100%)</span> Hospital Discharge Summary</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(100%)</span> Clinical Diagnosis:</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(100%)</span> Code: ICD-10-J45 (Asthma)</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(100%)</span> Admission: 10-02-2026</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(98%)</span> Ward: Respiratory Unit</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(99%)</span> Metadata: Generated for Spatial-Aware OCR Testing</div>
+</div>
+
+            <h4>OCR Result &mdash; Token Detail Table</h4>
+            <div style="overflow-x:auto">
+            <table class="token-table">
+                <tr>
+                    <th>#</th><th>Text</th><th>Lang</th><th>Confidence</th>
+                    <th>Page</th><th>BBox</th><th>HW</th><th>Zone</th><th>ID</th>
+                </tr>
+                <tr><td>0</td><td style='direction:auto;unicode-bidi:plaintext'>Patient Details:</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.44%</td><td>p1</td><td>(143,239)-(406,276)</td><td></td><td></td><td><code>069c863f</code></td></tr>
+<tr><td>1</td><td style='direction:auto;unicode-bidi:plaintext'>Name: Ahmed Ali</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>96.86%</td><td>p1</td><td>(144,288)-(382,320)</td><td></td><td></td><td><code>069c863f</code></td></tr>
+<tr><td>2</td><td style='direction:auto;unicode-bidi:plaintext'>DOB: 15-05-1985</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.76%</td><td>p1</td><td>(145,335)-(383,366)</td><td></td><td></td><td><code>069c863f</code></td></tr>
+<tr><td>3</td><td style='direction:auto;unicode-bidi:plaintext'>ID: PAT-99201</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.02%</td><td>p1</td><td>(143,375)-(346,412)</td><td></td><td></td><td><code>069c863f</code></td></tr>
+<tr><td>4</td><td style='direction:auto;unicode-bidi:plaintext'>Hospital Discharge Summary</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.89%</td><td>p1</td><td>(590,79)-(1254,135)</td><td></td><td></td><td><code>069c863f</code></td></tr>
+<tr><td>5</td><td style='direction:auto;unicode-bidi:plaintext'>Clinical Diagnosis:</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.93%</td><td>p1</td><td>(1035,238)-(1358,279)</td><td></td><td></td><td><code>069c863f</code></td></tr>
+<tr><td>6</td><td style='direction:auto;unicode-bidi:plaintext'>Code: ICD-10-J45 (Asthma)</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.54%</td><td>p1</td><td>(1034,287)-(1407,324)</td><td></td><td></td><td><code>069c863f</code></td></tr>
+<tr><td>7</td><td style='direction:auto;unicode-bidi:plaintext'>Admission: 10-02-2026</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.89%</td><td>p1</td><td>(1036,335)-(1346,366)</td><td></td><td></td><td><code>069c863f</code></td></tr>
+<tr><td>8</td><td style='direction:auto;unicode-bidi:plaintext'>Ward: Respiratory Unit</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>97.70%</td><td>p1</td><td>(1034,377)-(1342,413)</td><td></td><td></td><td><code>069c863f</code></td></tr>
+<tr><td>9</td><td style='direction:auto;unicode-bidi:plaintext'>Metadata: Generated for Spatial-Aware OCR Testing</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>98.93%</td><td>p1</td><td>(590,2327)-(1151,2359)</td><td></td><td></td><td><code>069c863f</code></td></tr>
+
+            </table>
+            </div>
+
+            <h4>Failures Detected</h4><div class="failure"><strong style="color:#d32f2f">[spatial_blind]</strong> severity=1.00 | remedy=vlm_rescan<br><span style="color:#475569">Reading order jump: tokens 8->9 are 1974px apart spatially</span></div>
+
+
+            <h4>Provenance Trail (first 15)</h4>
+            <div class="prov-box"><div class='prov'>[069c863f] 'Patient Details:' page=1 (143,239)-(406,276) conf=0.99 lang=en engine=paddleocr</div>
+<div class='prov'>[069c863f] 'Name: Ahmed Ali' page=1 (144,288)-(382,320) conf=0.97 lang=en engine=paddleocr</div>
+<div class='prov'>[069c863f] 'DOB: 15-05-1985' page=1 (145,335)-(383,366) conf=1.00 lang=en engine=paddleocr</div>
+<div class='prov'>[069c863f] 'ID: PAT-99201' page=1 (143,375)-(346,412) conf=0.99 lang=en engine=paddleocr</div>
+<div class='prov'>[069c863f] 'Hospital Discharge Summary' page=1 (590,79)-(1254,135) conf=1.00 lang=en engine=paddleocr</div>
+<div class='prov'>[069c863f] 'Clinical Diagnosis:' page=1 (1035,238)-(1358,279) conf=1.00 lang=en engine=paddleocr</div>
+<div class='prov'>[069c863f] 'Code: ICD-10-J45 (Asthma)' page=1 (1034,287)-(1407,324) conf=1.00 lang=en engine=paddleocr</div>
+<div class='prov'>[069c863f] 'Admission: 10-02-2026' page=1 (1036,335)-(1346,366) conf=1.00 lang=en engine=paddleocr</div>
+<div class='prov'>[069c863f] 'Ward: Respiratory Unit' page=1 (1034,377)-(1342,413) conf=0.98 lang=en engine=paddleocr</div>
+<div class='prov'>[069c863f] 'Metadata: Generated for Spatial-Aware OCR Testing' page=1 (590,2327)-(1151,2359) conf=0.99 lang=en engine=paddleocr</div>
+</div>
+        </div>
+        <div class="doc-detail">
+            <h3>2. test_logical_conflict.pdf</h3>
+            <div class="stats-row">
+                <span>Tokens: 5</span>
+                <span>Arabic: 0</span>
+                <span>English: 5</span>
+                <span>Confidence: 98.92%</span>
+                <span>Route: <strong>cheap_rail</strong></span>
+                <span>Uncertainty: 0.0108</span>
+                <span>Latency: 62688ms</span>
+            </div>
+
+            <h4>OCR Result &mdash; Full Text</h4>
+            <div class="fulltext-box">Status: Approved (System Error Expected) Date of Birth: 12-10-2020 Policy Effective Date: 01-01-2015 Client Name: Mohamed Hussein Insurance Policy Enrollment</div>
+
+            <h4>OCR Result &mdash; Annotated Tokens</h4>
+            <div class="text-box"><div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(98%)</span> Status: Approved (System Error Expected)</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(100%)</span> Date of Birth: 12-10-2020</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(97%)</span> Policy Effective Date: 01-01-2015</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(99%)</span> Client Name: Mohamed Hussein</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(100%)</span> Insurance Policy Enrollment</div>
+</div>
+
+            <h4>OCR Result &mdash; Token Detail Table</h4>
+            <div style="overflow-x:auto">
+            <table class="token-table">
+                <tr>
+                    <th>#</th><th>Text</th><th>Lang</th><th>Confidence</th>
+                    <th>Page</th><th>BBox</th><th>HW</th><th>Zone</th><th>ID</th>
+                </tr>
+                <tr><td>0</td><td style='direction:auto;unicode-bidi:plaintext'>Status: Approved (System Error Expected)</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>98.46%</td><td>p1</td><td>(1918,289)-(1957,901)</td><td></td><td></td><td><code>069c8643</code></td></tr>
+<tr><td>1</td><td style='direction:auto;unicode-bidi:plaintext'>Date of Birth: 12-10-2020</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.60%</td><td>p1</td><td>(2129,291)-(2169,699)</td><td></td><td></td><td><code>069c8643</code></td></tr>
+<tr><td>2</td><td style='direction:auto;unicode-bidi:plaintext'>Policy Effective Date: 01-01-2015</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>97.36%</td><td>p1</td><td>(2063,286)-(2114,830)</td><td></td><td></td><td><code>069c8643</code></td></tr>
+<tr><td>3</td><td style='direction:auto;unicode-bidi:plaintext'>Client Name: Mohamed Hussein</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.26%</td><td>p1</td><td>(2220,289)-(2260,812)</td><td></td><td></td><td><code>069c8643</code></td></tr>
+<tr><td>4</td><td style='direction:auto;unicode-bidi:plaintext'>Insurance Policy Enrollment</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.91%</td><td>p1</td><td>(2364,527)-(2417,1178)</td><td></td><td></td><td><code>069c8643</code></td></tr>
+
+            </table>
+            </div>
+
+            <p style="color:#2d8a4e;font-weight:600">No failures detected.</p>
+
+            <h4>Provenance Trail (first 15)</h4>
+            <div class="prov-box"><div class='prov'>[069c8643] 'Status: Approved (System Error Expected)' page=1 (1918,289)-(1957,901) conf=0.98 lang=en engine=paddleocr</div>
+<div class='prov'>[069c8643] 'Date of Birth: 12-10-2020' page=1 (2129,291)-(2169,699) conf=1.00 lang=en engine=paddleocr</div>
+<div class='prov'>[069c8643] 'Policy Effective Date: 01-01-2015' page=1 (2063,286)-(2114,830) conf=0.97 lang=en engine=paddleocr</div>
+<div class='prov'>[069c8643] 'Client Name: Mohamed Hussein' page=1 (2220,289)-(2260,812) conf=0.99 lang=en engine=paddleocr</div>
+<div class='prov'>[069c8643] 'Insurance Policy Enrollment' page=1 (2364,527)-(2417,1178) conf=1.00 lang=en engine=paddleocr</div>
+</div>
+        </div>
+        <div class="doc-detail">
+            <h3>3. test_low_confidence.pdf</h3>
+            <div class="stats-row">
+                <span>Tokens: 4</span>
+                <span>Arabic: 0</span>
+                <span>English: 4</span>
+                <span>Confidence: 98.80%</span>
+                <span>Route: <strong>cheap_rail</strong></span>
+                <span>Uncertainty: 0.0120</span>
+                <span>Latency: 54677ms</span>
+            </div>
+
+            <h4>OCR Result &mdash; Full Text</h4>
+            <div class="fulltext-box">(Handwritten Note: Urgent Delivery) Drug Name: Amoxicillin 500mg Total Amount: $ 1500.00 Pharmacy Invoice</div>
+
+            <h4>OCR Result &mdash; Annotated Tokens</h4>
+            <div class="text-box"><div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(98%)</span> (Handwritten Note: Urgent Delivery)</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(99%)</span> Drug Name: Amoxicillin 500mg</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(99%)</span> Total Amount: $ 1500.00</div>
+<div class="token"><span class="lang">[en]</span> <span class="conf" style="color:#2d8a4e">(100%)</span> Pharmacy Invoice</div>
+</div>
+
+            <h4>OCR Result &mdash; Token Detail Table</h4>
+            <div style="overflow-x:auto">
+            <table class="token-table">
+                <tr>
+                    <th>#</th><th>Text</th><th>Lang</th><th>Confidence</th>
+                    <th>Page</th><th>BBox</th><th>HW</th><th>Zone</th><th>ID</th>
+                </tr>
+                <tr><td>0</td><td style='direction:auto;unicode-bidi:plaintext'>(Handwritten Note: Urgent Delivery)</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>97.61%</td><td>p1</td><td>(1978,145)-(2023,628)</td><td></td><td></td><td><code>069c8646</code></td></tr>
+<tr><td>1</td><td style='direction:auto;unicode-bidi:plaintext'>Drug Name: Amoxicillin 500mg</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>98.66%</td><td>p1</td><td>(2035,145)-(2090,647)</td><td></td><td></td><td><code>069c8646</code></td></tr>
+<tr><td>2</td><td style='direction:auto;unicode-bidi:plaintext'>Total Amount: $ 1500.00</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.04%</td><td>p1</td><td>(2127,144)-(2180,552)</td><td></td><td></td><td><code>069c8646</code></td></tr>
+<tr><td>3</td><td style='direction:auto;unicode-bidi:plaintext'>Pharmacy Invoice</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.90%</td><td>p1</td><td>(2354,589)-(2426,1013)</td><td></td><td></td><td><code>069c8646</code></td></tr>
+
+            </table>
+            </div>
+
+            <p style="color:#2d8a4e;font-weight:600">No failures detected.</p>
+
+            <h4>Provenance Trail (first 15)</h4>
+            <div class="prov-box"><div class='prov'>[069c8646] '(Handwritten Note: Urgent Delivery)' page=1 (1978,145)-(2023,628) conf=0.98 lang=en engine=paddleocr</div>
+<div class='prov'>[069c8646] 'Drug Name: Amoxicillin 500mg' page=1 (2035,145)-(2090,647) conf=0.99 lang=en engine=paddleocr</div>
+<div class='prov'>[069c8646] 'Total Amount: $ 1500.00' page=1 (2127,144)-(2180,552) conf=0.99 lang=en engine=paddleocr</div>
+<div class='prov'>[069c8646] 'Pharmacy Invoice' page=1 (2354,589)-(2426,1013) conf=1.00 lang=en engine=paddleocr</div>
+</div>
+        </div>
+
+</body>
+</html>

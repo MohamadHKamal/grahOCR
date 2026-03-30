@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GraphOCR Pipeline Test Report — test_column_issue.pdf</title>
+<style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin: 2rem; background: #fafafa; color: #1a1a2e; }
+    h1 { color: #1a1a2e; margin-bottom: 0.3rem; }
+    h2 { color: #16213e; margin-top: 2rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; }
+    h3 { color: #0f3460; margin-top: 0; }
+    h4 { color: #334155; margin-top: 1.2rem; }
+    .meta { color: #64748b; font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .meta span { margin-right: 2rem; }
+    .run-card { background: white; border-radius: 8px; padding: 1.5rem; margin: 1rem 0; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-left: 4px solid #3b82f6; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.8rem; margin: 1rem 0; }
+    .stat { background: #f8fafc; border-radius: 6px; padding: 0.7rem; text-align: center; }
+    .stat-label { font-size: 0.7rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }
+    .stat-value { font-size: 1.3rem; font-weight: 700; color: #1a1a2e; }
+    table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: 0.82rem; }
+    th { background: #1a1a2e; color: white; padding: 8px 10px; text-align: left; }
+    td { padding: 6px 10px; border-bottom: 1px solid #e2e8f0; }
+    tr:hover { background: #f1f5f9; }
+    .token-table { font-size: 0.78rem; }
+    .token-table th { background: #334155; font-size: 0.72rem; padding: 6px 8px; }
+    .token-table td { padding: 4px 8px; }
+    .token-table tr:nth-child(even) { background: #f8fafc; }
+    .prov-box { background: #1e293b; color: #e2e8f0; border-radius: 4px; padding: 1rem; font-family: monospace; font-size: 0.75rem; max-height: 250px; overflow-y: auto; }
+    .prov { padding: 1px 0; }
+    .failure { background: #fef2f2; border-left: 3px solid #ef4444; padding: 8px 12px; margin: 6px 0; font-size: 0.82rem; border-radius: 0 4px 4px 0; line-height: 1.5; }
+    .suggestions { background: #fffbeb; border: 1px solid #f59e0b; border-radius: 8px; padding: 1rem 1rem 1rem 2rem; font-size: 0.88rem; line-height: 1.8; }
+    .suggestions li { margin-bottom: 0.5rem; }
+</style>
+</head>
+<body>
+<h1>GraphOCR Pipeline Test Report</h1>
+<div class="meta">
+    <span>File: <strong>test_column_issue.pdf</strong></span>
+    <span>Date: <strong>2026-03-29T23:04:00.806630</strong></span>
+    <span>Duration: <strong>88.8s</strong></span>
+    <span>Engine configs: <strong>1</strong></span>
+    <span>File size: <strong>1,959 bytes</strong></span>
+</div>
+
+
+<h2>Suggestions</h2><ul class='suggestions'><li>[PaddleOCR] High latency (87s) — consider GPU acceleration or reducing max image size for faster processing.</li></ul>
+
+<h2>Detailed Results</h2>
+
+        <div class="run-card">
+            <h3>PaddleOCR</h3>
+            <div class="stats-grid">
+                <div class="stat"><div class="stat-label">Tokens</div><div class="stat-value">10</div></div>
+                <div class="stat"><div class="stat-label">Arabic</div><div class="stat-value">0</div></div>
+                <div class="stat"><div class="stat-label">English</div><div class="stat-value">10</div></div>
+                <div class="stat"><div class="stat-label">Avg Confidence</div><div class="stat-value" style="color:#2d8a4e">99.10%</div></div>
+                <div class="stat"><div class="stat-label">Min Confidence</div><div class="stat-value">96.86%</div></div>
+                <div class="stat"><div class="stat-label">Max Confidence</div><div class="stat-value">99.93%</div></div>
+                <div class="stat"><div class="stat-label">Failures</div><div class="stat-value">1</div></div>
+                <div class="stat"><div class="stat-label">Route</div><div class="stat-value" style="color:#2d8a4e">cheap_rail</div></div>
+                <div class="stat"><div class="stat-label">Uncertainty</div><div class="stat-value">0.1090</div></div>
+                <div class="stat"><div class="stat-label">Latency</div><div class="stat-value">86716ms</div></div>
+            </div>
+
+            <h4>Failures</h4>
+            <div class="failure"><strong style="color:#d32f2f">[spatial_blind]</strong> severity=1.00 | remedy=vlm_rescan<br><span style="color:#475569">Reading order jump: tokens 8-&gt;9 are 1974px apart spatially</span></div>
+
+            <h4>Token Detail Table</h4>
+            <div style="overflow-x:auto">
+            <table class="token-table">
+                <tr><th>Text</th><th>Lang</th><th>Confidence</th><th>Page</th><th>BBox</th><th>HW</th><th>Zone</th><th>Engine</th><th>ID</th></tr>
+                <tr><td style='direction:auto;unicode-bidi:plaintext'>Patient Details:</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.44%</td><td>p1</td><td>(143,239)-(406,276)</td><td></td><td></td><td>paddleocr</td><td><code>069c993c</code></td></tr><tr><td style='direction:auto;unicode-bidi:plaintext'>Name: Ahmed Ali</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>96.86%</td><td>p1</td><td>(144,288)-(382,320)</td><td></td><td></td><td>paddleocr</td><td><code>069c993c</code></td></tr><tr><td style='direction:auto;unicode-bidi:plaintext'>DOB: 15-05-1985</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.76%</td><td>p1</td><td>(145,335)-(383,366)</td><td></td><td></td><td>paddleocr</td><td><code>069c993c</code></td></tr><tr><td style='direction:auto;unicode-bidi:plaintext'>ID: PAT-99201</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.02%</td><td>p1</td><td>(143,375)-(346,412)</td><td></td><td></td><td>paddleocr</td><td><code>069c993c</code></td></tr><tr><td style='direction:auto;unicode-bidi:plaintext'>Hospital Discharge Summary</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.89%</td><td>p1</td><td>(590,79)-(1254,135)</td><td></td><td></td><td>paddleocr</td><td><code>069c993c</code></td></tr><tr><td style='direction:auto;unicode-bidi:plaintext'>Clinical Diagnosis:</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.93%</td><td>p1</td><td>(1035,238)-(1358,279)</td><td></td><td></td><td>paddleocr</td><td><code>069c993c</code></td></tr><tr><td style='direction:auto;unicode-bidi:plaintext'>Code: ICD-10-J45 (Asthma)</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.54%</td><td>p1</td><td>(1034,287)-(1407,324)</td><td></td><td></td><td>paddleocr</td><td><code>069c993c</code></td></tr><tr><td style='direction:auto;unicode-bidi:plaintext'>Admission: 10-02-2026</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>99.89%</td><td>p1</td><td>(1036,335)-(1346,366)</td><td></td><td></td><td>paddleocr</td><td><code>069c993c</code></td></tr><tr><td style='direction:auto;unicode-bidi:plaintext'>Ward: Respiratory Unit</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>97.70%</td><td>p1</td><td>(1034,377)-(1342,413)</td><td></td><td></td><td>paddleocr</td><td><code>069c993c</code></td></tr><tr><td style='direction:auto;unicode-bidi:plaintext'>Metadata: Generated for Spatial-Aware OCR Testing</td><td>en</td><td style='color:#2d8a4e;font-weight:600'>98.93%</td><td>p1</td><td>(590,2327)-(1151,2359)</td><td></td><td></td><td>paddleocr</td><td><code>069c993c</code></td></tr>
+            </table>
+            </div>
+
+            <h4>Provenance Trail (first 20)</h4>
+            <div class="prov-box"><div class='prov'>[069c993c] &#x27;Patient Details:&#x27; page=1 (143,239)-(406,276) conf=0.99 lang=en engine=paddleocr</div><div class='prov'>[069c993c] &#x27;Name: Ahmed Ali&#x27; page=1 (144,288)-(382,320) conf=0.97 lang=en engine=paddleocr</div><div class='prov'>[069c993c] &#x27;DOB: 15-05-1985&#x27; page=1 (145,335)-(383,366) conf=1.00 lang=en engine=paddleocr</div><div class='prov'>[069c993c] &#x27;ID: PAT-99201&#x27; page=1 (143,375)-(346,412) conf=0.99 lang=en engine=paddleocr</div><div class='prov'>[069c993c] &#x27;Hospital Discharge Summary&#x27; page=1 (590,79)-(1254,135) conf=1.00 lang=en engine=paddleocr</div><div class='prov'>[069c993c] &#x27;Clinical Diagnosis:&#x27; page=1 (1035,238)-(1358,279) conf=1.00 lang=en engine=paddleocr</div><div class='prov'>[069c993c] &#x27;Code: ICD-10-J45 (Asthma)&#x27; page=1 (1034,287)-(1407,324) conf=1.00 lang=en engine=paddleocr</div><div class='prov'>[069c993c] &#x27;Admission: 10-02-2026&#x27; page=1 (1036,335)-(1346,366) conf=1.00 lang=en engine=paddleocr</div><div class='prov'>[069c993c] &#x27;Ward: Respiratory Unit&#x27; page=1 (1034,377)-(1342,413) conf=0.98 lang=en engine=paddleocr</div><div class='prov'>[069c993c] &#x27;Metadata: Generated for Spatial-Aware OCR Testing&#x27; page=1 (590,2327)-(1151,2359) conf=0.99 lang=en engine=paddleocr</div></div>
+        </div>
+
+<footer style="margin-top:3rem;padding-top:1rem;border-top:1px solid #e2e8f0;color:#94a3b8;font-size:0.8rem">
+    Generated by GraphOCR Pipeline Test | 2026-03-29T23:04:00.806630
+</footer>
+</body>
+</html>
