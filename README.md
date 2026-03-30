@@ -9,6 +9,8 @@ Deterministic Trust Layer for Insurance Claims — processes 100K multilingual (
 - [TASK_RESPONSE.md](TASK_RESPONSE.md) — Direct answers to every question in the technical task brief
 - [EVALUATION.md](EVALUATION.md) — Codebase evaluation against the problem brief
 - [docs/](docs/README.md) — Deep-dive architecture docs for each subsystem (Layer 1, Layer 2, Layer 3, RAG, DSPy, Compliance, Infrastructure)
+- [ProjectManagment.pdf](ProjectManagment.pdf) — Project management plan, timelines, and milestones
+- [GraphOCR All Docs (HTML)](graphocr-all-docs.html) — Consolidated single-page HTML with all architecture, evaluation, and task response docs (tabs + diagrams)
 
 ## Architecture
 
